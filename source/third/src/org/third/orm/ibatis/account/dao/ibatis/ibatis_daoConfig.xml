@@ -1,0 +1,49 @@
+<!DOCTYPE daoConfig 
+PUBLIC "-//ibatis.apache.org//DTD DAO Configuration 2.0//EN" 
+"http://ibatis.apache.org/dtd/dao-2.dtd">
+
+<daoConfig>
+  <context>
+    <transactionManager type="SQLMAP">
+      <property name="SqlMapConfigResource" value="org/third/orm/ibatis/account/dao/ibatis/sql-map-config.xml" />
+    </transactionManager>
+    <!--<transactionManager type="HIBERNATE">
+      <property name="hibernate.dialect" value="net.sf.hibernate.dialect.Cloudscape" />
+      <property name="hibernate.connection.driver_class" value="com.ibm.db2j.jdbc.DB2jDriver" />
+      <property name="hibernate.connection.url" value="jdbc:db2j:D:\cloudscape\wpsdb" />
+      <property name="hibernate.connection.username" value="db2admin" />
+      <property name="hibernate.connection.password" value="db2admin" />
+      <property name="class.1" value="com.sample.contact.Contact" />
+      </transactionManager>
+    --><!--
+      <transactionManager type="JDBC">
+      <property name="DataSource" value="JNDI" />
+      <property name="DBJndiContext" value="java:comp/env/jdbc/MyDataSource" />
+      </transactionManager>
+    --><!--
+      <transactionManager type="JTA">
+      <property name="DBJndiContext" value="java:comp/env/jdbc/MyDataSource" />
+      <property name="UserTransaction" value="java:comp/env/UserTransaction" />
+      </transactionManager>
+    --><!--
+      <transactionManager type="JDBC">
+      <property name="DataSource" value="SIMPLE" />
+      <property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver" />
+      <property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@sunshapp10:1521:EMS7100S" />
+      <property name="JDBC.Username" value="ygong1" />
+      <property name="JDBC.Password" value="tellabs" />
+      <property name="JDBC.DefaultAutoCommit" value="true" />
+      </transactionManager>
+    -->
+    <dao interface="org.third.orm.ibatis.account.dao.UserDao"
+      implementation="org.third.orm.ibatis.account.dao.ibatis.ibatis_style.UserDaoImpl" />
+    <dao interface="org.third.orm.ibatis.account.dao.SequenceDao"
+      implementation="org.third.orm.ibatis.account.dao.ibatis.ibatis_style.SequenceDaoImpl" />
+    <dao interface="org.third.orm.ibatis.account.dao.UserInfoDao"
+      implementation="org.third.orm.ibatis.account.dao.ibatis.ibatis_style.UserInfoDaoImpl" />
+    <dao interface="org.third.orm.ibatis.account.dao.AccountDao"
+      implementation="org.third.orm.ibatis.account.dao.ibatis.ibatis_style.AccountDaoImpl" />
+  </context>
+  
+
+</daoConfig>

@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     2009-6-29 下午01:19:45                                                        
+
+     project    
+     description
+                   
+     ygong                                                                
+     ====================================================================== -->
+<project name="project" default="test_for">
+
+	<path id="ant.lib">
+		<fileset dir="../ant_lib" includes="**/*.jar,**/*.properties" />
+		<pathelement path="../classes" />
+	</path>
+
+	<path id="ant.lib">
+			<fileset dir="../ant_lib" includes="**/*.jar,**/*.properties" />
+			<pathelement path="../classes"/>
+		</path>
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="ant.lib" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="ant.lib" />
+	<taskdef name="printTask" classname="org.anttest.PrintTask" classpathref="ant.lib">
+		<classpath>
+			<dirset dir="../classes">
+			</dirset>
+		</classpath>
+	</taskdef>
+
+
+	<!--taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="ant.lib" /-->
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="ant.lib" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="ant.lib" />
+<taskdef name="printTask" classname="org.anttest.PrintTask" classpathref="ant.lib">
+	<classpath>
+		<dirset dir="../classes">
+		</dirset>
+	</classpath>
+</taskdef>
+	<printTask description="sdf" taskname="asdf" content="sadf" />
+
+	<target name="test_for" depends="test_foreach">
+
+		<for list="a 3,b,c,d,e" description="," param="letter" trim="yes">
+			<sequential>
+				<echo>letter=@{letter}</echo>
+			</sequential>
+		</for>
+	</target>
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: test_foreach                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="test_foreach">
+		<foreach list="a.txt, e.doc" param="file_path" target="print_file">
+		</foreach>
+		<foreach list="" param="file_path" target="print_file">
+			<path path="../ant_dtd_01.dtd;../ant_dtd_02.dtd" location="dd.t">
+				<filelist dir="." files="build.xml,ant_contrib.xml" />
+				<fileset dir="." includes="**/*.*" />
+			</path>
+		</foreach>
+	</target>
+	<target name="print_file">
+		<echo>${file_path}</echo>
+		<path id="convert.test" path="../ant_dtd_01.dtd;../ant_dtd_02.dtd" location="dd.t">
+			<filelist dir="." files="build.xml,ant_contrib.xml" />
+			<fileset dir="." includes="**/*.*" />
+		</path>
+		<pathconvert refid="convert.test" property="javafiles" dirsep="/" pathsep=":">
+			<map from="C:" to="D:/test" />
+			<mapper type="identity" />
+		</pathconvert>
+		<echo>${javafiles}</echo>
+	</target>
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: test_if                    
+         - - - - - - - - - - - - - - - - - -->
+	<target name="test_if">
+		<if>
+			<equals arg1="${foo}" arg2="bar" />
+			<then>
+				<echo message="The value of property foo is 'bar'" />
+			</then>
+			<elseif>
+				<equals arg1="${foo}" arg2="foo" />
+				<then>
+					<echo message="The value of property foo is 'foo'" />
+				</then>
+			</elseif>
+			<else>
+				<mkdir dir="test" />
+				<copy todir="test" file="ant_contrib.xml">
+				</copy>
+				<antcall target="test_foreach">
+				</antcall>
+				<echo message="The value of property foo is not 'foo' or 'bar'" />
+			</else>
+		</if>
+	</target>
+	<!-- - - - - - - - - - - - - - - - - - 
+    target: test_switch                      
+   - - - - - - - - - - - - - - - - - -->
+	<target name="test_switch">
+		<switch value="${foo}" caseinsensitive="false">
+			<case value="bar">
+				<echo message="The value of property foo is bar" />
+			</case>
+			<case value="baz">
+				<echo message="The value of property foo is baz" />
+			</case>
+			<default>
+				<echo message="The value of property foo is not sensible" />
+			</default>
+		</switch>
+	</target>
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: test_trycatch                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="test_trycatch">
+		<trycatch property="foo" reference="bar">
+			<try>
+				<fail>Tada!</fail>
+			</try>
+			<catch>
+				<echo>In &lt;catch&gt;.</echo>
+			</catch>
+			<finally>
+				<echo>In &lt;finally&gt;.</echo>
+			</finally>
+		</trycatch>
+		<echo>As property: ${foo}</echo>
+		<property name="baz" refid="bar" />
+		<echo>From reference: ${baz}</echo>
+
+		<antcall target="test_switch" inheritall="true" inheritrefs="true">
+			<param name="p1" value="value1" />
+		</antcall>
+	</target>
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: test_remoteant                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="test_remoteserver">
+		<antserver port="17000" />
+	</target>
+	<target name="test_remoteant">
+		<remoteant machine="localhost" port="17000" failonerror="true" persistant="true">
+			<runtarget target="test_trycatch">
+				<property name="build.type" value="full" />
+			</runtarget>
+			<runant target="test_switch">
+				<property name="build.type" value="full" />
+				<reference refid="my.ref" torefid="inherited.ref" />
+			</runant>
+			<sendfile file="" todir="" tofile="" />
+			<shutdown />
+		</remoteant>
+	</target>
+
+
+	<jar destfile="test.jar" basedir=".">
+		<include name="build" />
+		<manifest>
+			<attribute name="Built-By" value="${user.name}" />
+			<section name="common/class1.class">
+				<attribute name="Sealed" value="false" />
+			</section>
+		</manifest>
+	</jar>
+
+
+</project>
+

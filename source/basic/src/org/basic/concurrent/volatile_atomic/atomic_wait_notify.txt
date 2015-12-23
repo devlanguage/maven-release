@@ -1,0 +1,42 @@
+1 线程的等待/通知机制
+线程Thread通过调用Thread.wait() (或者通过wait( long timeoute) 必须在指定的时间内被通知否则返回) 进行生命周期的状态切换.
+线程通过notify(),notiifyAll()进行通知.如果没有线程处于等待状态那么自动返回。
+必须注意的是
+1 wait & notify (继承至Object类)必须在同步块中被调用，否则会引起race condition.
+2 当发生在一个以上的wait的线程时，notify线程没有确定哪个Thread会被明确唤醒。
+3 等待和通知的内容在标准的继承自Object类的wait() &notify()都是一样的。
+4 如果要确定那个Thread被唤起。可以使用条件变量。使用J2SE5.0引入的 Condition Interface: private Lock dn_Lock=new ReentrantLock();
+        private Condition dn_ConLock=dn_Lock.newCondition();
+          void run(){
+            try{
+                 dn_Lock.lock();
+                  dn_ConLock.await();
+       //your code
+           }finally{
+           dn_Lock.unlock();
+       }
+    }
+…..
+    public synchronized void setDone(boolean done){
+       dn_ConLock.signal();// or dn_ConLock.signalAll();
+       this.done=done;
+                     }
+   那么在什么时候需要使用LOCK提供的条件变量呢？
+1 当你在程序里使用Lock时，是用一个Lock Interface 进行锁的时候，你就必须使用Lock提供的条件变量了。因为Lock 对象本身的wait,notify这个时候是无法运作的。
+2 利用这种方式，我们可以对一组Thread进行设置。这个和利用this.wait()方法每个在等待的通知事件都是相同的不同。
+2 对于 Atomic 类使用的简介
+先看下代码：private AtomicBoolean done=new AtomicBoolean(false);
+                            public void run(){
+                                while(done.get())
+                                {
+                                       //your code
+                                }
+                            }
+                            public void setDone(boolean done){
+                                this.done.set(done);
+                         }
+代码还是以前的，只不过现在没有了synchronized关键字了，同时原来的volatile类型也没有用在这里了。换而改用Atomic类型了。这里我们使用了AtomicBoolean它提供了get() & set() 提供了原子化(Atomic)的操作，同时也确保值来自与主存储器。
+简而言之：Atomic通过封装了Integer,Long,Boolean,Reference对象，使它们所做的一些操作变成了原子化操作，这样我们在程序里就不需要就一个变量的自增，或者读取一段代码都必须做同步块处理，做到了极简同步的目的。当然大部分情况，这种操作还是必须和同步块进行合作的，想想如果同时2个Atomic变量都要从进行改变，那么不用sychronized的话，没有办法保证在对1个Atomic变量操作完不会有其他Thread打断它。
+Atomic 目前只提供了4种类型的支持，当然可以通过自己封装其他的类，利用AtomicReference对象使封装的类的引用再改变时每次都重新生成一个新的引用，就是把封装的引用进行替换，而不是传统上的修改了。这也存在了性能问题。利用Atomic大部分场合，还是适合对单一对象的操作上，当然我们利用它可以实现更复杂的同步功能但是带来的是程序上的复杂，所以我认为在实际使用中并不会过多的依赖。这里就只对它做一个大概的介绍。
+附一些AtomicInteger的函数：getAndSet(int i)设置新值是i返回旧值的原子化操作。
+incrementAndGet() 自增的原子操作。 addAndGet() 前置运算符的操作等

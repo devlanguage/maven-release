@@ -1,0 +1,45 @@
+<HTML>
+
+<HEAD><TITLE>Facade</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Provide a unified interface to a set of interfaces in a subsystem.
+Facade defines a higher-level interface that makes the subsystem
+easier to use.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Clients communicate with the subsystem by sending requests to Facade,
+which forwards them to the appropriate subsystem object(s).  Although
+the subsystem objects perform the actual work, the facade may have to
+do work of its own to translate its interface to subsystem
+interfaces.</LI><P></P>
+<LI>Clients that use the facade don't have to access its subsystem objects
+directly.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/facade.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Facade</B> (Compiler)<P></P>
+<UL><LI>knows which subsystem classes are responsible for a request.</LI><P></P>
+<LI>delegates client requests to appropriate subsystem objects.</LI></UL><P></P>
+
+<LI><B>subsystem classes</B> (Scanner, Parser, ProgramNode, etc.)<P></P>
+<UL><LI>implement subsystem functionality.</LI><P></P>
+<LI>handle work assigned by the Facade object.</LI><P></P>
+<LI>have no knowledge of the facade; that is, they keep no
+    references to it.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Facade design pattern is not known by another name.</P>
+
+</BODY>
+
+</HTML>

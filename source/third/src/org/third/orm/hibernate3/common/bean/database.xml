@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>oracle config</comment>
+	<entry key="db.oracle.host">192.168.120.10</entry>
+	<entry key="db.oracle.port">1521</entry>
+	<entry key="db.oracle.sid">EMS7100S</entry>
+	<entry key="db.oracle.user">emsinstall</entry>
+	<entry key="db.oracle.password">tellabs</entry>
+	<entry key="db.oracle.url">jdbc:oracle:thin:@192.168.120.10:1521:EMS7100S</entry>
+</properties>

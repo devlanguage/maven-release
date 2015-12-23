@@ -1,0 +1,287 @@
+# @(#)file      README 
+# @(#)author    Sun Microsystems, Inc. 
+# @(#)version   1.5 
+# @(#)lastedit  04/04/16 
+#
+# Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+# SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+
+# ==============================================================================
+#
+# Example of using JNDI/LDAP as a Lookup service - registering and looking up
+# an RMI Connector (IIOP/JRMP) and a JMXMP Connector
+#
+# ==============================================================================
+#
+# Requirements:
+#
+# Before running this example you will have to:
+# ---------------------------------------------
+#
+# * Get access to (or install & start) an LDAP directory server that
+#   will implement the lookup service.
+# * Make sure the Java Schema (RFC 2713: http://www.ietf.org/rfc/rfc2713.txt)
+#   is known by that server
+# * Update the directory server with the JSR 160 LDAP Schema 
+#   - 60jmx-schema.ldif file provided
+#   This ldif file corresponds to the schema described in jmx-schema.txt 
+#   and can be copied as is in the config/schema directory of 
+#   the Sun ONE Directory Server.
+# * Make sure you have write access to the server so that you can
+#   create contexts in which the server will register its URL.
+# 
+# The names used in this example make the assumption that you
+# have created a new suffix, a database, and a root node (e.g. dc=Test)
+# for the purpose of the example. You may however use any names or location
+# you want - just be sure to provide the correct names & URLs
+# when starting the Server and Client examples.
+#
+# In addition, if you wish to use an external directory for the  RMI JMX
+# Connectors (URLs of the form jmx:service:[rmi|iiop]:/host:port/jndi/jndi-url)
+# then:
+#
+#   o If you wish to use an RMI registry in conjunction with the RMI/JRMP 
+#     JMX Connector you will have to start a rmiregistry (see below).
+#
+#   o If you wish to use CORBA Naming Service in conjunction with the RMI/IIOP 
+#     JMX Connector you will have to start an ORB daemon (see below).
+#
+#   o If you wish to use LDAP in conjunction with the RMI JMX Connectors
+#     you will have to install/setup a directory server (you can use the
+#     same server as that used for lookup, or another one)
+#
+# In order to compile & run the example, make a copy of this
+# README file, update the variables to match your local installation,
+# and then simply cut & paste all variable definitions & commands 
+# as needed into a terminal window.
+#
+# Note that this README makes the assumption that you are running
+# UNIX, you are familiar with LDAP, with the JSR 160 specification
+# (in particular JMXServiceURL and Lookup), with JNDI,
+# and with Bourne or Korn shell syntax.
+#
+# All variable assignations and commands below are defined using 
+# UNIX Korn shell syntax.
+#
+# If you're not running UNIX and the Korn shell you are expected
+# to be able to adapt these commands to your favorite OS/shell
+# environment.
+#
+
+# Update & define the following variables to match your local installation:
+#
+JDMK_HOME=@INSTALL_HOME_FOR_JDMK@
+JDMK_LIB=$JDMK_HOME/lib
+
+classp=$JDMK_LIB/jmx.jar:$JDMK_LIB/jmxremote.jar:
+$JDMK_LIB/jmxremote_optional.jar
+
+# JMX and JMX Remote API (mandatory) are integrated into J2SE 1.5 so
+#
+# classp=${JDMK_LIB}/jmxremote_optional.jar
+
+#-------------------------------------------------------------------------------
+# The directory server must be started first.
+# On Solaris 9 you should first login as root and execute
+# the following commands:
+
+# Setup an LDAP server (you don't need to do this if the
+# server has already been configured).
+#
+/usr/sbin/directoryserver setup
+
+# Stop the server, copy the jmx schema, start the server
+#
+/usr/sbin/directoryserver stop
+cp 60jmx-schema.ldif /var/ds5/slapd-<hostname>/config/schema
+/usr/sbin/directoryserver start
+
+# Start the console, and if needed create a new suffix, a database,
+# and a root node (e.g. dc=Test)
+#
+/usr/sbin/directoryserver startconsole
+
+# NOTE: if you are not using Solaris 9 Directory Server you will have
+#       to make sure the Java Schema (RFC 2713: 
+#       http://www.ietf.org/rfc/rfc2713.txt) is known by that server
+
+#-------------------------------------------------------------------------------
+# Start an rmiregistry (don't forget to put the JMX & JMX Remote API jars in its
+# classpath)
+#
+export CLASSPATH=$JDMK_LIB/jmx.jar:$JDMK_LIB/jmxremote.jar ; rmiregistry 9999 &
+
+# JMX and JMX Remote API (mandatory) are integrated into J2SE 1.5 so
+#
+# rmiregistry 9999 &
+
+#-------------------------------------------------------------------------------
+# Start an ORB daemon:
+#
+rm -rf ./orb.db
+orbd -ORBInitialPort 7777 &
+
+#-------------------------------------------------------------------------------
+# Compile Server.java and Client.java
+#
+# * Server.java: creates an MBeanServer, creates and starts an
+#                RMI connector (JRMP/IIOP) or a JMXMP connector
+# * Client.java: looks up a connector in JNDI
+#                list all MBeans.
+
+javac -d . -classpath $classp Server.java Client.java
+
+#-------------------------------------------------------------------------------
+# LDAP parameters:
+#
+
+# Supply the appropriate hostname below, and define this variable:
+#
+ldaphost=<host_name>
+
+# Supply the appropriate port number below, and define this variable:
+#
+ldapport=6666
+
+# Supply the appropriate principal below, and define this variable:
+#
+principal="cn=Directory Manager"
+
+# Supply the appropriate credentials below, and define this variable:
+#
+credentials=
+
+# Supply the appropriate root under which the Server will try
+# to register its URL...
+#
+provider="ldap://$ldaphost:$ldapport/dc=Test"
+
+#-------------------------------------------------------------------------------
+# JNDI URLs
+#
+jndirmi="rmi://localhost:9999"
+jndiiiop="iiop://localhost:7777"
+jndildap="ldap://$ldaphost:$ldapport"
+
+#-------------------------------------------------------------------------------
+# Below we illustrate the different JMX Connector Servers
+# which you can choose to start. 
+# There are seven cases labelled (a) to (g):
+#
+#   * RMI Connectors
+#       + over JRMP
+#           - without any external directory (a)
+#           - using rmiregistry as external directory (b)
+#           - using LDAP as external directory (c)
+#       + over IIOP
+#           - without any external directory (d)
+#           - using CORBA Naming Service as external directory (e)
+#           - using LDAP as external directory (f)
+#   * JMXMP Connector (g)
+
+# NOTE-1: As defined in section 6.1 "Terminology" of the "JMX Remote API 1.0 
+# Specification" document, an agent is composed of one MBean Server and of 
+# one or more Connector Servers. There can be several agents running in one JVM.
+# For flexibility of this example, the jndi.Server class creates an agent which
+# is composed of one MBean Server and of only one Connector Server. The class
+# jndi.Server decides which type of Connector Server to create depending on the
+# value given to the "url" system property when you start the example.
+
+# NOTE-2: The value of the "agent.name" system property is the value that the 
+# jndi.Server class will give to the "AgentName" lookup attribute when it 
+# registers the connector's URL in the lookup service. As defined in Table 6.1
+# "Lookup attributes for connectors" of the "JMX Remote API 1.0 Specification" 
+# document: the "AgentName" lookup attribute is a simple name used to identify 
+# the *AGENT* to which the connector is attached. It makes it possible to 
+# search, with a query to the lookup service, for all the connectors registered
+# by a given agent.
+
+# (a) You can start an agent with an RMI Connector Server over JRMP
+#     without using any external directory
+#
+java -classpath .:$classp -Ddebug=true \
+     -Dagent.name=test-server-a \
+     -Durl="service:jmx:rmi://" \
+     -Djava.naming.provider.url="$provider" \
+     -Djava.naming.security.principal="$principal" \
+     -Djava.naming.security.credentials="$credentials" \
+     jndi.Server &
+
+# (b) Or you can start an agent with an RMI Connector Server over JRMP
+#     using rmiregistry as an external directory
+#     (Start rmiregistry first, if not yet started)
+#
+java -classpath .:$classp -Ddebug=true \
+     -Dagent.name=test-server-b \
+     -Durl="service:jmx:rmi:///jndi/${jndirmi}/server" \
+     -Djava.naming.provider.url="$provider" \
+     -Djava.naming.security.principal="$principal" \
+     -Djava.naming.security.credentials="$credentials" \
+     jndi.Server &
+
+# (c) Or you can start an agent with an RMI Connector Server over JRMP
+#     using LDAP as an external directory
+#     (First start an LDAP server and create the dc=Test suffix)
+#
+java -classpath .:$classp -Ddebug=true \
+     -Dagent.name=test-server-c \
+     -Durl="service:jmx:rmi:///jndi/${jndildap}/cn=x,dc=Test" \
+     -Djava.naming.provider.url="$provider" \
+     -Djava.naming.security.principal="$principal" \
+     -Djava.naming.security.credentials="$credentials" \
+     jndi.Server &
+
+# (d) Or you can start an agent with an RMI Connector Server over IIOP
+#     without using any external directory
+#
+java -classpath .:$classp -Ddebug=true \
+     -Dagent.name=test-server-d \
+     -Durl="service:jmx:iiop://" \
+     -Djava.naming.provider.url="$provider" \
+     -Djava.naming.security.principal="$principal" \
+     -Djava.naming.security.credentials="$credentials" \
+     jndi.Server &
+
+# (e) Or you can start an agent with an RMI Connector Server over IIOP
+#     using CORBA Naming Service as an external directory
+#     (Start ORBD first if not yet started).
+#
+java -classpath .:$classp -Ddebug=true \
+     -Dagent.name=test-server-e \
+     -Durl="service:jmx:iiop:///jndi/${jndiiiop}/server" \
+     -Djava.naming.provider.url="$provider" \
+     -Djava.naming.security.principal="$principal" \
+     -Djava.naming.security.credentials="$credentials" \
+     jndi.Server &
+
+# (f) Or you can start an agent with an RMI Connector Server over IIOP
+#     using LDAP as an external directory
+#     (First start an LDAP server and create the dc=Test suffix) 
+#
+java -classpath .:$classp -Ddebug=true \
+     -Dagent.name=test-server-f \
+     -Durl="service:jmx:iiop:///jndi/${jndildap}/cn=x,dc=Test" \
+     -Djava.naming.provider.url="$provider" \
+     -Djava.naming.security.principal="$principal" \
+     -Djava.naming.security.credentials="$credentials" \
+     jndi.Server &
+
+# (g) Or you can start an agent with a JMXMP Connector Server 
+#
+java -classpath .:$classp -Ddebug=true \
+     -Dagent.name=test-server-g \
+     -Durl="service:jmx:jmxmp://" \
+     -Djava.naming.provider.url="$provider" \
+     -Djava.naming.security.principal="$principal" \
+     -Djava.naming.security.credentials="$credentials" \
+     jndi.Server &
+
+# Once you have started one or more agents, you can start the Client.
+#
+java -classpath .:$classp -Ddebug=true \
+     -Djava.naming.provider.url="$provider" \
+     -Djava.naming.security.principal="$principal" \
+     -Djava.naming.security.credentials="$credentials" \
+     jndi.Client
+
+#-------------------------------------------------------------------------------

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="User">
+    <typeAlias alias="userInfo" type="com.wysm.netstar.domain.UserInfo" />
+    <select id="getUserInfoByUserId" resultClass="userInfo" parameterClass="int">
+        SELECT USERID, REGDATE, LASTLOGDATE, LOGTIMES FROM HI_USER_INFO WHERE USERID = #userId#
+    </select>
+    <update id="updateUserInfo" parameterClass="userInfo">
+        UPDATE HI_USER_INFO SET REGDATE= #regDate#, LASTLOGDATE=#lastLogDate#, LOGTIMES=#logTimes#
+        WHERE USERID = #userId#
+    </update>
+    <insert id="insertUserInfo" parameterClass="userInfo">
+        INSERT INTO HI_USER_INFO (USERID, REGDATE, LASTLOGDATE, LOGTIMES) VALUES (#userId#,
+        #regDate#,#lastLogDate#,#logTimes#)
+    </insert>
+    <delete id="deleteUserInfo" parameterClass="int">
+        DELETE FROM HI_USER_INFO WHERE USERID=#userId#
+    </delete>
+</sqlMap>

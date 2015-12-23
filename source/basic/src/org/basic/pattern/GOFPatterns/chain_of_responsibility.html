@@ -1,0 +1,44 @@
+<HTML>
+
+<HEAD><TITLE>Chain of Responsibility</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Avoid coupling the sender of a request to its receiver by giving more
+than one object a chance to handle the request.  Chain the receiving
+objects and pass the request along the chain until an object
+handles it.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>When a client issues a request, the request propagates along the chain
+until a ConcreteHandler object takes responsibility for handling it.
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/chain094.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Handler</B> (HelpHandler)<P></P>
+<UL><LI>defines an interface for handling requests.<P></P>
+<LI>(optional) implements the successor link.</UL><P></P>
+
+<LI><B>ConcreteHandler</B> (PrintButton, PrintDialog)<P></P>
+<UL><LI>handles requests it is responsible for.<P></P>
+<LI>can access its successor.<P></P>
+<LI>if the ConcreteHandler can handle the request, it does so;
+    otherwise it forwards the request to its successor.</UL><P></P>
+
+<LI><B>Client</B><P></P>
+<UL><LI>initiates the request to a ConcreteHandler object on the chain.</UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Chain of Responsibility design pattern is not known by another name.</P>
+
+</BODY>
+
+</HTML>

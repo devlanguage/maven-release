@@ -1,0 +1,56 @@
+<HTML>
+
+<HEAD><TITLE>Composite</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Compose objects into tree structures to represent part-whole
+hierarchies.  Composite lets clients treat individual objects and
+compositions of objects uniformly.</P>
+
+<H2>Solution Overview</H2>
+
+<UL><LI>Clients use the Component class interface to interact with objects in
+the composite structure. If the recipient is a Leaf, then the request
+is handled directly.  If the recipient is a Composite, then it usually
+forwards requests to its child components, possibly performing
+additional operations before and/or after forwarding.</LI></UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/compo072.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Component</B> (Graphic)<P></P>
+<UL><LI>declares the interface for objects in the composition.</LI><P></P>
+<LI>implements default behavior for the interface
+    common to all classes, as appropriate.</LI><P></P>
+<LI>declares an interface for accessing and managing its child
+    components.</LI><P></P>
+<LI>(optional) defines an interface for accessing a component's
+    parent in the recursive structure, and implements it if that's
+    appropriate.</LI></UL><P></P>
+
+<LI><B>Leaf</B> (Rectangle, Line, Text, etc.)<P></P>
+<UL><LI>represents leaf objects in the composition. A leaf has no
+    children.</LI><P></P>
+<LI>defines behavior for primitive objects in the composition.</LI></UL><P></P>
+
+<LI><B>Composite</B> (Picture)<P></P>
+<UL><LI>defines behavior for components having children.</LI><P></P>
+<LI>stores child components.</LI><P></P>
+<LI>implements child-related operations in the Component interface.</LI></UL><P></P>
+
+<LI><B>Client</B><P></P>
+<UL><LI>manipulates objects in the composition through the
+    Component interface.</LI></UL>
+
+</UL>
+
+<H2>Classification</H2>
+<P>The Composite design pattern is not known by another name.</P>
+
+</BODY>
+
+</HTML>

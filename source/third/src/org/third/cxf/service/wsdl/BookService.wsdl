@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BookService" targetNamespace="http://service.cxf.third.org/Book/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:tns="http://service.cxf.third.org/Book/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/">
+ <wsdl:types>
+  <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://service.cxf.third.org/Book/">
+   <xsd:complexType name="BookType">
+    <xsd:sequence>
+     <xsd:element name="bookId" type="xsd:long"></xsd:element>
+     <xsd:element name="bookName" type="xsd:string"></xsd:element>
+    </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:element name="getBookByName">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="bookName" type="xsd:string"></xsd:element>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="getBookByNameResponse">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="book" type="tns:BookType"></xsd:element>
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:schema>
+ </wsdl:types>
+ <wsdl:message name="getBookByNameRequest">
+  <wsdl:part name="parameters" element="tns:getBookByName"></wsdl:part>
+ </wsdl:message>
+ <wsdl:message name="getBookByNameResponse">
+  <wsdl:part name="parameters" element="tns:getBookByNameResponse"></wsdl:part>
+ </wsdl:message>
+ <wsdl:portType name="IBookService">
+  <wsdl:operation name="getBookByName">
+   <wsdl:input message="tns:getBookByNameRequest"></wsdl:input>
+   <wsdl:output message="tns:getBookByNameResponse"></wsdl:output>
+  </wsdl:operation>
+ </wsdl:portType>
+ <wsdl:binding name="BookServiceBinding_SoapRpcLiteral" type="tns:IBookService">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+  <wsdl:operation name="getBookByName">
+   <soap:operation soapAction="http://service.cxf.third.org/Book/getBookByName" />
+   <wsdl:input>
+    <soap:body use="literal" />
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal" />
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:binding name="BookServiceBinding_SoapDocumentLiteral" type="tns:IBookService">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+  <wsdl:operation name="getBookByName">
+   <soap:operation soapAction="http://service.cxf.third.org/Book/getBookByName" />
+   <wsdl:input>
+    <soap:body use="literal" />
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal" />
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ <!-- <wsdl:binding name="BookServiceBinding_SoapRpcEncoded" type="tns:IBookService"> <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" 
+  /> <wsdl:operation name="getBookByName"> <soap:operation soapAction="http://service.cxf.third.org/Book/getBookByName" /> 
+  <wsdl:input> <soap:body use="encoded" namespace="http://service.cxf.third.org/Book/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+  /> </wsdl:input> <wsdl:output> <soap:body use="encoded" namespace="http://service.cxf.third.org/Book/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+  /> </wsdl:output> </wsdl:operation> </wsdl:binding> -->
+ <wsdl:binding name="BookServiceBinding_HttpGet" type="tns:IBookService">
+  <http:binding verb="GET" />
+  <wsdl:operation name="getBookByName">
+   <http:operation location="/getBookByName" />
+   <wsdl:input>
+    <http:urlEncoded />
+   </wsdl:input>
+   <wsdl:output>
+    <mime:content type="text/xml" />
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:binding name="BookServiceBinding_HttpPost" type="tns:IBookService">
+  <http:binding verb="POST" />
+  <wsdl:operation name="getBookByName">
+   <http:operation location="/getBookByName" />
+   <wsdl:input>
+    <mime:content type="application/x-www-form-urlencoded" />
+   </wsdl:input>
+   <wsdl:output>
+    <mime:content type="text/xml" />
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:service name="BookService">
+  <wsdl:port name="BookServicePort_SoapDocumentLiteral" binding="tns:BookServiceBinding_SoapDocumentLiteral">
+   <soap:address location="http://localhost:9001/cxf" />
+  </wsdl:port>
+  <wsdl:port name="BookServicePort_SoapRpcLiteral" binding="tns:BookServiceBinding_SoapRpcLiteral">
+   <soap:address location="http://localhost:9002/cxf" />
+  </wsdl:port>
+  <!-- <wsdl:port name="BookServiceBinding_SoapRpcEncoded" binding="tns:BookServiceBinding_SoapRpcEncoded"> <soap:address 
+   location="http://localhost:9003/cxf" /> </wsdl:port> -->
+  <wsdl:port name="BookServicePort_HttpGet" binding="tns:BookServiceBinding_HttpGet">
+   <http:address location="http://localhost:9004/cxf" />
+  </wsdl:port>
+  <wsdl:port name="BookServicePort_HttpPost" binding="tns:BookServiceBinding_HttpPost">
+   <http:address location="http://localhost:9005/cxf" />
+  </wsdl:port>
+ </wsdl:service>
+</wsdl:definitions>

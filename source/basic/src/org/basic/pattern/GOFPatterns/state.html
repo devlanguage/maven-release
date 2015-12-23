@@ -1,0 +1,53 @@
+<HTML>
+
+<HEAD><TITLE>State</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Allow an object to alter its behavior when its internal state changes.
+The object will appear to change its class.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Context delegates state-specific requests to the current ConcreteState
+object.</LI><P></P>
+
+<LI>A context may pass itself as an argument to the State object
+handling the request.  This lets the State object access
+the context if necessary.</LI><P></P>
+
+<LI>Context is the primary interface for clients. Clients can configure a
+context with State objects. Once a context is configured, its clients don't 
+have to deal with the State objects directly. </LI><P></P>
+
+<LI>Either Context or the ConcreteState subclasses can decide which state
+succeeds another and under what circumstances.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/state.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Context</B> (TCPConnection)</LI><P></P>
+<UL><LI>defines the interface of interest to clients.<P><!-- extra space --></P>
+<LI>maintains an instance of a ConcreteState subclass that defines the
+current state.</UL><P></P>
+
+<LI><B>State</B> (TCPState)</LI><P></P>
+<UL><LI>defines an interface for encapsulating the behavior associated with a
+particular state of the Context.</LI></UL><P></P>
+
+<LI><B>ConcreteState subclasses</B> (TCPEstablished, TCPListen, TCPClosed)</LI><P></P>
+<UL><LI>each subclass implements a behavior associated with a state of
+the Context.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The State design pattern is also known as Objects for States.</P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee">
+  <display-name>stockquote</display-name>
+  <description>stockquote</description>
+  <listener>
+    <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>stockquote</servlet-name>
+    <display-name>stockquote</display-name>
+    <description>JAX-WS endpoint - stockquote</description>
+    <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>stockquote</servlet-name>
+    <url-pattern>/stockquote</url-pattern>
+  </servlet-mapping>
+  <session-config>
+    <session-timeout>60</session-timeout>
+  </session-config>
+</web-app>

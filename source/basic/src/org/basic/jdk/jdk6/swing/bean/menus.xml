@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus>
+	<hierarchy>
+		<level1 identifier="level1_File" name="File"
+			isMenuLevel="true">
+			<level2 identifier="level2_New" name="New"
+				isMenuLevel="true">
+				<level3 identifier="level3_Project" name="Project"
+					attachDelimiter="true" isMenuLevel="true">
+					<level4 identifer="level4_Java" name="Java"></level4>
+				</level3>
+
+				<level3 identifier="level3_Package" name="Package" />
+				<level3 identifier="level3_Class" name="Class" />
+				<level3 identifier="level3_Interface" name="Interface"
+					attachDelimiter="true" />
+				<level3 identifier="level3_Enum" name="Enum" />
+			</level2>
+			<level2 identifier="level2_Open File" name="Open File"
+				attachDelimiter="true" />
+
+			<level2 identifier="level2_Close" name="Close" />
+			<level2 identifier="level2_CloseAll" name="CloseAll"
+				attachDelimiter="true" />
+
+			<level2 identifier="level2_Save" name="Save" />
+			<level2 identifier="level2_SaveAs" name="SaveAs" />
+			<level2 identifier="level2_SaveAll" name="SaveAll" />
+			<level2 identifier="level2_Revert" name="Revert"
+				attachDelimiter="true" />
+
+			<level2 identifier="level2_Exit" name="Exit" />
+		</level1>
+		<level1 identifier="level1_Edit" name="Edit"
+			isMenuLevel="true">
+			<level2 identifier="level2_Undo Text Change"
+				name="Undo Text Change" />
+		</level1>
+	</hierarchy>
+</menus>

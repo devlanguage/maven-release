@@ -1,0 +1,46 @@
+<HTML>
+
+<HEAD><TITLE>Iterator</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Provide a way to access the elements of an aggregate object
+sequentially without exposing its underlying representation.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>A ConcreteIterator keeps track of the current object in the
+aggregate and can compute the succeeding object in the
+traversal.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/iterator.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Iterator</B></LI><P></P>
+<UL><LI>defines an interface for accessing and traversing elements.</UL><P></P>
+
+<LI><B>ConcreteIterator</B><P></P>
+<UL><LI>implements the Iterator interface.</LI><P><!-- extra space --></P>
+
+<LI>keeps track of the current position in the traversal of
+    the aggregate.</LI></UL><P></P>
+
+<LI><B>Aggregate</B><P></P>
+<UL><LI>defines an interface for creating an Iterator object.</LI></UL><P></P>
+
+<LI><B>ConcreteAggregate</B></LI><P></P>
+<UL><LI>implements the Iterator creation interface to return an
+    instance of the proper ConcreteIterator.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Iterator design pattern is also known as the Cursor.</P>
+
+</BODY>
+
+</HTML>

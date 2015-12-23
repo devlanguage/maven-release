@@ -1,0 +1,45 @@
+<HTML>
+
+<HEAD><TITLE>Decorator</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Attach additional responsibilities to an object dynamically. 
+Decorators provide a flexible alternative to subclassing for 
+extending functionality.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Decorator forwards requests to its Component object. It may optionally
+perform additional operations before and after forwarding the request.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/decor064.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Component</B> (VisualComponent)</LI><P></P>
+<UL><LI>defines the interface for objects that can have
+    responsibilities added to them dynamically.</LI></UL><P></P>
+
+<LI><B>ConcreteComponent</B> (TextView)</LI><P></P>
+<UL><LI>defines an object to which additional responsibilities
+    can be attached.</LI></UL><P></P>
+
+<LI><B>Decorator</B></LI><P></P>
+<UL><LI>maintains a reference to a Component object and defines an interface
+    that conforms to Component's interface.</LI></UL><P></P>
+
+<LI><B>ConcreteDecorator</B> (BorderDecorator, ScrollDecorator)</LI><P></P>
+<UL><LI>adds responsibilities to the component.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Decorator design pattern is also known as the Wrapper.</P>
+
+</BODY>
+
+</HTML>

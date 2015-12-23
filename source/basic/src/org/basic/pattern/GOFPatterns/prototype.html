@@ -1,0 +1,39 @@
+<HTML>
+
+<HEAD><TITLE>Prototype</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Specify the kinds of objects to create using a 
+prototypical instance, and create new objects by 
+copying this prototype.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>A client asks a prototype to clone itself.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/proto018.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Prototype</B> (Graphic)<P></P>
+<UL><LI>declares an interface for cloning itself.</UL><P></P>
+
+<LI><B>ConcretePrototype</B> (Staff, WholeNote, HalfNote)<P></P>
+<UL><LI>implements an operation for cloning itself.</UL><P></P>
+
+<LI><B>Client</B> (GraphicTool)<P></P>
+<UL><LI>creates a new object by asking a prototype to clone itself.</UL>
+</UL>
+
+<H2>Classification</H2>
+
+<P>The Prototype design pattern is not known by another name.</P>
+
+</BODY>
+
+</HTML>

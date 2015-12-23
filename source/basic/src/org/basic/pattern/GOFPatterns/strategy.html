@@ -1,0 +1,54 @@
+<HTML>
+
+<HEAD><TITLE>Strategy</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Define a family of algorithms, encapsulate each one, and make them
+interchangeable.  Strategy lets the algorithm vary independently from
+clients that use it.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Strategy and Context interact to implement the chosen algorithm.  A
+context may pass all data required by the algorithm to the strategy
+when the algorithm is called. Alternatively, the context can pass
+itself as an argument to Strategy operations. That lets the strategy
+call back on the context as required.</LI><P></P>
+
+<LI>A context forwards requests from its clients to its strategy.  Clients
+usually create and pass a ConcreteStrategy object to the context;
+thereafter, clients interact with the context exclusively. There is
+often a family of ConcreteStrategy classes for a client to choose
+from.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/strategy.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Strategy</B> (Compositor)</LI><P></P>
+<UL><LI>declares an interface common to all supported algorithms.
+    Context uses this interface to call the
+    algorithm defined by a ConcreteStrategy.</LI></UL><P></P>
+
+<LI><B>ConcreteStrategy</B> (SimpleCompositor, TeXCompositor,
+ArrayCompositor)</LI><P></P>
+<UL><LI>implements the algorithm using the Strategy interface.</LI></UL><P></P>
+
+<LI><B>Context</B> (Composition)<P></P>
+<UL><LI>is configured with a ConcreteStrategy object.</LI><P><!-- extra space --></P>
+
+<LI>maintains a reference to a Strategy object.</LI><P><!-- extra space --></P>
+<LI>may define an interface that lets Strategy access its data.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Strategy design pattern is also known as the Policy.</P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,47 @@
+<HTML>
+
+<HEAD><TITLE>Factory Method</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Define an interface for creating an object, but let subclasses decide 
+which class to instantiate. Factory Method lets a class defer instantiation to subclasses.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Creator relies on its subclasses to define the factory method so that 
+it returns an instance of the appropriate ConcreteProduct.</LI><P></P>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/fmethod.gif">
+
+<H2>Participants</H2>
+
+<UL>
+<LI><B>Product</B> (Document)<P></P>
+<UL><LI>defines the interface of objects the factory method creates.</LI></UL><P></P>
+
+<LI><B>ConcreteProduct</B> (MyDocument)<P></P>
+<UL><LI>implements the Product interface.</LI></UL><P></P>
+
+<LI><B>Creator</B> (Application)<P></P>
+<UL><LI>declares the factory method, which returns an object of type
+    Product.  Creator may also define a default
+    implementation of the factory method that returns a default
+    ConcreteProduct object.</LI><P></P>
+
+<LI>may call the factory method to create a Product object.</LI></UL><P></P>
+
+<LI><B>ConcreteCreator</B> (MyApplication)<P></P>
+<UL><LI>overrides the factory method to
+    return an instance of a ConcreteProduct.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Factory Method design pattern is also known as the Virtual Constructor.</P>
+
+</BODY>
+
+</HTML>

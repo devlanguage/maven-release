@@ -1,0 +1,18 @@
+Strategy:
+    Validator Framework
+Command:
+        
+Singleton:
+    Action:
+Facade:
+Session Facade:
+    MessageResource
+Decorator:
+    ActionMapping
+Compistor View:
+    TagLib,
+Service
+ServiceLocator:
+    Find DB conection basd datasourc information
+ValueObject: 
+    ActionForm(Nest other JavaBean--ValueObject Assember), ActionError     ActionMessages           

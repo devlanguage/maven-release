@@ -1,0 +1,106 @@
+
+Activity Summary	 
+New Features for PowerPoint, Publisher, and Access in Office 2010	
+
+Expand AllExpand All    Collapse AllCollapse All
+ 	
+Description and Notes
+Below are the details about this activity including activity description, user notes and instructor notes.
+	Collapse
+Description:
+Since the release of the Microsoft Office 2003 suite of products, PowerPoint, Publisher, and Access have all undergone significant changes �C both to the interface and the range of available features. The Fluent User Interface (UI), now available in all products in Office 2010, gives a consistent look and feel across applications. PowerPoint 2010 aims to make presentation creation more efficient and presentations themselves more visually impressive. Publisher has undergone similar changes, enhancing the creation of high-quality publications. Access 2010 simplifies database creation, makes data accessible from any location, and provides enhanced navigation controls for accessing data. This course covers the new features of PowerPoint 2010, Publisher 2010, and Access 2010 including changes to the interface and key functional improvements and enhancements.
+ 
+ 	
+Additional Information
+Below are the additional details about this activity such as facility, location and so on.
+	Expand
+ 
+ 	
+Category Details
+This activity is organized into the categories below.
+	Expand
+ 
+??
+１．连接oracle８／８i／９i （thin模式）
+
+Class.forName("oracle.jdbc.driver.OracleDriver");
+String url="jdbc:oracle:thin:@192.168.0.1:1521:orcl";
+String user="test";
+String password="test";
+Connection conn= DriverManager.getConnection(url,user,password);
+oracle.jdbc.driver.OracleDriver:驱动程序类的名称
+jdbc:oracle:thin:使用thin模式连接
+192.168.0.1:数据库的ＩＰ地址
+1521:数据库服务的端口号
+orcl:数据库的ＳＩＤ
+２．连接ＳＱＬ　server　７．０／２０００
+
+Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver");
+String url="jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=mydb";
+String user="test";
+String password="test";
+Connection conn= DriverManager.getConnection(url,user,password);
+com.microsoft.jdbc.sqlserver.SQLServerDriver:驱动程序类的名称
+localhost:数据库地址
+１４３３：数据库服务的端口号
+mydb：数据库名称
+３．连接mysql
+
+Class.forName("org.git.mm.mysql.Driver");
+String url="jdbc:mysql://localhost/myDB?user=soft&password=soft1234&useUnicode=true&characterEncoding=8859_1";
+Connection conn= DriverManager.getConnection(url);
+org.git.mm.mysql.Driver:驱动程序类的名称
+soft：数据库用户名
+soft1234：数据库密码
+myDB:数据库名称
+４．连接ＤＢ２
+
+Class.forName("com.ibm.db2.jdbc.app.DB2Driver");
+String url="jdbc:db2://127.0.0.1:5000/sample";
+String user="test";
+String password="test";
+Connection conn= DriverManager.getConnection(url,user,password);
+com.ibm.db2.jdbc.app.DB2Driver：驱动程序类的名称
+5000:数据库服务的端口号
+127.0.0.1:数据库ＩＰ地址
+sample:数据库名称
+５．连接Ｓybase
+
+Class.forName("com.sybase.jdbc.SybDriver");
+String url="jdbc:sybase:Tds:localhost:5007/myDB";
+Propeties sysProps=System.getProperties();
+SysProps.put("user","userid");
+SysProps.put("password","user_password");
+Connection conn= DriverManager.getConnection(url,SysProps);
+com.sybase.jdbc.SybDriver:驱动程序类的名称
+5007:数据库的服务端口号
+myDB:数据库的名称
+userid:访问数据库的用户名
+user_password:访问数据库的密码
+６．连接Ｉnformix
+
+Class.forName("com.informix.jdbc.IfxDriver");
+String url="jdbc:informix-sqli://123.45.67.89:1533/myDB:INFORMIXSERVER=myserver;user=testuser;password=testpassword";
+Connection conn= DriverManager.getConnection(url,);
+com.informix.jdbc.IfxDriver：驱动程序类的名称
+123.45.67.89：数据库地址
+1533：数据库服务端口号
+myDB：数据库名称
+myserver：数据库服务器的名称
+testuser：访问数据库的用户名
+testpassword：访问数据库的密码
+７．连接ＰostgreＳＱＬ
+
+Class.forName("org.postgresql.Driver");
+String url="jdbc:postgresql://localhost/myDB";
+String user="test";
+String password="test";
+Connection conn= DriverManager.getConnection(url,user,password);
+８．连接Ａcess
+
+Class.forName("sun.jdbc,odbc.JdbcOdbcDriver");
+String url="jdbc:odbc:Driver={Microsoft   Access  Driver (*.mdb)};DBQ=""+application.geyRealPath("/Data/ReportDemo.mdb");
+String user="test";
+String password="test";
+Connection conn= DriverManager.getConnection(url,user,password);
+/Data/ReportDemo.mdb:数据库文件

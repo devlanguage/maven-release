@@ -1,0 +1,130 @@
+1、JVM中单个字符占用的字节长度跟编码方式有关，而默认编码方式又跟平台是一一对应的或说平台决定了默认字符编码方式；
+
+2、对于单个字符：ISO-8859-1单字节编码，GBK双字节编码，UTF-8三字节编码；因此中文平台(中文平台默认字符集编码GBK)下一个中文字符占2个字节，而英文平台(英文平台默认字符集编码Cp1252(类似于ISO-8859-1))。
+
+3、getBytes()、getBytes(encoding)函数的作用是使用系统默认或者指定的字符集编码方式，将字符串编码成字节数组。
+
+编码方式决定字节长度；在中文平台下，默认的字符集编码是GBK，此时如果使用getBytes()或getBytes("GBK")，则按照GBK的编码规则将每个中文字符用2个byte表示。所以我们看到"中文"最终GBK编码结果就是： -42 -48 -50 -60 。-42和-48代表了"中"字，而"-50"和"-60"则代表了"文"字。
+
+在中文平台下，如果指定的字符集编码是UTF-8，那么按照UTF-8对中文的编码规则：每个中文用3个字节表示，那么"中文"这两个字符最终被编码成：-28 -72 -83、-26 -106 -121两组。每3个字节代表一个中文字符。
+
+在中文平台下，如果指定的字符集编码是ISO-8859-1，由于此字符集是单字节编码，所以使用getBytes("ISO-8859-1")时，每个字符只取一个字节，每个汉字只取到了一半的字符。另外一半的字节丢失了。由于这一半的字符在字符集中找不到对应的字符，所以默认使用编码63代替，也就是?。
+
+在英文平台下，默认的字符集编码是Cp1252(类似于ISO-8859-1)，如果使用GBK、UTF-8进行编码，得到的字节数组依然是正确的(GBK4个字节，UTF-8是6个字节)。因为在JVM内部是以Unicode存储字符串的，使用getBytes(encoding)会让JVM进行一次Unicode到指定编码之间的转换。对于GBK，JVM依然会转换成4个字节，对于UTF-8，JVM依然会转换成6个字节。但是对于ISO-8859-1，则由于无法转换(2个字节--->1个字节，截取了一半的字节)，所以转换后的结果是错误的。
+
+
+在中文平台下，默认的字符集编码是GBK，于是content.getBytes()得到的是什么呢？就是下面这4个字节：
+
+byte[0] = -42 hex string = ffffffd6
+
+byte[1] = -48 hex string = ffffffd0
+
+byte[2] = -50 hex string = ffffffce
+
+byte[3] = -60 hex string = ffffffc4
+
+如果新的encoding是GBK，那么经过解码后，由于一个字符用2个字节表示。于是最终的结果就是：
+
+char[0]='中' --- byte[0] + byte[1]
+
+char[1]='文' --- byte[2] + byte[3]
+
+如果新的encoding是ISO-8859-1，那么经过解码后，由于一个字符用1个字节表示，于是原来本应该2个字节一起解析的变成单个字节解析，每个字节都代表了一个汉字字符的一半。这一半的字节在ISO-8859-1中找不到对应的字符，就变成了"?"了，最终的结果：
+
+char[0]='?' ---- byte[0]
+
+char[1]='?' ---- byte[1]
+
+char[2]='?' ---- byte[2]
+
+char[3]='?' ---- byte[3]
+
+如果新的encoding是UTF-8，那么经过解码后，由于一个字符用3个字节表示，于是原来4个字节的数据无法正常的解析成UTF-8的数据，最终的结果也是每一个都变成"?"。
+
+char[0]='?' ---- byte[0]
+
+char[1]='?' ---- byte[1]
+
+char[2]='?' ---- byte[2]
+
+char[3]='?' ---- byte[3]
+
+如果是在英文平台下，由于默认的编码方式是Cp1252，于是content.getBytes()得到的字节都是被截去一半的残留字符，所以我们看到在英文平台下，不论指定的encoding是GBK、UTF-8，其结果和ISO-8859-1都是一样的。
+
+记住：这个方法再次证明了String的getBytes()方法的危险性，如果我们使用new String(str.getBytes(), encoding)对字符串进行重新编码解码时，我们一定要清楚str.getBytes()方法返回的字节数组的长度、内容到底是什么，因为在接下来使用新的encoding进行编码解码时，Java并不会自动地对字节数组进行扩展以适应新的encoding。而是按照新的编码方法直接对该字节数组进行解析。于是结果就像上面的例子一样，同样是4个原始字节，有些每2个一组进行解析，有些每个一组进行解析，有些每3个一组进行解析。其结果就只能看那种编码方式合适了。
+
+
+结论：相同的平台下，同一个中文字符，在不同的编码方式下，得到的是完全不同的字节数组。这些字节数组有可能是正确的(只要该字符集支持中文)，也可能是完全错误的(该字符集不支持中文)。
+
+记住：不要轻易地使用或滥用String类的getBytes(encoding)方法，更要尽量避免使用getBytes()方法。因为这个方法是平台依赖的，在平台不可预知的情况下完全可能得到不同的结果。如果一定要进行字节编码，则用户要确保encoding的方法就是当初字符串输入时的encoding。
+
+———————————————————————————————————————————————————
+
+ 
+
+和getBytes(encoding)不同，toCharArray()返回的是"自然字符"。但是这个"自然字符"的数目和内容却是由原始的编码方式决定的。
+
+
+FileWriter是字符流输出流，而OutputStreamWriter是字节流输出流在中文平台下，如果使用FileWriter，不论你如何设置字符集都不会起作用。因为它采用的是默认的系统字符集。即便你设置了System.setProperty("file.encoding", "ISO-8859-1")，或者在运行时给予参数-Dfile.encoding=UTF-8都不会起作用。你会发现它最终还是都已"GB2312"或者"GBK"的方式保存。
+
+在中文平台下，如果使用OutputStreamWriter，则在后台写入时会把字符流转换成字节流，此时指定的编码字符集就起作用了。可以看到在指定GBK、UTF-8的情况下中文可以正常的保存和读取，同时文件按照我们给定的方式保存了。而对于ISO-8859-1则变成了?，这再次证明了采用ISO-8859-1是不能保存中文的，而且会因为中文编码在ISO-8859-1的编码中找不到对应的字符而默认转换成?。
+
+在英文平台下，如果使用FileWriter，不论你如何设置字符集同样都不会起作用。所有的文件都将按照ISO-8859-1的编码方式保存，毫无疑问地变成了?。在英文平台下，如果使用OutputStreamWriter，则只有当我们把字符和文件的编码方式正确设置为GBK、UTF-8的情况下，中文才能正确的保存并显示。
+
+通过上述的实验证明，为了确保在不同的平台下，客户端输入的中文可以被正确地解析、保存、读取。最好的办法就是使用OutputStreamWriter配合UTF-8编码。如果不想使用UTF-8编码，那么可以考虑使用GB2312，不建议使用GBK、GB18030。因为对于某些老式的文本编辑器，甚至不支持GBK、GB18030的编码，但是对于GB2312则是一定支持的。因为前两者都不是国标但后者是。
+
+关于String的getBytes()，getBytes(encoding)和new String(bytes, encoding)这三个方法，非常值得注意：A.getBytes()：使用平台默认的编码方式(通过file.encoding属性获取)方式来将字符串转换成byte[]。得到的是字符串最原始的字节编码值。
+
+B.getBytes(NAME_OF_CHARSET)：使用指定的编码方式将字符串转换成byte[]，如果想要得到正确的字节数组，程序员必须给出正确的NAME_OF_CHARSET。否则得到的就不会得到正确的结果。
+
+C.new String(bytes, encoding)：如果我们在客户端使用UTF-8编码的JSP页面发出请求，浏览器编码后的UTF-8字节会以ISO-8859-1的形式传递到服务器端。所以要得到经HTTP协议传输的原始字节，我们需要先调用getBytes("ISO-8859-1")得到原始的字节，但由于我们客户端的原始编码是UTF-8，如果继续按照ISO-8859-1解码，那么得到的将不是一个中文字符，而是3个乱码的字符。所以我们需要再次调用new String(bytes,"UTF-8")，将字节数组按照UTF-8的格式，每3个一组进行解码，才能还原为客户端的原始字符。
+
+D.String的getBytes()、getBytes(NAME_OF_CHARSET)方法都是比较微妙的方法，原则上：传输时采用的是什么编码，我们就需要按照这种编码得到字节。new String(bytes, NAME_OF_CHARSET)则更加需要小心，原则上：客户端采用的是什么编码，那么这里的NAME_OF_CHARSET就必须和客户端保持一致。例如JSP页面是GBK，那么我们接收页面传递而来的参数时就必须使用new String(parameter.getBytes("ISO-8859-1"), "GBK");如果使用了错误的解码方式，如使用了UTF-8，那么得到的很有可能就是乱码了。也就是说：GBK--->ISO-8859-1--->GBK、UTF-8--->ISO-8859-1--->UTF-8的转换过程是没有问题的。但是GBK--->ISO-8859-1--->UTF-8、UTF-8--->ISO-8859-1--->GBK的字节直接转码则可能导致乱码，需要另外的转换过程。
+
+记住：谨慎地使用getBytes(NAME_OF_CHARSET)和new String(bytes, NAME_OF_CHARSET)，除非你很清楚的知道原始的字符编码和传输协议使用的编码。推荐使用基于服务器的配置、过滤器设置request/response的characterEncoding、content type属性。还有就是JSP页面的pageEncoding属性、HTML meta元素的content type属性。尽量避免频繁的在代码中进行字符串转码，即降低了效率又增加了风险。
+
+问题：我们在web应用开发过程中经常遇到输出某种编码的字符，如iso8859-1等，如何输出一个某种编码的字符串？
+
+public class StringTest {
+  public static void main(String[] args){
+  String str="我是中国人";
+  try {
+  byte[] by=str.getBytes("ISO-8859-1");
+  byte[] by1=str.getBytes("GBK");
+  byte[] by2=str.getBytes("utf-8");
+  System.out.println("ISO-8859-1");
+  System.out.println(by.length);
+  System.out.println(by[0]);
+  
+  System.out.println("GBK");
+  System.out.println(by1.length);
+  System.out.println(by1[0]);
+  
+  System.out.println("utf-8");
+  System.out.println(by2.length);
+  System.out.println(by2[0]);
+  
+  //先将字符串以ISO-8859-1进行编码
+  String tempStr = new String(str.getBytes(), "ISO-8859-1");
+  //由于中文平台一个中文占两上字节，所以以ISO-8859-1进行编码时，输出为10个字符的乱码
+  System.out.println(tempStr);
+  //再获取该字符串的ISO-8859-1字节，以GBK解码，
+  tempStr=new String(tempStr.getBytes("ISO-8859-1"),"GBK");
+  //还原
+  System.out.println(tempStr);
+  }
+  catch (Exception e) {
+  System.err.println(e.getMessage());
+  }
+  }
+}
+
+输出：
+GBK
+10
+-50
+utf-8
+15
+-26
+???????ú??
+我是中国人

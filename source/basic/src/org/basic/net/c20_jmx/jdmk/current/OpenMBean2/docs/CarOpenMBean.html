@@ -1,0 +1,191 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79C-CCK-MCD  [en] (X11; U; SunOS 5.9 sun4u) [Netscape]">
+   <meta name="Author" content="P. Duc-Jacquet">
+   <meta name="Description" content="Tracing policy specifications">
+   <title>Open MBEAN tests spec</title>
+<!--#include virtual="/OUEBE/cgi-bin/choosestyle.pl" -->
+</head>
+<body text="#000000" bgcolor="#FFF7E7" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+&nbsp;
+<table COLS=1 BGCOLOR="#54809B" NOSAVE >
+<caption>
+<blockquote>&nbsp;</blockquote>
+</caption>
+
+<tr NOSAVE>
+<td NOSAVE>
+<blockquote>
+<center>
+<h1>
+<font color="#CCCCCC">Design of a Complex Open MBean: CarOpenMBean</font>&nbsp;</h1></center>
+</blockquote>
+</td>
+</tr>
+</table>
+
+<blockquote>&nbsp;</blockquote>
+
+<h1>
+Open Data Structures Defined by CarOpenMBean</h1>
+
+The data structure of this Open MBean models a concrete example that
+could be used in a car sales application. The goal is to describe a set
+of objects that represent a list of cars available for sale. Basically,
+we manage a table of car objects <b><font color="#FF0000">setOfCars. </font></b>
+A car is described by its <b>maker</b> (that is, its manufacturer), its <b>model</b>, 
+its <b>color </b>and its <b>price</b>. A color is defined as one of 3 basic colors <b>(red, green,
+blue</b>). <b><font color="#FF0000">nbSoldCars </font></b>is an attribute
+indicating the total number of cars sold, <b><font color="#FF0000">nbAvailableCars
+</font></b>is
+an attribute indicating the total number of cars available in the store, 
+<b><font color="#FF0000">mostUsedColorsData </font></b>is a CompositeData
+attribute which represents colors  most often sold and finally
+<b><font color="#FF0000">isStoreOpen
+</font></b>is
+an attribute indicating if the store is open or not.
+<br>&nbsp; 
+
+<p>
+These open MBean data structures can be represented as follows :
+
+<p>
+<table BORDER CELLPADDING=5 COLS=2 WIDTH="100%" BGCOLOR="#FFFFFF" NOSAVE >
+
+<tr>
+<td VALIGN=TOP COLSPAN="2" BGCOLOR="#9BB9C7">
+<blockquote>
+<center><b>OpenType and Attribute definition</b></center>
+</blockquote>
+</td>
+</tr>
+
+<tr NOSAVE>
+<td VALIGN=TOP WIDTH="50%" HEIGHT="50%" NOSAVE>
+<blockquote><b>CompositeType compositeTypeColor</b> {&nbsp;
+<br>&nbsp;&nbsp;&nbsp; SimpleType.INTEGER red&nbsp;
+<br>&nbsp;&nbsp;&nbsp; SimpleType.INTEGER green&nbsp;
+<br>&nbsp;&nbsp;&nbsp; SimpleType.INTEGER blue&nbsp;
+<br>}&nbsp;
+<center><img SRC="color.jpg" height=35 width=328></center>
+<b>CompositeData <font color="#FF0000">mostUsedColors</font></b> =new CompositeDataSupport(compositeTypeColor,...)&nbsp;</blockquote>
+</td>
+
+<td VALIGN=TOP WIDTH="50%">
+<blockquote><b>TabularType tabularTypeListOfColors&nbsp;</b> {&nbsp;
+<br>&nbsp;&nbsp;&nbsp; ...&nbsp;
+<br>&nbsp;&nbsp;&nbsp; CompositeType compositeTypeColor&nbsp;
+<br>&nbsp;&nbsp;&nbsp; index -> 3 column&nbsp;
+<br>}&nbsp;
+<center><img SRC="colorsTabular.jpg" height=94 width=201></center>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="2">
+<blockquote><b>CompositeType compositeTypeCar</b> {&nbsp;
+<br>&nbsp;&nbsp;&nbsp; String maker &nbsp;
+<br>&nbsp;&nbsp;&nbsp; String model &nbsp;
+<br>&nbsp;&nbsp;&nbsp; TabularData colors &nbsp;
+<br>&nbsp;&nbsp;&nbsp; Float price &nbsp;
+<br>}&nbsp;
+<center><img SRC="carType.jpg" height=173 width=583></center>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td COLSPAN="2">
+<blockquote><b>TabularType tabularTypeListOfCars</b>{&nbsp;
+<br>&nbsp;&nbsp;&nbsp; ...&nbsp;
+<br>&nbsp;&nbsp;&nbsp; CompositeType compositeTypeCar&nbsp;
+<br>&nbsp;&nbsp;&nbsp; index-> column 1 and 2&nbsp;
+<br>}&nbsp;
+<p><b>TabularData&nbsp; <font color="#FF0000">setOfCars</font></b>=new
+TabularDataSupport(listOfCarsType<b>)</b>
+<center><img SRC="listOfCar.jpg" height=363 width=582></center>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP COLSPAN="2">
+<blockquote>SimpleType.LONG <b><font color="#FF0000">nbSoldCars</font></b>
+(default value 0)&nbsp;
+<br>SimpleType.SHORT <b><font color="#FF0000">nbAvailableCars</font></b>
+<br>SimpleType.BOOLEAN <b><font color="#FF0000">isStoreOpen</font></b></blockquote>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP COLSPAN="2" BGCOLOR="#9BB9C7">
+<blockquote>
+<center><b>Definition of Operations</b></center>
+</blockquote>
+</td>
+</tr>
+
+<tr>
+<td VALIGN=TOP COLSPAN="2">
+<blockquote>
+&nbsp;
+<p>
+<tt><b>TabularData carCheaperThan(Float price) </b></tt><br> 
+This operation
+returns a TabularData of type tabularTypeListOfCars representing cars of
+setOfCars whose price is less than &lt;price>.&nbsp;
+<p>
+<br><tt><b>Boolean addCar(compositeTypeCar car)</b></tt><br> 
+This operation adds the
+CompositeData car to the setOfCars TabularData object and increments by
+one the nbAvailableCars attribute.&nbsp;
+<p>
+<br><tt><b>Boolean addCar(String maker, String model, Integer red, Integer green, 
+Integer blue, Float price)</b></tt><br> 
+This operation adds the car represented
+by its maker, model, color and price to the setOfCars TabularData object
+and increments by one the nbAvailableCars attribute.&nbsp;
+<p>
+<br><tt><b>Boolean removeCar(String maker, String model)</b></tt><br>
+This operation
+removes the car represented by its maker and model from the setOfCars TabularData
+object and decrements by one the nbAvailableCars attribute.&nbsp;
+<p>
+<br><tt><b>TabularData returnAvailableColors(String maker, String model)</b></tt><br>
+This operation returns a TabularData representing the list of available
+colors for the car represented by its maker and model.&nbsp;
+<p>
+<br><tt><b>Void addNewColor(String maker, String model,Integer red, Integer green, Integer blue)</b></tt><br>
+This operation adds a color to the TabularData
+representing the list of available colors for the car represented by maker
+and model.&nbsp;
+<p>
+<br><tt><b>TabularData returnByMaker(String maker)</b></tt><br> 
+This operation returns
+a TabularData representing all cars whose maker is &lt;maker>.&nbsp;
+<p>
+<br><tt><b>CompositeData getCarByMakerAndModel(String Maker, String Model)</b></tt><br>
+This operation returns a CompositeData representing the car whose maker
+is &lt;maker> and model &lt;model>.</blockquote>
+</td>
+</tr>
+</table>
+
+<p>
+<br>&nbsp;
+
+<P>
+<FONT SIZE=-1>Copyright &copy; 2004
+      Sun Microsystems, Inc.,&nbsp; 
+      901 San Antonio Road, Palo Alto, CA 94303
+      USA.&nbsp;<BR> 
+      All rights reserved.&nbsp;</FONT>
+
+<p>
+<br>&nbsp;
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bookservice" default="generate_java_wsdl">
+	<property name="project.base.dir" value="." />
+	<property name="dir.top" location="../../../../../" />
+	<property name="dir.current" location="./" />
+	<property file="${dir.current}/bookservice.properties" />
+	<property name="dir.ddp" value="${dir.current}/DDPs" />
+	<property name="dir.config" value="${dir.current}/config" />
+	<property name="dir.output" value="${dir.current}/output" />
+	<property name="dir.output.src" value="${dir.output}/src" />
+	<property name="dir.output.dest" value="${dir.output}/dest" />
+	<property name="dir.modified.src" value="modified_stub" />
+	<property name="dir.src.stub" value="${ws.impl}/stub_skeleton" />
+
+
+	<path id="cxf.class.path">
+		<fileset dir="${cxf.home}/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<target name="init">
+	</target>
+	<!--
+    -?,-h,-help  Displays the online help for this utility and exits.
+-fe frontend-name  Specifies the frontend. Default is JAXWS. Currently supports only JAXWS frontend and a "jaxws21" frontend to generate JAX-WS 2.1 compliant code.
+-db databinding-name   Specifies the databinding. Default is jaxb. Currently supports jaxb, xmlbeans, sdo (sdo-static and sdo-dynamic), and jibx.
+-wv wsdl-version   Specifies the wsdl version .Default is WSDL1.1. Currently suppports only WSDL1.1 version.
+-p [ wsdl-namespace= ] PackageName   Specifies zero, or more, package names to use for the generated code. Optionally specifies the WSDL namespace to package name mapping.
+-sn service-name   The WSDL service name to use for the generated code.
+-b binding-name  Specifies JAXWS or JAXB binding files or XMLBeans context files. Use multiple -b flags to specify multiple entries.
+-catalog catalog-file-name   Specify catalog file to map the imported wsdl/schema
+-d output-directory  Specifies the directory into which the generated code files are written.
+-compile   Compiles generated Java files.
+-classdir compile-class-dir  Specifies the directory into which the compiled class files are written.
+-client  Generates starting point code for a client mainline.
+-clientjar jar-file-name   Generates the jar file which contains all the client classes and wsdl;the specified wsdlLocation won't work when the -clientJar is defined.
+-server  Generates starting point code for a server mainline.
+-impl  Generates starting point code for an implementation object.
+-all   Generates all starting point code: types, service proxy, service interface, server mainline, client mainline, implementation object, and an Ant build.xml file.
+-ant   Specify to generate an Ant build.xml script.
+-autoNameResolution  Automatically resolve naming conflicts without requiring the use of binding customizations.
+-defaultValues=[DefaultValueProvider impl]   Specifies that default values are generated for the impl and client. You can also provide a custom default value provider. The default provider is RandomValueProvider
+-nexclude schema-namespace [=java-packagename]   Ignore the specified WSDL schema namespace when generating code. This option may be specified multiple times. Also, optionally specifies the Java package name used by types described in the excluded namespace(s).
+-exsh (true/false)   Enables or disables processing of implicit SOAP headers (i.e. SOAP headers defined in the wsdl:binding but not wsdl:portType section.) Processing the SOAP headers requires the SOAP binding jars available on the classpath which was not the default in CXF 2.4.x and older. You may need to add a dependency to cxf-rt-binding-soap for this flag to work. Default is false.
+-dns (true/false)  Enables or disables the loading of the default namespace package name mapping. Default is true and http://www.w3.org/2005/08/addressing=org.apache.cxf.ws.addressing namespace package mapping will be enabled.
+-dex (true/false)  Enables or disables the loading of the default excludes namespace mapping. Default is true.
+-validate  Enables validating the WSDL before generating the code.
+-keep  Specifies that the code generator will not overwrite any preexisting files. You will be responsible for resolving any resulting compilation issues.
+-wsdlLocation wsdlLocation   Specifies the value of the @WebServiceClient annotation's wsdlLocation property.
+-xjc<xjc args>   Specifies a comma separated list of arguments that are passed directly to the XJC processor when using the JAXB databinding. A list of available XJC plugins can be obtained using -xjc-X.
+-noAddressBinding  For compatibility with CXF 2.0, this flag directs the code generator to generate the older CXF proprietary WS-Addressing types instead of the JAX-WS 2.1 compliant WS-Addressing types.
+-v   Displays the version number for the tool.
+-verbose   Displays comments during the code generation process.
+-quiet   Suppresses comments during the code generation process.
+-exceptionSuper  superclass for fault beans generated from wsdl:fault elements (defaults to java.lang.Exception)
+-reserveClass classname  Used with -autoNameResolution, defines a class names for wsdl-to-java not to use when generating classes. Use this option multiple times for multiple classes.
+-allowElementReferences<=true>   (or -aer) If true, disregards the rule given in section 2.3.1.2(v) of the JAX-WS 2.2 specification disallowing element references when using wrapper-style mapping.
+-asyncMethods=foo,bar,...  List of subsequently generated Java class methods to allow for client-side asynchronous calls, similar to enableAsyncMapping in a JAX-WS binding file.
+-bareMethods=foo,bar,...   List of subsequently generated Java class methods to have wrapper style (see below), similar to enableWrapperStyle in JAX-WS binding file.
+-mimeMethods=foo,bar,...   List of subsequently generated Java class methods to enable mime:content mapping, similar to enableMIMEContent in JAX-WS binding file.
+-faultSerialVersionUID <fault-serialVersionUID>  How to generate suid of fault exceptions. Use NONE, TIMESTAMP, FQCN, or a specific number. Default is NONE.
+-mark-generated  Adds the @Generated annotation to classes generated.
+wsdlurl  The path and name of the WSDL file to use in generating the code.
+    <delete dir="${dir.output}" /> 
+  -->
+	<target name="generate_java_wsdl" depends="init">
+		<echo>
+                Start generate java files for @{service.name}(${service.acronym}), wsdl: @{artifact.name}/IIS/wsdl/@{service.name}/${wsdl.name}
+                   wsdl2java -client -p org.tmforum.mtosi.v3.service.${service.acronym} ${namespace.package.mappping} 
+                  -d ${dir.src.stub}/@{service.name}              
+                  -wsdlLocation /DDPs/@{artifact.name}/IIS/wsdl/@{service.name}/${wsdl.name}
+                  DDPs/@{artifact.name}/IIS/wsdl/@{service.name}/${wsdl.name}
+            </echo>
+		<java classname="org.apache.cxf.tools.wsdlto.WSDLToJava" fork="true">
+			<jvmarg line="-Xmx1024M -Xms512M" />
+			<arg line="-all" />
+			<!---server, client,impl,types,proxy,ant build.xml, -->
+			<arg line="${service.type.mappings}" />
+			<arg line="-d ${dir.top}" />
+			<!--arg line="-b ${dir.config}/cxf-mappings.xml" /-->
+			<arg line="-wsdlList http://localhost:9002/cxf/BookServiceSoapRpcLiteralImpl?wsdl" />
+			<classpath>
+				<path refid="cxf.class.path" />
+			</classpath>
+		</java>
+	</target>
+	<target name="package-all" depends="clean,generate_java_wsdl">
+		<javac classpathref="cxf.class.path" srcdir="${dir.output}/src" destdir="${dir.output}/dest" memoryinitialsize="64M" memorymaximumsize="1024M" debug="${app.debug.support}" debuglevel="${app.debug.support.level}" fork="true">
+		</javac>
+		<!--antcall target="generate.serialuid" /-->
+		<javac classpathref="cxf.class.path" srcdir="${dir.output}/src" destdir="${dir.output}/dest" memoryinitialsize="64M" memorymaximumsize="1024M" debug="${app.debug.support}" debuglevel="${app.debug.support.level}" fork="true">
+		</javac>
+		<jar file="${dir.output}/${app.name}.jar">
+			<!--metainf dir="${dir.output}/resources" /-->
+			<fileset dir="${dir.current}" includes="DDPs/**/*.wsdl,DDPs/**/*.xsd" />
+			<fileset dir="${dir.output}/dest" includes="**/*" />
+		</jar>
+		<jar file="${dir.output}/${app.name}_src.jar">
+			<fileset dir="${dir.current}" includes="DDPs/**/*.wsdl,DDPs/**/*.xsd" />
+			<fileset dir="${dir.output}/src" includes="**/*" />
+		</jar>
+	</target>
+	<target name="package_service" description="Package the Service: ${service.name}">
+		<jar destfile="${dir.src.stub}/${service.name}/${service.acronym}.jar">
+			<fileset dir="${dir.src.stub}/${service.name}/dest" includes="**/*" />
+		</jar>
+		<jar file="${dir.src.stub}/${service.name}.jar">
+			<!--metainf dir="${dir.src.stub}/${service.name}/resources" /-->
+			<fileset dir="${dir.src.stub}/${service.name}/dest" includes="**/*" />
+		</jar>
+	</target>
+	<target name="clean_service" description="Deploy the Service: ${service.name}">
+		<delete dir="${dir.src.stub}/${service.name}" />
+		<mkdir dir="${dir.src.stub}/${service.name}" />
+	</target>
+	<target name="clean">
+		<delete dir="${dir.output}" />
+		<delete dir="${dir.src.stub}" />
+	</target>
+
+</project>

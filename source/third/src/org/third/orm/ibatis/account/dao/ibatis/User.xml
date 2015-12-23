@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="User">
+    <typeAlias alias="user" type="com.wysm.netstar.domain.User" />
+    <select id="getUserByUserAlias" resultClass="user" parameterClass="string">
+        SELECT USERID as userId, UALIAS as userAlias, PASSWORD as password, REALNAME as realName,
+        EMAIL as email, USERTYPEID as userTypeId FROM HI_USER WHERE UALIAS = #userAlias#
+    </select>
+    <select id="getUserByUserAliasAndPassword" resultClass="user" parameterClass="user">
+        SELECT USERID as userId, UALIAS as userAlias, PASSWORD as password, REALNAME as realName,
+        EMAIL as email, USERTYPEID as userTypeId FROM HI_USER WHERE UALIAS = #userAlias# AND
+        PASSWORD = #password#
+    </select>
+    <select id="getUserByEmail" resultClass="user" parameterClass="string">
+        SELECT USERID as userId, UALIAS as userAlias,
+
+        PASSWORD as password, REALNAME as realName, EMAIL as email, USERTYPEID as userTypeId FROM
+        HI_USER WHERE EMAIL=#email#
+    </select>
+    <update id="updateUser" parameterClass="user">
+        UPDATE HI_USER SET UALIAS= #userAlias#, PASSWORD=#password#, REALNAME=#realName#, EMAIL =
+        #email#, USERTYPEID = #userTypeId# WHERE USERID = #userId#
+    </update>
+    <insert id="insertUser" parameterClass="user">
+        INSERT INTO HI_USER (USERID, UALIAS, PASSWORD, REALNAME, EMAIL, USERTYPEID) VALUES
+        (#userId#, #userAlias#,#password#,#realName#, #email#, #userTypeId#)
+    </insert>
+    <delete id="deleteUser" parameterClass="int">DELETE FROM HI_USER WHERE USERID=#userId#</delete>
+    <select id="existUserId" parameterClass="int">
+        select count(*) FROM HI_USER WHERE USERID=#userId#
+    </select>
+    <select id="listUsers">SELECT * FROM HI_USER</select>
+</sqlMap>

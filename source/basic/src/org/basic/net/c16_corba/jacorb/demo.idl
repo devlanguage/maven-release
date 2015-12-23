@@ -1,0 +1,17 @@
+module org{
+module basic{
+module corba{
+module jacorb{
+    module demo
+    {
+        module hello {
+            interface GoodDay {
+                string hello_latin1();
+                wstring hello_chinese();           
+            };
+        };
+    };
+};
+};
+};
+};

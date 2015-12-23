@@ -1,0 +1,9 @@
+1.generate stub/skeleton
+ set SOURCE_PATH=D:\software\dev\eclispe\java_proj\JavaBasic\java\basic\src
+ idlj -td %SOURCE_PATH% -fall hello.idl
+1）运行CORBA服务
+　　orbd -ORBInitialPort 1050 -ORBInitialHost localhost
+2）运行CORBA应用的服务端
+　　java HelloServer -ORBInitialPort 1050
+3）运行CORBA应用的客户端
+　　java HelloClient -ORBInitialHost 192.168.14.117 -ORBInitialPort 1050

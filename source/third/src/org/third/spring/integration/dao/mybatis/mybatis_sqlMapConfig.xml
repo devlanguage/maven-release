@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.xxt.ibatis.dbcp.domain.User" alias="User" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="com/xxt/ibatis/dbcp/domain/TestData_User.xml" />
+	</mappers>
+</configuration> 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<person name="JAXB2" sex="FEMALE">
+	<xmlList>list1, list2 list3</xmlList>
+	<friend>Friend-1</friend>
+	<friend>Friend-2</friend>
+
+	<birthDay>2007-09-14T15:00:49.300+08:00</birthDay>
+	<gender>MALE</gender>
+	<job>SW</job>
+
+	<JarTask name="jarTask"></JarTask>
+	<JavacTask name="javacTask"></JavacTask>
+
+	<addresses>
+		<CAddress country="China">
+			<province>Beijing</province>
+			<city>Beijing</city>
+			<street>ShangDi West</street>
+			<zipcode>100080</zipcode>
+		</CAddress>
+		<AAddress country="American">
+			<state>Los-Angels</state>
+			<city>Los-Angels</city>
+			<street>ShangDi West</street>
+			<zipcode>100080</zipcode>
+		</AAddress>
+	</addresses>
+
+
+
+</person>

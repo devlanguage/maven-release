@@ -1,0 +1,250 @@
+ 目前，主流的XML解析API有SAX和DOM。
+ 	SAX是基于事件的XML解析API，每次解析时都会从头到尾读取整个文档，然后在解析过程中触发一些事件并调用相应的回调方法进行处理。
+ 	而DOM是基于树状模型的XML解析API，只需一次读取文档并解析生成文档的树状模型存放在内存里，以后可以对树模型中的节点进行随机访问。
+ 	
+ 	SAX对于只要解析一次的XML文档显得很高效，且节省存储空间，但是如果要对文档的节点进行随机访问时，则会很低效，需要每次对文档进行一次解析。
+ 	DOM对文档的节点进行随机访问很方便，但是因为需要把整个文档的树状模型存放在内存里，所以对内存要求较高，不适用于存储受限的场合（如嵌入式设备）。
+ 	另外，SAX是一种push式的XML解析API，它从XML文档中读到数据，然后将这些数据push给用户程序。
+
+     除了SAX和DOM以外，最近又涌现出了一种新的XML解析API，StAX（the Streaming API for XML），它是一种新一代的pull式的XML解析API。
+ StAX与SAX类似的地方是它也是从头到尾读取整个文档并进行解析，但是不同的是StAX读取文档的方式是每次只读取一部分，等用户程序要求时才读取下一部分，
+ 文档的读取过程是用户程序可以控制的，所以是一种pull的方式。
+       下面是一段例程，通过例程我们就可以更好地理解StAX的工作方式了。这段例程用于解析一段XHTML并把其中的各级标题（h1、h2、h3……）的内容给解析出来。
+       
+Axiom Stax Example2008年05月20日 星期二 14:27Axiom testing:
+AXIOM——AXis 对象模型（AXis Object Model，AXIOM）是 Apache Axis 2 的 XML 对象模型,Axiom采用pull解析方式，基于StAX（JSR173），
+其目标是提供强大的特性组合彻底改变 XML 处理技术（Axiom和StAX紧密相关，要使用Axiom，StAX相关的jar包也必须在classpath下）。
+
+AXIOM 还不仅仅是另一种对象模型。它有着明确的设计目标：大幅提升 Apache 下一代 SOAP 协议栈 Axis 2 的性能。因为它突出了
+构造的轻型，并且仅当需要的时候才建立，结果造就了不同于其他对象模型的 AXIOM（也称为 OM）。由于是轻型的，它尽可能地减轻对系
+统资源的压力，特别是 CPU 和内存。同时，延迟构造又允许在其他部分还没有完成的时候使用树的一部分。AXIOM 强大的延迟构建能力源
+于底层的 Streaming API for XML (StAX) 解析器。AXIOM 提供了所有这些特性，同时幕后的复杂性对用户是透明的。
+
+Axiom采用pull解析方式，基于StAX（JSR173）。
+Pull解析是最近处理XML的一种趋势。
+  而SAX和DOM都是基于push的解析方式，也就是说解析控制在parser本身。Push解析方式很容易使用，但在处理巨型XML文档时效率并不好，（因为要在内存中生成完成的对象模型）。
+  Pull解析方式颠倒了这种控制方式，增强了parser，只在用户需要的时候菜进行处理。用户决定处理或者忽略parser生成的事件。
+
+使用 XMLBench Document Model Benchmark 测试的结果表明，AXIOM 的性能和现有的高性能对象模型相当。
+但是 AXIOM 的内存占用要好于现有多数依靠 SAX 和/或 DOM 输入输出的对象模型。因此对于 Web 服务引擎或内存受限制设备这样的 XML 处理器，
+AXIOM 是一种理想的选择，它可用于一般的 XML 处理，但是有一个对 SOAP 优化了的可选层。
+
+AXIOM 超越了现有的 XML 处理技术，它把延迟构建和一种快速、轻型的可定制对象模型结合了起来, 提供了一种可以按需扩展的虚拟文档模型，仅构建客户端应用程序所请求的树结构文档模型表示。这种虚拟的文档模型工作于 XML 文档的元素级。当解析器报告元素开始标记时创建元素表示，但是该元素的初始形式仅仅只是一个壳，其中保存了对解析器的引用。
+
+ 推式解析 vs. 拉式解析
+和推式解析相比，拉式解析具有以下优点：
+1、在拉式解析中，事件是由解析应用产生的，因此拉式解析中向客户端提供的是解析规则，而不是解析器。
+2、同推式解析相比，拉式解析的代码更简单，而且不用那么多库。
+3、拉式解析客户端能够一次读取多个XML文件。
+4、拉式解析允许你过滤XML文件和跳过解析事件。
+
+进入StAX的世界
+StAX是Streaming API for XML的缩写，它包含在2004年3月的JSR 173 中。StAX是JDK6.0中包含的新特性。
+在推式模型中，直到整个XML文件全部被解析，解析器才会产生解析事件。而拉式解析由应用程序来控制，也就是说解析事件由应用程序产生。这就意味着，你可以暂缓解析、解析时跳过某个元素或者同时解析多个文件。用DOM解析式要先将XML文件解析成DOM结构，因此降低了解析效率。使用StAX，解析事件在 XML文件解析过程中产生。下面是各种解析方法之间的比较：
+ XML Parser API Feature Summary
+--------------------------------------------------------------------------------
+Feature				StAX			SAX				DOM				TrAX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+API TypE		Pull, streaming  Push, streaming  In memory tree  XSLT Rule
+--------------------------------------------------------------------------------
+Ease of Use			High			Medium			High			Medium
+--------------------------------------------------------------------------------
+XPath Capability	No				No				Yes				Yes
+--------------------------------------------------------------------------------
+CPU&RAM Efficiency	Good			Good			Varies			Varies
+--------------------------------------------------------------------------------
+Forward Only		Yes				Yes				No				No
+--------------------------------------------------------------------------------
+Read XML			Yes				Yes				Yes				Yes
+--------------------------------------------------------------------------------
+Write XML			Yes				No				Yes				Yes
+--------------------------------------------------------------------------------
+Create/读/删/改		No				No				Yes				No 
+--------------------------------------------------------------------------------
+
+#####################################################################################################################
+## Depended Jar Packages
+#####################################################################################################################
+activation-1.1.jar
+axiom-api-1.2.5.jar
+axiom-dom-1.2.5.jar
+axiom-impl-1.2.5.jar
+commons-logging-1.1.jar
+log4j-1.2.14.jar
+mail-1.4.jar
+stax-api-1.0.1.jar
+wstx-asl-3.2.1.jar
+
+#####################################################################################################################
+## Example
+#####################################################################################################################
+/**
+* Copyright reserved by Tellabs Communication Corp. LTD. The file
+* org.ws.pullxml.hello.PullXmlHelloTest.java is created on 2008-5-20
+*/
+package org.xml.parser.axiom;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import javax.xml.namespace.QName;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
+
+import org.apache.axiom.om.OMAbstractFactory;
+import org.apache.axiom.om.OMAttribute;
+import org.apache.axiom.om.OMDocument;
+import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.OMFactory;
+import org.apache.axiom.om.OMNamespace;
+import org.apache.axiom.om.OMOutputFormat;
+import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+
+/**
+* 
+*/
+public class PullXmlHelloTest {
+
+    public final static String FILE_ROOT="source/";
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+
+        PullXmlHelloTest test = new PullXmlHelloTest();
+        try {
+//            test.testRead();
+            test.testWrite();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    private void testWrite() throws FileNotFoundException, XMLStreamException,
+            FactoryConfigurationError {
+
+
+        
+        // 通常通过OMFactory来构造XML文档中的element，下面是一些示例代码。
+        OMFactory factory = OMAbstractFactory.getOMFactory();
+        OMDocument doc = factory.createOMDocument();
+        
+        //创建两个名空间
+        OMNamespace nsPerson = factory.createOMNamespace("http://pullxml.test/person", "p");
+        OMNamespace nsAddress = factory.createOMNamespace("http://pullxml.test/person/address", "addr");
+
+        //创建rood节点
+        OMElement personElement = factory.createOMElement("person", nsPerson);
+            OMAttribute nameAttribute = factory.createOMAttribute("name", nsPerson, "ZhangSan");
+            personElement.addAttribute(nameAttribute);
+            personElement.addAttribute("age","23",null);
+            personElement.addAttribute("age","23",nsPerson);
+            OMElement addressesElement = factory.createOMElement("address", nsAddress);
+                OMElement addressXiAn = factory.createOMElement("address",nsAddress);
+                addressXiAn.addChild(factory.createOMText("Xi'An City"));
+                addressesElement.addChild(addressXiAn);
+                OMElement addressLanZhou = factory.createOMElement("address", nsAddress);
+                addressLanZhou.addChild(factory.createOMText("兰州市"));
+                addressesElement.addChild(addressLanZhou);
+            personElement.addChild(addressesElement);        
+        doc.addChild(personElement);
+        
+        // 写入到XmlFile
+        OMOutputFormat oof = new OMOutputFormat();
+        oof.setXmlVersion("1.0");oof.setCharSetEncoding("UTF-8");
+        // 方法一,二：
+        doc.serialize(new FileOutputStream(FILE_ROOT+"pull_root_write_001.xml"));
+        doc.serialize(new FileOutputStream(FILE_ROOT+"pull_root_write_002.xml"), oof);
+        
+        // 方法三, 四：
+        oof.setDoOptimize(true);
+        doc.serializeAndConsume(new FileOutputStream(FILE_ROOT+"pull_root_write_003.xml"));
+        doc.serializeAndConsume(new FileOutputStream(FILE_ROOT+"pull_root_write_004.xml"), oof);
+        
+        // 方法五： 构建writer做输出器，
+        XMLStreamWriter writer = XMLOutputFactory.newInstance().createXMLStreamWriter(
+                new FileOutputStream(FILE_ROOT+"pull_root_write_005.xml"));
+        personElement.serialize(writer);//Cache on
+        writer.flush();
+        
+        //Detach
+        doc.serialize(System.out);System.out.println("\n\n");
+        
+        addressesElement.detach();        
+        doc.serialize(System.out);System.out.println("\n\n");
+        
+        addressesElement.serialize(System.out);
+//        // ele.detach();
+//        ele.serialize(System.out); // 即使detach()，依然会输出ele
+//        doc.serialize(System.out); // 如果detach()，就不会有ele到document里。
+
+    }
+
+    private void testRead() throws FileNotFoundException, XMLStreamException,
+            FactoryConfigurationError {
+
+        // 首先构建parser，
+        XMLStreamReader parser = XMLInputFactory.newInstance().createXMLStreamReader(
+                PullXmlHelloTest.class.getResourceAsStream("pull_root_read_test.xml"));
+        // 还需要builder对象，
+        StAXOMBuilder builder = new StAXOMBuilder(parser);
+        // get the root element
+        // OMElement documentElement = builder.getDocumentElement();
+        OMDocument doc = builder.getDocument();
+        // dump the out put to console with caching
+        doc.serialize(System.out);
+        System.out.println();
+        OMElement firstAddressElement = doc.getOMDocumentElement().getFirstChildWithName(
+                new QName("http://pullxml.test/person/address", "address"));
+
+        // OMElement有一系列的get方法来获得内容。
+        firstAddressElement.serialize(System.out); // cache on, 强制构建OMTre
+        firstAddressElement.serializeAndConsume(System.out); // cache off, 不强制构建OMTre
+        System.out.println();
+        System.out.println();
+
+        // will NOT build the OMTree in the memory.
+        // So you are at your own risk of losing information.
+        String firstAddressString = firstAddressElement.toStringWithConsume();
+        // call toString, will build the OMTree in the memory.
+        System.out.println(firstAddressString);
+
+        // 关于serialize和serializeAndConsume，前者会强制构建OMTree，或者则不会。
+        // 关于detach，它只影响OMElement本身和OMTree的关系，并不影响OMElement本身。
+        // 与之对应的还有一个build方法，build会强制build整个OMTree出来。
+        // 这两个方法通常用在处理OMElement与OMTree的关系上。从输入流构建出OMElement(build)以及把OMElement从输入流断开(detach)，以便放到输出流。输入流和输出流是不同的OMTree。
+    }
+
+}
+
+
+#######################
+## Outpu Result
+########################
+File Output:
+<!--   pull_root_write_001.xml -->
+<?xml version='1.0' encoding='utf-8'?><p:person xmlns:p="http://pullxml.test/person" p:name="ZhangSan" age="23" p:age="23"><addr:address xmlns:addr="http://pullxml.test/person/address"><addr:address>Xi'An City</addr:address><addr:address>兰州市</addr:address></addr:address></p:person>
+<!--   pull_root_write_002.xml -->
+<?xml version='1.0' encoding='UTF-8'?><p:person xmlns:p="http://pullxml.test/person" p:name="ZhangSan" age="23" p:age="23"><addr:address xmlns:addr="http://pullxml.test/person/address"><addr:address>Xi'An City</addr:address><addr:address>兰州市</addr:address></addr:address></p:person>
+<!--   pull_root_write_003.xml -->
+<?xml version='1.0' encoding='UTF-8'?><p:person xmlns:p="http://pullxml.test/person" p:name="ZhangSan" age="23" p:age="23"><addr:address xmlns:addr="http://pullxml.test/person/address"><addr:address>Xi'An City</addr:address><addr:address>兰州市</addr:address></addr:address></p:person>
+<!--   pull_root_write_004.xml -->
+<?xml version='1.0' encoding='UTF-8'?><p:person xmlns:p="http://pullxml.test/person" p:name="ZhangSan" age="23" p:age="23"><addr:address xmlns:addr="http://pullxml.test/person/address"><addr:address>Xi'An City</addr:address><addr:address>兰州市</addr:address></addr:address></p:person>
+<!--   pull_root_write_005.xml -->
+<p:person xmlns:p="http://pullxml.test/person" p:name="ZhangSan" age="23" p:age="23"><addr:address xmlns:addr="http://pullxml.test/person/address"><addr:address>Xi'An City</addr:address><addr:address><????</addr:address></addr:address></p:person>
+
+Console Output:
+<?xml version='1.0' encoding='utf-8'?><p:person xmlns:p="http://pullxml.test/person" p:name="ZhangSan" age="23" p:age="23"><addr:address xmlns:addr="h
+ttp://pullxml.test/person/address"><addr:address>Xi'An City</addr:address><addr:address>兰州市</addr:address></addr:address></p:person>
+
+
+<?xml version='1.0' encoding='utf-8'?><p:person xmlns:p="http://pullxml.test/person" p:name="ZhangSan" age="23" p:age="23" />
+
+
+<addr:address xmlns:addr="http://pullxml.test/person/address"><addr:address>Xi'An City</addr:address><addr:address>兰州市?</addr:address></addr:address>
+ 

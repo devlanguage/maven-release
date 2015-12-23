@@ -1,0 +1,187 @@
+<commands>
+	<command valid="false">
+		<name>start</name>
+		<description>Start server</description>
+		<response_message><![CDATA[NBI Server current status: {0}]]>
+		</response_message>
+	</command>
+	<command>
+		<name>stop</name>
+		<description>Stop server</description>
+		<response_message><![CDATA[NBI Server current status: {0}
+]]></response_message>
+	</command>
+	<command>
+		<name>quit</name>
+		<description>Quit the Admin console</description>
+		<response_message><![CDATA[Bye!]]></response_message>
+	</command>
+	<command>
+		<name>help</name>
+		<description>Display the command help information.</description>
+		<response_message><![CDATA[help : Display the command help information.]]></response_message>
+	</command>
+	<command>
+		<name>desc dbcon</name>
+		<description>
+			Display database adapter connection count
+		</description>
+		<response_message><![CDATA[Database adapter connection count: {0}]]></response_message>
+	</command>
+	<command>
+		<name>desc dbthread</name>
+		<description>
+			Display the command help information database adapter handle
+			thread count
+		</description>
+		<response_message><![CDATA[Database adapter handle thread count:  {0}]]></response_message>
+	</command>
+	<command>
+		<name>desc report</name>
+		<description>Display reports count</description>
+		<response_message><![CDATA[Reports count: {0}]]</response_message>
+	</command>
+	<command>
+		<name>desc reportpool active</name>
+		<description>
+			Display reports thread pool active coun t
+		</description>
+		<response_message><![CDATA[Avtive task count in report pool: {0}]]></response_message>
+	</command>
+	<command>
+		<name>desc reportpool task</name>
+		<description>
+			Display reports thread pool tasks count
+		</description>
+		<response_message>
+			Task count in report thread pool: {0}
+		</response_message>
+	</command>
+	<command>
+		<name>desc dbpool active</name>
+		<description>
+			Display the active connection count in database cache pool
+		</description>
+		<response_message><![CDATA[Active connection count in database cache pool: {0}]]</response_message>
+	</command>
+	<command>
+		<name>desc dbpool cache</name>
+		<description>Display da tabase pool cache count</description>
+		<response_message><![CDATA[Database pool cache count: {0}]]></response_message>
+	</command>
+	<command valid="false">
+		<name>show nbi registion</name>
+		<description>Display the registion list</description>
+		<response_message><![CDATA[NBI Registions follows as: 
+ {0}]]></response_message>
+	</command>
+	<command>
+		<name>show adapterqueue size</name>
+		<description>Display the adapter queue size</description>
+		<response_message><![CDATA[Adapter queue size: {0}]]></response_message>
+	</command>
+	<command>
+		<name>show mtosiqueue size</name>
+		<description>Display the MTOSI Queue si ze</description>
+		<response_message><![CDATA[MTOSI queue size is: {0}]]></response_message>
+	</command>
+	<command>
+		<name>show mtnmqueue size</name>
+		<description>Display the MTNM Queue Size</description>
+		<response_message><![CDATA[MTNM queue size is: {0}]]></response_message>
+	</command>
+	<command>
+		<name>show par ameter</name>
+		<description>
+			Display parameters from TMF NBI Server
+		</description>
+		<response_message><![CDATA[        Database adapter handle thread count:
+ {1}
+        Reports count is: {2}
+        Reports pool active count is: {3}
+        Task count in report thread pool: {4}
+        Database pool active count is: {5}
+        Database pool cache count is: {6}
+        Adapter queue size is: {7}
+        MTOSI queue size is: {8}
+        MTNM queue size is: {9}
+]]></response_message>
+	</command>
+	<command>
+		<name>set loglevel</name>
+		<description><![CDATA[Set the log level. The command format is as follows:
+        set loglevel LevelValue
+        Notes:
+           LevelValue: it indicates which log level will be set as valid. valid value case-insensitive
+                     is as list: off, debug, info, warn ,error, fatal, all]]></description>
+		<response_message><![CDATA[Log level has been set as: {0}]]></response_message>
+	</command>
+	<command>
+		<name>show status</name>
+		<description><![CDATA[Display all the current connection status, including connection t
+o DB, JMS,
+ Cobra Naming Service and Corba Notification Service]]></description>
+		<response_message><![CDATA[        Connection status to EMS database:            
+   {0}
+        Connection status to JMS Server:                 {1}
+        Connection status to Corba Naming Service:       {2}
+        Connection status to Corba Notification Service: {3}]]></response_message>
+	</command>
+	<command>
+		<name>show status db</name>
+		<description>
+			Disp lay the current connection status on DB
+		</description>
+		<response_message><![CDATA[Connection status to EMS database: {0}]]></response_message>
+	</command>
+	<command>
+		<name>show status jms</name>
+		<description>
+			Display the current connection status on JMS Server
+		</description>
+		<response_message><![CDATA[Conn
+ection status to JMS Server: {0}]]></response_message>
+	</command>
+	<command>
+		<name>show status corba</name>
+		<description>
+			Display the current connection status to Corba Naming
+			Service and Corba Notification Service
+		</description>
+		<response_message><![CDATA[        Connection status to Corba Naming Servi
+ce: {0}
+        Connection status to Corba Notification Service: {1}]]></response_message>
+	</command>
+	<command>
+		<name>show session</name>
+		<description>
+			Displ ay the session information: session id, session
+			related report, session connection information and session's
+			last active time
+		</description>
+		<response_message><![CDATA[Session Information follows as:
+---------------------------------------------------------------------]]></response_message>
+	</command>
+	<command>
+		<name>show subscription</name>
+		<description>
+			Display the web side notification subscription list
+		</description>
+		<response_message><![CDATA[web side notification subscription list follow as
+ :
+---------------------------------------------------------------------]]></response_message>
+	</command>
+	<command>
+		<name>dump mq</name>
+		<description>
+			<![CDATA[Dump the message queue content into the console or files.
+ This is the complete command format:
+   dump mq serviceName [destination]
+  Notes:
+  serviceName: Specify which messages of the service in local queue will be dump. valid values follow
+      as: messaging, adapter, mtosi, mtnm, reporting, provisioning, security, admin
+ destination: Specify the path where dumpped content will be stored. Abosulte or relative paths are
+       all allowed.]]></description>
+		<response_message></response_message>
+	</command>
+</commands>

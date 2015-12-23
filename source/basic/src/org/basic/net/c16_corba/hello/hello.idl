@@ -1,0 +1,35 @@
+module org {
+module basic {
+module corba {
+#ifndef _GOODDAY_IDL_
+#define _GOODDAY_IDL_
+    module hello {
+    module hellostub {
+    //`float' `double' `long' `short' `unsigned' `char' `wchar' `boolean' `octet' `any';
+    	enum IntefaceList { GoodDayIntf };
+    	typedef long TypeDefLong;
+    	typedef sequence<string> TypeSeqString;
+    	exception InternalException {
+			unsigned short errorCode;
+			string reason;
+			boolean otherMsg;
+		};
+		struct FileServer {
+			TypeDefLong port;
+			any value;			
+		};		
+        interface GoodDay {
+        	const string NAME_OBJECT = "GoodDayNameObject";
+        	readonly attribute  string helloSimple;//float balance ();
+            wstring helloWide( in wstring msg );
+            string helloWideException( in wstring msg ) raises (InternalException);
+            
+            oneway void lock();
+			boolean ping(in string hello);
+        };
+    };
+    };
+#endif
+};
+};
+};

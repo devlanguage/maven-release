@@ -1,0 +1,78 @@
+@SOAPBinding(style = Style.RPC, use = Use.ENCODED, parameterStyle = ParameterStyle.WRAPPED)
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+     <ns2:sayHello xmlns:ns2="http://www.jd6webservice.org/hello">
+        <sayHelloUserPart>test01</sayHelloUserPart>
+        <sayHelloAgePart>22</sayHelloAgePart>
+     </ns2:sayHello>
+  </S:Body>
+</S:Envelope>
+
+   <?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+     <ns2:sayHelloResponse xmlns:ns2="http://www.jd6webservice.org/hello">
+        <sayHelloPart>Hello:test01</sayHelloPart>
+     </ns2:sayHelloResponse>
+  </S:Body>
+</S:Envelope>0
+
+// @SOAPBinding(style = Style.RPC, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+     <ns2:sayHello xmlns:ns2="http://www.jd6webservice.org/hello">
+        <sayHelloUserPart>test01</sayHelloUserPart>
+        <sayHelloAgePart>22</sayHelloAgePart>
+     </ns2:sayHello>
+  </S:Body>
+</S:Envelope>
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+     <ns2:sayHelloResponse xmlns:ns2="http://www.jd6webservice.org/hello">
+        <sayHelloPart>Hello:test01</sayHelloPart>
+     </ns2:sayHelloResponse>
+  </S:Body>
+</S:Envelope>
+
+@SOAPBinding(style = Style.DOCUMENT, use = Use.ENCODED, parameterStyle = ParameterStyle.BARE)
+ for bare, only one paramete is allowed
+// @SOAPBinding(style = Style.DOCUMENT, use = Use.ENCODED, parameterStyle = ParameterStyle.WRAPPED)
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+ <S:Body>
+    <ns2:sayHello xmlns:ns2="http://www.jd6webservice.org/hello">
+       <userName>test01</userName>
+       <userAge>22</userAge>
+    </ns2:sayHello>
+ </S:Body>
+</S:Envelope>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+ <S:Body>
+    <ns2:sayHelloResponse xmlns:ns2="http://www.jd6webservice.org/hello">
+       <sayHelloResult>Hello:test01</sayHelloResult>
+    </ns2:sayHelloResponse>
+ </S:Body>
+</S:Envelope>
+// @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.BARE)
+// @SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+     <ns2:sayHello xmlns:ns2="http://www.jd6webservice.org/hello">
+        <userName>test01</userName>
+        <userAge>22</userAge>
+     </ns2:sayHello>
+  </S:Body>
+</S:Envelope>
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>9f
+     <ns2:sayHelloResponse xmlns:ns2="http://www.jd6webservice.org/hello">
+        <sayHelloResult>Hello:test01</sayHelloResult>
+     </ns2:sayHelloResponse>
+  </S:Body>
+</S:Envelope>
+0
+

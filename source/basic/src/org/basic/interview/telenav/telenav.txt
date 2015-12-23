@@ -1,0 +1,32 @@
+ 泰为面试
+
+1.Given this program .If thread 1 calls seti() and thread 2 calls geti() will the 2 threads
+block each other, please give reason?
+       public class TestLock{
+       private int i;
+       public synchronized void seti(int i){
+              this.i = i;
+       }
+       public int geti(){
+              return i;
+       }
+}
+
+如果把seti()方法换成下面的会如何！
+private final static Object o = new Object ();
+public int geti(){
+       synchronized(o){
+              return this.i ;
+}
+}
+
+2.Reverse a linked list (Using data structure & algorithm)!
+
+3.You are given an array containing both positive and negative integers and required
+to find the contiguous sub-array with the largest sum .
+       Fox example ,given an array ,6,-1,9,3,-2,0,-8,4,7,1,the largest sum happens to
+be the total sum = 19 .
+
+4.Mention the two different approaches to construct threads in Java. What are you prefer and why ?
+
+5,给你一个stack类，里面有pop(),push(),getSize()方法，现在让你写一个类除了于有stack的方法外另外加一个方法getMinValue()得到这个栈的最小值！

@@ -1,0 +1,120 @@
+Commons-Validator（一）
+Commons-Validator包用来把验证规则程序提取出来，以供重复使用。这个包可以使用在Struts中，也可以独立的应用在任何其它的应用中。用户可以通过java类的方式自定义验证方法，也可以在配置文件中通过正则表达式配置验证方法。它不但支持服务器端的验证，客户端的验证也支持，具体需要使用tag把相应的js方法写入相应的页面中。
+　　
+　　一、综述：
+　　
+　　整个Validator框架可以有若干个FormSet，而每个FormSet又可以有若干个Form，每个Form中可以有若干个Field。FormSet的process(...)方法，逐个调用其中的Form的process(...)方法，而Form的process(...)方法又是逐个调用Field的process(...)方法。Validator类作为验证的起始点，调用与其一一对应的Form的validate(...)方法，而Form的validate(...)方法又是逐个调用其中Field的validate(...)方法实现的。
+　　
+　　二、配置文件说明：
+　　
+　　<form-validation>
+　　<global>
+　　<constant>
+　　<constant-name>验证方法的标志名</constant-name>
+　　<constant-value>正则表达式</constant-value>
+　　</constant>
+　　<validator name="这个验证方法的标志名，供下面的depends调用"
+　　classname="这个验证方法在哪个类中，为类全名"
+　　method="验证方法的名称"
+　　methodParams="这个验证方法需要的参数类型，依次以逗号格开，为类全名"
+　　depends="基于什么验证之上，可以为多个值，以逗号格开，值为方法的标志名"
+　　jsFunction="js的方法全名，格式为文件路径.方法名。文件路径以点隔开，
+　　如果不填，默认为org.apache.commons.validator.javascript.xxxx"
+　　msg="对应于properties文件中的一条，作为不通过验证时返回的信息"/>
+　　</global>
+　　<formset language="语言" country="城市" variant="方言？">
+　　<constant>
+　　<constant-name>验证方法的标志名</constant-name>
+　　<constant-value>正则表达式</constant-value>
+　　</constant>
+　　<form name="bean 对象名称">
+　　<field property="bean中的属性名" depends="需要什么样的验证，可以为多个值，以逗号格开，值为方法的标志名">
+　　<arg name = "变量名" key = "properties文件的key，或者来自Var的name" resource = "是/否来自资源文件"/>
+　　<var>
+　　<var-name>变量名</var-name>
+　　<var-value>变量值</var-value>
+　　</var>
+　　</field>
+　　</form>
+　　</formset>
+　　</form-validation>
+　　
+　　Commons-Validator（二）
+　　
+　　在Validator的配置文件中，一共有如下几个基本元素。
+　　
+　　一、org.apache.commons.validator.Var
+　　
+　　它的作用是为配置文件(validator.xml)中的其它标签提供可取用的变量，为Field提供执行验证所需要的其它参数值，比如最大长度。这个类有如下属性：name，变量的名称；value，变量的值；jsType，当要自动生成js的时候，js的类型。
+　　
+　　二、org.apache.commons.validator.Arg
+　　
+　　它的作用是替换信息中的某一部分，或者为验证方法提供必需的参数值。这个类有如下属性：bundle，资源文件名，用来存放所需要的信息。key，表示Arg的key或者value。name，表示Arg的名称。position，这个Arg中的值用来替换信息中的哪一部分，需要替换的部分以{n}标志。resource：key所指定的信息是否来自外部的资源文件，默认为true；如果为true，则代表key为buddle属性所指定的资源文件中的key。
+　　
+　　三、org.apache.commons.validator.Msg
+　　
+　　它的作用是在验证不通过时，应该返回什么的信息。这个类有如下属性：bundle，资源文件名，用来存放所需要的信息。key，表示Msg的key或者value。name，表示Msg的名称。resource：key所指定的信息是否来自外部的资源文件，默认为true；如果为true，则代表key为buddle属性所指定的资源文件中的key。
+　　
+　　四、org.apache.commons.validator.FormSet
+　　
+　　这个类管理通过一个Map所有要检验的Form对象，key为Form的name；同时通过一个Map管理在<formset/>中定义的Constant，key为<constant-name>。同时其内部有language，country， variant这几个属性，用来实现国际化。一个配置文件可以有多个FormSet，这些FormSet的区别是要求不同的本地化。
+　　
+　　五、org.apache.commons.validator.Form
+　　
+　　这个类有如下属性：name，这个form的名称。lFields，一个保存所有Field的List。hFields，一个保存所有Field的FastHashMap，这个FastHashMap的key值是对应Field的key属性(对应配置文件中的property)。这个类通过validate(...)方法用来对这个Form中的所有位置低于page的Field进行验证。它实际是在一个循环中逐个调用每个field的validate(...)方法，然后把结果保存在一个ValidatorResults对象中。
+　　
+　　六、org.apache.commons.validator.Field
+　　
+　　这个类有如下属性：depends，依赖于什么验证规则。dependencyList保存了以逗号为分隔符把depends分割生成的list。page，如果是多步提交的话当前是第几步，值等于或小于表单中page性质的值，JavaBean 才会得到处理；args，是一个数组；这个数组的元素为HashMap，每个HashMap在数组的位置就是其中的Arg中的position属性的值；HashMap中的key值为Arg的name，如果这个name为null则为默认的值：DEFAULT_ARG(org.apache.commons.validator.Field.DEFAULT)，value为Arg对象。hVars，是一个FastHashMap，用来管理所有的Var对象，key为Var的name，值为Var对象。getIndexedListProperty表明这个property为JavaBean中的一个数组元素的index。
+　　
+　　1、process(Map globalConstants, Map constants)
+　　
+　　这个方法用来执行配置文件中变量的替换。它的两个参数分别为在<global/>和<formset/>中定义的constant。在这个Map中，key为<constant/>标签中的constant-name，value为<constant-value>。在配置文件中，可以实现如下的变量使用方式：Form的property属性，Var中的value属性，Arg中的key属性，Msg的key属性，他们均可以通过{constant-name}的方式，引用在<global/>或者<formset/>标签中定义的constant。Arg中的key属性，可以通过{Var:var-name}的方式引用在<var/>中定义的Var。
+　　
+　　FormSet中的process(...)方法依次调用其中的Form的process(...)方法，而Form的process(...)方法又依次调用其中的Field的process(...)方法。
+　　
+　　2、validate(Map params, Map actions)
+　　
+　　执行验证，其中actions保存了所有的ValidatorAction对象。它首先会从params取出key为Validator.BEAN_PARAM(java.lang.Object)的值作为要验证的JavaBean。然后通过generateKey()方法判断当前要验证的Field是否是IndexedList。如果是，则需要分别对这个List中的各个元素进行验证；否则直接执行对与JavaBean的特定属性(property)执行验证。
+　　
+　　3、validateForRule(...)
+　　
+　　接受要执行的ValidatorAction对象的同时，还是会接受Map actions参数，这是因为这个要执行的ValidatorAction可能会依赖于其它的ValidatorAction。它会先查找以前的验证结果，如果以前没有执行过这个验证，那么执行runDependentValidators(...)方法，执行它所依赖于的ValidatorAction；如果通过，那么再对要执行的ValidatorAction，执行验证。
+　　
+　　Commons-Validator（三）
+　　
+　　在Validator包中提供了一些Util类，同时提供了对基本数据类型，时间，E-mail，信用卡等格式的验证方法。
+　　
+　　一、org.apache.commons.validator.util.Flags
+　　
+　　这个类用来管理一系列的Flag，其中的每个Flag的值都是2的N次方。然后每个Flag之间位与(&)就得到了整个Flags的值。
+　　
+　　二、org.apache.commons.validator.util.ValidatorUtils
+　　
+　　这个类为Validator提供一些Utility的操作，共有三个方法。
+　　
+　　1、replace(...)
+　　
+　　这个方法用来将一个字符串中某个特性的字符串替换为另一个字符串，注意这是一个全局替换方法。
+　　
+　　2、getValueAsString(...)
+　　
+　　这个方法用来获取某个Bean中的一个特定的属性，然后把属性值转换为字符串返回。注意，String[]和Collection类型的值，如果里面不包含任何值，则直接返回""。
+　　
+　　3、copyFastHashMap(...)
+　　
+　　很显然的是对一个特定的FashHashMap执行copy。这里要注意的是，如果value为Msg，Arg，Var类型的时候需要执行clone，然后再保存。
+　　
+　　三、org.apache.commons.validator.ValidatorUtil
+　　
+　　这个类完全通过调用上面的ValidatorUtils方法，实现自己的同名方法。只是多了一个getDelimitedRegExp(...)方法，用来生成一个正则表达式。
+　　
+　　四、org.apache.commons.validator.DateValidator
+　　
+　　实现了单例模式。这个类用来检查日期类型是否合法，日期的类型要通过参数传递给这个Validator。同时还有一个strict属性，表示时候检查过渡匹配所要求的日期格式。这个日期检查就是通过formatter.parse(value)方法检查时候有异常抛出。
+　　
+　　五、org.apache.commons.validator.EmailValidator
+　　
+　　实现了单例模式。这个类用来检查Email类型是否合法。它通过正则表达式实现验证。
+　　
+　六、org.apache.commons.validator.GenericTyp 

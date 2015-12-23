@@ -1,0 +1,1 @@
+<?xml version='1.0' encoding='GBK'?><p:person xmlns:p="http://pullxml.test/person" p:name="ZhangSan" age="23" p:age="45"><addr:address xmlns:addr="http://pullxml.test/person/address"><addr:address>Xi'An City</addr:address><addr:address>&#x5170;&#x5dde;&#x5e02;</addr:address></addr:address></p:person>

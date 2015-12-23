@@ -1,0 +1,18 @@
+// Change @INSTALL_HOME_FOR_JDMK@ to match your JMX Remote API installation path
+//
+// This grant clause is not required when running on J2SE 1.5
+//
+grant codeBase "file:@INSTALL_HOME_FOR_JDMK@/lib/jmxremote.jar" {
+    permission javax.management.remote.SubjectDelegationPermission "javax.management.remote.JMXPrincipal.delegate";
+};
+
+grant codeBase "file:server" {
+    permission javax.management.remote.SubjectDelegationPermission "javax.management.remote.JMXPrincipal.delegate";
+};
+
+grant principal javax.management.remote.JMXPrincipal "username" {
+    //
+    // Grant the JMXPrincipal "username" the right to act on behalf of a JMXPrincipal "delegate".
+    //
+    permission javax.management.remote.SubjectDelegationPermission "javax.management.remote.JMXPrincipal.delegate";
+};

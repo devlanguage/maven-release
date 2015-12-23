@@ -1,0 +1,13 @@
+1. cmd命令中执行 
+  set SOURCE_PATH="D:\software\dev\eclispe\java_proj\JavaBasic\java\basic\src"
+  set PKG_NAME=org.basic.jdk6.ws.client.async
+  set PKG_NAME=org.basic.jdk6.ws.client.doc_encoded_wrapped
+  set PKG_NAME=org.basic.jdk6.ws.client.doc_literal_bare
+  set PKG_NAME=org.basic.jdk6.ws.client.doc_literal_wrapped  
+  set PKG_NAME=org.basic.jdk6.ws.client.rpc_encoded_wrapped
+  set PKG_NAME=org.basic.jdk6.ws.client.rpc_literal_wrapped  
+	wsimport -d %SOURCE_PATH% -s %SOURCE_PATH% -b custom-client-async.xml -p %PKG_NAME% http://localhost:18888/wstest?wsdl
+	
+	
+	 后在在src目录下生成客 户端调用的两个类： test.jws.client.ref.HelloWorld.java 根据wsdl描述生成的客户端
+	

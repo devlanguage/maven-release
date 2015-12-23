@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory name="hibernateSessionFactory">
+    <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+    <property name="hibernate.connection.password">tellabs</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@sunshapp10:1521:EMS7100S</property>
+    <property name="hibernate.connection.username">ygong1</property>
+    <property name="hibernate.default_schema">ygong1</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.Oracle9iDialect</property>
+  </session-factory>
+</hibernate-configuration>

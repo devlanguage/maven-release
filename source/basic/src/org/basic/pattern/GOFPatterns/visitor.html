@@ -1,0 +1,64 @@
+<HTML>
+
+<HEAD><TITLE>Visitor</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Represent an operation to be performed on the elements of an object
+structure.  Visitor lets you define a new operation without changing the
+classes of the elements on which it operates.</P>
+
+<H2>Solution Overview</H2>
+
+<UL><LI>A client that uses the Visitor pattern must create a ConcreteVisitor
+object and then traverse the object structure, visiting each element
+with the visitor.</LI><P></P>
+
+<LI>When an element is visited, it calls the Visitor operation that
+corresponds to its class.  The element supplies itself as an argument
+to this operation to let the visitor access its state, if necessary.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/visitor.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Visitor</B> (NodeVisitor)</LI><P></P>
+<UL><LI>declares a Visit operation for each class of ConcreteElement
+    in the object structure.  The operation's name and
+    signature identifies the class that sends the Visit
+    request to the visitor. That lets the visitor determine the
+    concrete class of the element being visited.  Then the visitor
+    can access the element directly through its particular interface.</LI></UL><P></P>
+
+<LI><B>ConcreteVisitor</B> (TypeCheckingVisitor)</LI><P></P>
+<UL><LI>implements each operation declared by Visitor. Each operation
+    implements a fragment of the algorithm defined for the corresponding
+    class of object in the structure.  ConcreteVisitor provides the
+    context for the algorithm and stores its local state. This state often
+    accumulates results during the traversal of the structure.</LI></UL><P></P>
+
+<LI><B>Element</B> (Node)</LI><P></P>
+<UL><LI>defines an Accept operation that takes a visitor as an argument.</LI></UL><P></P>
+
+<LI><B>ConcreteElement</B> (AssignmentNode,VariableRefNode)</LI><P></P>
+<UL><LI>implements an Accept operation that takes a visitor as an
+    argument.</LI></UL><P></P>
+
+<LI><B>ObjectStructure</B> (Program)</LI><P></P>
+<UL><LI>can enumerate its elements.</LI><P><!-- extra space --></P>
+
+<LI>may provide a high-level interface to allow the visitor
+    to visit its elements.</LI><P><!-- extra space --></P>
+
+<LI>may either be a composite or a collection such as a list or a set.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Visitor design pattern is not known by another name.</P>
+
+</BODY>
+
+</HTML>

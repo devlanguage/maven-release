@@ -1,0 +1,8 @@
+<Students>
+	<Student stuId="10001">
+		<stuName>ZhangSan-1</stuName>
+	</Student>
+	<Student stuId="10002">
+		<stuName>ZhangSan-2</stuName>
+	</Student>
+</Students>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<menus>
+	<menu name="File">
+		<items>
+			<item name="New">
+				<items>
+					<item name="Project"></item>
+				</items>
+				<items>
+					<item name="Package"></item>
+					<item name="Class"></item>
+					<item name="Interface"></item>
+					<item name="Enum"></item>
+				</items>
+			</item>
+			<item name="Open File"></item>
+		</items>
+		<items>
+			<item name="Close"></item>
+			<item name="CloseAll"></item>
+		</items>
+		<items>
+			<item name="Save"></item>
+			<item name="SaveAs"></item>
+			<item name="SaveAll"></item>
+			<item name="Revert"></item>
+		</items>
+		<items>
+			<item name="Exit"></item>
+		</items>
+	</menu>
+</menus>

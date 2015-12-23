@@ -1,0 +1,52 @@
+<HTML>
+
+<HEAD><TITLE>Command</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Encapsulate a request as an object, thereby letting you parameterize
+clients with different requests, queue or log requests, and support
+undoable operations.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>The client creates a ConcreteCommand object and specifies its receiver.</LI><P></P>
+<LI>An Invoker object stores the ConcreteCommand object.</LI><P></P>
+<LI>The invoker issues a request by calling Execute on the command.  When
+commands are undoable, ConcreteCommand stores state for undoing the
+command prior to invoking Execute.</LI><P></P>
+<LI>The ConcreteCommand object invokes operations on its receiver to carry
+out the request.</LI></UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/command.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Command</B><P></P>
+<UL><LI>declares an interface for executing an operation.</LI></UL><P></P>
+
+<LI><B>ConcreteCommand</B> (PasteCommand, OpenCommand)<P></P>
+<UL><LI>defines a binding between a Receiver object and an action.</LI><P></P>
+<LI>implements Execute by invoking the corresponding operation(s)
+    on Receiver.</LI></UL><P></P>
+
+<LI><B>Client</B> (Application)</LI><P></P>
+<UL><LI>creates a ConcreteCommand object and sets its receiver.</LI></UL><P></P>
+
+<LI><B>Invoker</B> (MenuItem)<P></P>
+<UL><LI>asks the command to carry out the request.</LI></UL><P></P>
+
+<LI><B>Receiver</B> (Document, Application)<P></P>
+<UL><LI>knows how to perform the operations associated with carrying
+    out a request.  Any class may serve as a Receiver.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Command design pattern is also known as the Action, and the Transaction.</P>
+
+</BODY>
+
+</HTML>

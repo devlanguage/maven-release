@@ -1,0 +1,756 @@
+JDBC4.0草案
+第一章 介绍 
+1.1 JDBC类库 
+JDBC类库提供了通过Java语言访问关系数据库的能力。Java程序通过JDBC可以执行SQL语句，对获取的数据进行处理，并将变化了的数据存回数据库。在分布式异构环境中，我们还可以通过JDBC操纵多个数据源。 
+
+JDBC类库基于X/Open SQL通用语言接口(CLI)，ODBC也基于此。JDBC提供了一个使用方便的映射方案：从Java语言到X/Open 通用语言接口和SQL标准的抽象实体及概念的映射。 
+
+自1997年的产生至今，JDBC类库已被广泛的接受和实现。类库的灵活性使得它可以有很多个具体实现。 
+ 
+
+1.2 平台 
+    JDBC类库是Java平台的一部分。4.0版分为两个包：java.sql 和 javax.sql。这两个包都包含在JSE(Java桌面版)和JEE(Java企业版)中。 
+
+1.3 适合读者 
+该文档主要面向下列产品的开发者： 
+    * JDBC驱动程序 
+    * 基于数据库驱动提供三层架构服务的应用服务器 
+    * 使用JDBC类库来提供服务的工具 
+
+该文档想达到以下目的： 
+* 对使用JDBC类库的开发者的一个介绍 
+* 作为开发基于JDBC的类库的起始点 
+
+第二章 目标 
+
+2.1 历史 
+JDBC API是一种成熟的技术，最早发布是1997年1月。在最初的版本中，JDBC API着重提供一个对SQL数据库的基本调用级接口。之后，JDBC 2.1规范和2.0可选包规范拓宽了API的范围。包括支持更高级应用和管理使用JDBC API来增强其应用的应用服务所需的各项特征。 
+JDBC 3.0规范以填补较小范围内的功能缺失为目标。对于JDBC 4.0，我们的目标有两个：提高所有开发者在JAVA平台使用SQL开发的易用性。第二，提供企业级特性的JDBC工具集和API来管理JDBC资源。 
+
+2.2 目标概述 
+下面列出了一般的JDBC API和JDBC 4.0 API的目标和设计原理： 
+
+1.适合J2EE和J2SE平台 
+JDBC API是JAVA平台的重要技术。JDBC 4.0 API应遵循JAVA 2 企业版和JAVA 2 标准版平台的总体方向。另外，最近开发的JAVA 5.0平台已经展示出一系列新的特性和语言的改进，并在本规范中广泛使用。 
+ 
+2.兼容SQL:2003 
+JDBC API提供用JAVA编程语言编写标准SQL来对应用进行程序级访问能力。JDBC 3.0致力于确保其可以支持可广泛支持工业的具有SQL:99特征的子集。对于JDBC 4.0也一样，支持SQL:2003是本规范的一个主要组成部分。我们期望在不久的将来可以实现。 
+
+3.巩固以前的规范 
+本文档把4个以前的JDBC规范组织成一个单一的JDBC API规范。 
+
+4.提供中立于开发商的一般访问特性 
+JDBC API致力于提供支持针对不同开发商应用的高带宽的一般访问特征。其目标是提供与原生应用可以达到的同级别的访问特性。然而，本API必须足够通用和灵活以适应大范围的实施。 
+
+5.关注于SQL 
+JDBC API一直关注于用JAVA编程语言访问相关数据。这个目标曾在JDBC 3.0 API规范中说明，在本规范中仍是一个主要原则。提供API和工具来改进开发难度，并继续集中于在JAVA平台开发基于SQL的软件的需要。与以前的规范相似，本规范也不阻止与其它技术进行交互，如XML，CORBA和非关系型数据。 
+
+6.提供基础数据和更高级别的API 
+JDBC API提供标准API访各种数据源或旧系统。实施的差异使通过JDBC API抽象透明化。这使其成为对想开发可移动工具和应用的工具开发商来说，一个有价值的目标平台。由于它是一个用JAVA编程语言对SQL的“调用”级接口，所以JDBC API也适用于更高级别应用的底层，如EJB 3.0容器管理的持久性，SQLJ和JDBC的RowSet实现。 
+
+7.保持简单 
+JDBC API意欲成为一种使用简单、直接的接口。在之上可以构建更多复杂的实体。这个目标通过定义大量紧凑、单一目的方法来代替少数带有控制标识参数的复杂、多目的的方法来实现。 
+
+8.增强可靠性、可用行和可测性 
+可靠性、可用行和可测性是J2EE和J2SE平台的主题，也是未来JAVA平台的主题。JDBC 4.0 API严格按照以上目标进行。它扩展支持了一些领域，包括资源管理、对逻辑连接预备声明的复用和错误处理。 
+
+9.支持对已有应用和驱动的向后兼容 
+使用已有JDBC技术的驱动和应用必须能够在支持JDBC 4.0 API的JAVA虚拟机上继续工作。那些只使用更早版本中定义的JDBC API（不包括在JDBC 2.0中已废除的）的应用，应该不需要修改就可以继续运行。已有的应用应该可以直接迁移到JDBC 4.0技术。 
+
+10.与JDBC RowSet?工具紧密联系 
+J2SE 5.0包含一个标准JDBC RowSet?工具（在《JDBC RowSet?工具集》中说明（JSR-114））。本规范会提供一个工具集包括工具类级别和元数据语言级别的工具。它允许开发者轻易的把使用JDBC技术的应用迁移到JDBC RowSet?模型。该模型可以断开数据源访问连接，另外能够管理来自于XML驻留点的关系数据存储。 
+
+11.允许对连接器的向前兼容 
+连接器构架定义了一个标准方法来对资源适配器进行打包和布署。它允许一个J2EE容器整合它与外部资源的连接、处理和安全管理。JDBC 4.0 API提供JDBC驱动到连接器架构的迁移路径。对那些产品中使用JDBC技术的开发商来说，应可以转向对连接器API的实现。希望这些实现会重新包装已有数据源的实现。这样他们可以对连接器框架进行复用。 
+
+12.清晰的列明需求 
+遵从JDBC要求的需求，要明确和易于识别。JDBC 4.0规范和API文档（Javadoc）会明晰什么特性是需要的，什么特性是可选的。 
+
+第三章 新特性概述 
+
+3.1 变更概述 
+JDBC 4.0 API在如下领域引入新事物和变化： 
+ 
+自动载入java.sql.Driver 
+     修改DriverManager.getConnection，利用J2SE服务提供机制自动载入JDBC驱动。取消调用Class.forName的需要。
+  Enumeration<Driver> drivers = DriverManager.getDrivers();
+  
+易于开发API
+    加入了许多标准JDBC注解并支持通用DataSet以利于Java应用程序与SQL数据源的交互。 
+
+ROWID数据类型 
+    加入java.sql.RowID数据类型。允许JDBC程序访问SQL ROWID。 
+    java.sql.RowIdLifetime DatabaseMetaData.getRowIdLifetime();
+    ROWID_UNSUPPORTED、ROWID_VALID_FOREVER、ROWID_VALID_OTHER、ROWID_VALID_SESSION 和 ROWID_VALID_TRANSACTION
+    ResultSet.getRowId()/setRowId() 
+ 
+国际字符集置换支持 
+    增加了NCHAR、NVARCHAR、LONGNVARCHAR和NCLOB等JDBC类型。在PreparedStatement接口中增加了setNCharacterStream、setNClob方法。 
+
+增强支持BLOB、CLOB 
+    在Connection接口中加入额外的方法，允许创建BLOB、CLOB对象。PreparedStatement接口已有使用InputStream 对象插入BLOB对象的方法和用Reader对象CLOB、NCLOB对象的方法。Blob、Clob和Nclob接口已增加了方法可以释放已获得的对象资源。 
+
+支持SQL/XML和XML 
+    SQL2003介绍了在SQL datastor中如何表达XML数据的想法。这里另加入新的API使应用程序可以访问以上数据。 
+    SQLXML xml = connection.createSQLXML(); 
+    Writer writer = xml.setCharacterStream();
+        Writer       xml.setCharacterStream(); 
+        Reader       xml.getCharacterStream()
+        OutputStream xml.setBinaryStream();
+        InputStream  xml.getBinaryStream();
+        String       xml.setString(String);
+        String       xml.getString();
+        <T extends javax.xml.transform.Result> T setResult(Class<T> resultClass);
+        <T extends javax.xml.transform.Source> T getSource(Class<T> sourceClass)
+         
+    BufferedReader reader = new BufferedReader(new FileReader("test.xml")); 
+    String line= null; 
+    while((line = reader.readLine() != null) { 
+          writer.write(line); 
+    } 
+
+打包模式 
+    增加了解开JDBC class的能力，以使用开发商提供的非标准JDBC方法。 
+
+增强SQLException 
+    加入了支持J2SE例外。SQLException现在支持迭代接口，允许在for-each循环中使用。加入了两类SQLException： SQLTransientException?和SQLNonTransientExeption.。每类提供新的SQLException子类以映射公共 SQLState类值。 
+
+连接管理 
+    增强Connection和Statement接口，改善对连接状态的跟踪，在池环境中对状态对象的管理更具灵活性。 
+
+JDBC API变更 
+    如下JDBC接口发生了变更：
+    DataSource
+                    增加了createQueryObject方法。
+    PooledConnection
+                    增加了addStatementEventListener和removeStatementEventListener方法。 
+    Connection
+                    增加了createBlob、createClob、createNClob、createQueryObject、isValid、reateXML、getClientInfo、setClientInf方法。
+    Statement 
+                   增加了isClosed和getResultSetHoldability方法                  
+    CallableStatement
+                    增加了getRowId、setRowId、getNClob、setNString、setNCharacterStream、setNClob、getSQLXML、setSQLXML方法。覆盖了setClob和setBlob方法。 
+    DatabaseMetaData
+                    增加了getRowIdLifetime、autoCommitFailureClosesAllResultSets、 providesQueryObjectGenerator、getClientInfoProperties和 supportsStoredFunctionsUsingCallSyntax方法。覆盖了getSchemas方法。 
+    PreparedStatement
+                    增加了setRowId, setNString, setNCharacterStream、setSQLXML、isPoolable、setPoolable和setNClob方法。覆盖了setClob和setBlob方法。 
+    ResultSet
+                     增加了getHoldability、getRowId、updateRowID、getNClob、isClosed、updateNString、getSQLXML、updateSQLXML和updateNClob方法。
+ 
+
+详见第五章《类与接口》中受以上变更影响的类和接口的清单
+
+第四章 概述 
+JDBC API提供了让java程序访问一个或多个数据源的方法。主流的案例中，数据源是关系数据库，数据的访问通过SQL。当然，也可以在其它数据源（如传统的文档系统和面向对象系统）上实现JDBC驱动。JDBC API的主要动力是提供一套面向应用的标准API，以访问多种数据源。 
+本章介绍JDBC API的一些关键概念。另外，介绍两种JDBC应用的公共环境，并讨论各自实现的功能性差异。两层和三层模型是两种逻辑结构，它们可以在各种物理结构中实现。 
+
+
+4.1 建立连接 
+JDBC API定义了Connection接口来表示对数据源的连接。 
+
+典型的方案是，一个JDBC应用使用下面两种机制之一来连接一个目标数据源：
+    DriverManager?—该类已完全实现，并在最早的JDBC 1.0 API已引入。它需要应用程序使用一个固定编码的URL载入一个专门的驱动。 
+    DataSource?—该接口在JDBC 2.0 Optional Package API中引入。最好是跳过DriverManager，因为它要求底层数据源的详细信息对应用程序透明。一个DataSource对象的属性是一批。因此，它表示一个独有的数据源。当它的getConnection方法被调用，该DataSource实例会返回一个对那个数据源的连接。一个应用程序可以直接连接到多个数据源，只需要改变DataSource对象属性即可，不需要改变应用程序代码。同样的可以改变一个DataSource实现而无需改变使用它的应用程序代码。 
+ 
+JDBC API也定义了DataSource接口两种重要的扩展来支持企业应用。即为如下两个接口： 
+    ConnectionPoolDataSource? —支持对物理连接的缓存和复用，以提高应用的性能和可伸缩性。 
+    XADataSource? —提供连接使之可以进行颁分布式处理。 
+ 
+4.2 执行SQL声明和操作结果集 
+一旦连接建立，应用程序就可以使用JDBC API对目标数据源执行查询和更新。JDBC API提供访问大多数据具有SQL2003特性的一般实现的能力。因为不出厂商在这些特性中支持的级别不同，JDBC API包含了DatabaseMetadata接口。应用程序可以使用该接口来决定它们使用的数据源是否支持某一特性。JDBC API也定义了escape syntax以允许应用程序访问非标准厂商提供的特性。使用escape syntax给JDBC应用作为原生应用访问相同特性集带来了好处，同时也为维护应用程序的可移动性带来了好处。 
+应用程序使用Connection接口中的方法来指明处理属性并创建Statement、PreparedStatement或者 CallableStatement?对象。这些声明用于执行SQL声明并获取结果集。ResultSet接口封装了SQL查询结果集。声明可以是批量的，允许应用程序对一个数据源提交多个更新作为一个单元来执行。 
+JDBC API通过RowSet接口扩展了ResultSet接口，因此可以提供一个表格型数据容器。该容器比标准结果集更具通用性。RowSet对象是一个 JavaBeans?组件，它可以在不连接数据源的情况下进行操作。例如：一个RowSet实现可以被序列化并通过网络发送出去。这对小空间客户端希望操作表型数据而不想带入额外的JDBC驱动和数据源连接尤其有用。RowSet实现的另一个特征是它可以使使用者访问任何具有表型格式的数据，不仅仅是关系数据库数据。另外，一个RowSet对象可以在与数据源断开的情况下更新行，并且该实现可以让使用者把这些更新写入到底层的数据源。 
+
+4.2.1 支持SQL高级数据类型 
+JDBC API定义了标准映射把SQL数据类型转换成JDBC数据类型或者相反。这包括支持SQL2003高级数据类型如BLOB、CLOB、ARRAY、 REF、STRUCT和DISTINCT。JDBC驱动也可以实现更多定制类型映射以支持用户定义类型（UDTs）。这时UDT被映射成为Java语言中的一个类。JDBC API也提供支持其它可管理的数据，如在数据源之外的一个文档。 
+
+4.3 两层模型 
+两层模型按功能分成了客户层和服务层，如图4-1： 
+
+http://www.pgsqldb.org/twiki/pub/PgSQL/OverView/4.1.bmp 
+
+客户层包括应用程序和一个或多个JDBC驱动，应用程序负责处理如下领域： 
+
+ 
+
+ 
+
+表示逻辑 
+业务逻辑 
+多指令（multiple-statement）事务或分布事务的事务管理 
+资源管理 
+ 
+
+在此模型中，应用程序直接与JDBC驱动交互，包括建立和管理物理连接及对底层数据源实现的细节处理。应用程序可以利用非标准特性实现它的专有功能或进行执行优化。此模型的一些缺点是： 
+
+ 
+
+ 
+
+在基础构架上和系统级功能上，混杂了表示逻辑和业务逻辑。这使得在优良定义的构架中建立可维护代码带来了障碍。 
+ 
+
+由于针对专门的数据库进行了优化，使得应用程序缺乏可移植性。应用程序如需连接多种数据库必须考虑不同厂商间实现的差异。 
+ 
+
+有限的伸缩性。典型的，应用程序会对数据库保持一个或多个物理连接，直到其结束。应用程序会支持有限的并发。在此模型中，JDBC驱动来负责性能、可伸缩性和可用性等问题以及对底层数据源的响应。如果一个应用程序使用多个驱动，还要考虑每个驱动/数据源对之间处理问题的不同差异。 
+ 
+
+ 
+
+4.4 三层模型 
+三层模型引入了中间层服务，驻留业务逻辑和底层结构。如下图4-2所示： 
+
+http://www.pgsqldb.org/twiki/pub/PgSQL/OverView/4.2.bmp 
+
+此构架的设计用来改善企业应用的性能、可伸缩性和可用性。各层功能划分如下： 
+
+ 
+
+客户层—该层实现与人交互的表示逻辑。Java程序、web浏览器和PDA是典型的客户层实现。客户与中间层应用交互并不需要知道底层结构或底层数据源的功能。 
+中间层服务—中间层包括： 
+ 
+
+ 
+
+
+应用程序与客户交互并实现业务逻辑。如果应用程序包括与数据源交互，它会进行更高级的抽象，如DataSource对象和逻辑连接而不是更低级的驱动API。 
+ 
+
+ 
+
+ 
+
+
+一个应用服务器提供支持各种应用的基础结构。包括对物理连接的管理和连接池、事务管理和屏蔽不同JDBC驱动之间的差异。最后一点使得更容易编写可移植应用程序。应用服务器可以用J2EE服务器实现。应用服务器实现对使用的应用和与JDBC驱动直接交互的更高级抽象。 
+ 
+
+ 
+
+ 
+
+
+JDBC驱动提供对底层数据源的连接。每个驱动根据底层数据源支持的特性实现标准JDBC API。驱动层可以屏蔽标准SQL2003与数据源支持的内部语言的差异。如果数据源不是关系数据库，驱动会实现关系层供应用服务器使用。 
+ 
+
+ 
+
+底层数据源—该层为数据驻留层。它可以包括关系数据库、传统文件系统、面向对象数据库、数据仓库、电子表格或其它方式的数据表示或数据包装。它只需要相应的驱动来支持JDBC API。 
+ 
+
+4.5 J2EE平台的JDBC 
+J2EE组件，如JavaServer Pages、Servlets和Enterprise Java Beans（EJB）组件，经常需要访问关系数据和使用JDBC API进行访问。当J2EE组件使用JDBC API时，该容器对事务和数据源进行管理。这也就是说J2EE组件开发人员不直接使用JDBC API的事务管理和数据源管理工具。需要更多细节参见J2EE平台说明书。
+
+第五章 类和接口 
+以下类和接口组成了JDBC类库 
+
+ 
+
+5.1 java.sql包 
+JDBC核心类库包含在java.sql包中。java.sql包中的注释(annotations)、枚举、类和接口如下。注释、枚举和类使用粗体；接口使用正常字体。 
+
+java.sql.AutoGeneratedKeys 
+java.sql.Array
+java.sql.BaseQuery
+java.sql.BatchUpdateException 
+java.sql.Blob
+java.sql.CallableStatement
+java.sql.ClientInfoException 
+java.sql.Column 
+java.sql.Clob
+java.sql.Connection
+java.sql.DataSet
+java.sql.DataTruncation 
+java.sql.DatabaseMetaData
+java.sql.Date 
+java.sql.Driver
+java.sql.DriverManager 
+java.sql.DriverPropertyInfo 
+java.sql.NClob
+java.sql.ParameterMetaData
+java.sql.PreparedStatement
+java.sql.Query 
+java.sql.QueryObjectFactory 
+java.sql.QueryObjectGenerator
+java.sql.Ref
+java.sql.ResultSet
+java.sql.ResultSetMetaData
+java.sql.RowId
+java.sql.RowIdLifeTime 
+java.sql.Savepoint
+java.sql.SQLData
+java.sql.SQLDataException 
+java.sql.SQLException 
+java.sql.SQLInput
+java.sql.SQLIntegrityConstraintViolationException 
+java.sql.SQLInvalidAuthorizationSpecException 
+java.sql.SQLNonTransientConnectionException 
+java.sql.SQLNonTransientException 
+java.sql.SQLOutput
+java.sql.SQLPermission
+java.sql.SQLSyntaxErrorException 
+java.sql.SQLTimeoutException 
+java.sql.SQLTransactionRollbackException 
+java.sql.SQLTransientConnectionException 
+java.sql.SQLTransientException 
+java.sql.SQLXML
+java.sql.SQLWarning 
+java.sql.Statement
+java.sql.Struct
+java.sql.Table 
+java.sql.Time 
+java.sql.Timestamp 
+java.sql.Types 
+java.sql.Update 
+java.sql.Wrapper
+
+
+下列类和接口是新增的或经过修改的。新的类和接口用粗体标出。 
+
+java.sql.AutoGeneratedKeys 
+java.sql.BaseQuery 
+java.sql.Blob
+java.sql.CallableStatement
+java.sql.ClientInfoException 
+java.sql.Clob
+java.sql.Column 
+java.sql.Connection
+java.sql.DatabaseMetaData
+java.sql.NClob 
+java.sql.PreparedStatement
+java.sql.Query 
+java.sql.QueryObjectFactory 
+java.sql.QueryObjectGenerator 
+java.sql.ResultSet
+java.sql.RowId 
+java.sql.RowIdLifeTime 
+java.sql.SQLDataException 
+java.sql.SQLException
+java.sql.SQLIntegrityConstraintViolationException 
+java.sql.SQLInvalidAuthorizationSpecException 
+java.sql.SQLNonTransientConnectionException 
+java.sql.SQLNonTransientException 
+java.sql.SQLSyntaxErrorException 
+java.sql.SQLTimeoutException 
+java.sql.SQLTransactionRollbackException 
+java.sql.SQLTransientConnectionException 
+java.sql.SQLTransientException 
+java.sql.SQLXML 
+java.sql.SQLWarning
+java.sql.Statement
+java.sql.Table 
+java.sql.Types
+java.sql.Update 
+java.sql.Wrapper 
+javax.sql.CommonDataSource 
+javax.sql.StatementEvent 
+javax.sql.StatementEventListener 
+
+
+图5-1显示了java.sql包中关键类和接口之间的交互和关系，以及用于创建语句、设置参数、检索结果的方法。
+ 
+
+图5-1 java.sql包中主要类和接口之间的关系 
+
+ 
+
+5.2 javax.sql包 
+java.sql包中的类和接口如下。类使用粗体；接口使用正常字体。 
+
+javax.sql.CommonDataSource
+javax.sql.ConnectionEvent 
+javax.sql.ConnectionEventListener
+javax.sql.ConnectionPoolDataSource
+javax.sql.DataSource
+javax.sql.PooledConnection
+javax.sql.RowSet
+javax.sql.RowSetEvent 
+javax.sql.RowSetInternal
+javax.sql.RowSetListener
+javax.sql.RowSetMetaData
+javax.sql.RowSetReader
+javax.sql.RowSetWriter
+javax.sql.StatementEvent 
+javax.sql.StatementEventListener
+javax.sql.XAConnection
+javax.sql.XADataSource
+
+
+ 
+
+
+--------------------------------------------------------------------------------
+
+注意 ：javax.sql包中的类和接口最开始是作为JDBC 2.0可选包引入的。可选包独立于java.sql包提供。 现在两者都包含在J2SE 1.4中。 
+
+
+--------------------------------------------------------------------------------
+
+图5-2，图5-3，图5-4和图5-5显示了以下功能领域中关键类和接口之间的关系：DataSource对象，池化连接，分布式事务，行集。 
+
+ 
+
+图5-2 javax.sql.DataSource和java.sql.Connection之间的关系 
+
+ 
+
+图5-3 连接池化过程中涉及的关系 
+
+ 
+
+图5-4 分布式事务支持中涉及的关系 
+
+ 
+
+图5-5 行集涉及的关系 
+
+ 
+
+第6章 兼容性 
+这一章描述了JDBC类库实现在各个兼容级别要支持的特性。一个JDBC类库实现包含了一个JDBC驱动和底层数据源。兼容性定义了在驱动层之上要实现的特性。 
+
+任何没有提到的特性都是可选的。通常，如果底层数据源不支持，驱动不需要实现这个特性。 
+
+ 
+
+6.1 定义 
+为了避免混淆，我们将在兼容性的讨论中使用以下术语： 
+
+ 
+
+JDBC类库实现 --- 一个JDBC驱动和它的底层数据源。驱动可能提供对底层数据源没有实现的特性的支持。它也可能提供标准语法/语义到数据源本地类库的映射。 
+ 
+
+相关规范 --- 这个类库规范以及其他相关的SQL规范。如果一个特性在多个文档里被描述，我们应该考虑被排在最前面的文档。对于JDBC 1.0类库来说，相关的SQL规范包括SQL92和X/Open SQL CLI。对于JDBC2.0和3.0类库，它包括SQL92加上SQL99和X/Open SQL CLI的相关部分。对于JDBC 4.0类库，它包括SQL92以及SQL2003和X/Open SQL CLI的相关部分。 
+ 
+
+支持特性 --- 在相关规范中定义了特性的标准语法和语义，JDBC类库实现要按照语法和语义的规定支持这些特性。 
+ 
+
+扩展 --- 一个没有被相关规范定义的特性，或者是，相关规范中特性的非标准实现。 
+ 
+
+完整实现 --- 一个接口的所有方法都被实现。 
+ 
+
+需要的接口 --- 要支持的接口，但不一定要完整实现。接口里没有实现的方法应抛出SQLException，说明不支持该特性。 
+ 
+
+6.2 指导原则和要求 
+下列指导原则适合所有级别的兼容性： 
+
+ 
+
+一个JDBC类库实现必须支持入门级别SQL92（Entry Level SQL92）和“Drop Table”SQL命令（请参照注意事项）。 
+
+--------------------------------------------------------------------------------
+
+入门级别SQL92（Entry Level SQL92）是JDBC类库实现要支持的最低SQL级别。对SQL99或SQL2003中特性的访问应该与SQL99或SQL2003规范的相关部分一致。 
+
+
+--------------------------------------------------------------------------------
+
+ 
+
+驱动必须支持转义语法。转义语法将在第13章“语句”中讲述。 
+ 
+
+驱动必须支持事务。详见第9章“事务”。 
+ 
+
+驱动应该提供对底层数据源所有特性的访问，包括扩展了JDBC类库的特性。如果一个特性没有被支持，特性对应的方 法应该抛出SQLException。这样使得JDBC程序可以访问与本地应用相同的特性集。 
+ 
+
+如果从DatabaseMetaData的方法得知驱动支持给定的特性，则驱动要保证特性的语法和语义应该跟相关规范一致。这意味着，如果数据源的本地类库或语法与标准不一致，驱动要提供相应的映射。 
+ 
+
+支持一个特性，还必须实现相关的元数据方法。例如，一个驱动支持RowSet接口，它还要实现RowSetMetaData接口。 
+ 
+
+不支持一个特性，则对应的DatabaseMetaData方法要“拒绝访问”：对不支持特性的方法的访问要抛出SQLException。 
+ 
+
+
+--------------------------------------------------------------------------------
+
+注意 ：JDBC类库实现要支持“SQL92 - 过渡级别”中定义的DROP TABLE命令，但对CASCADE和RESTRICT选项的支持 是可选的。而且，当要被删除的表有视图（views）和完整性约束时，DROP TABLE的行为也是实现类库的厂商自己定义的。 
+
+
+--------------------------------------------------------------------------------
+
+ 
+
+6.3 JDBC 1.0 类库兼容性 
+与JDBC 1.0 类库兼容的驱动应满足以下条件： 
+
+遵守前述指导原则和要求 
+完整实现下列接口： 
+java.sql.Driver 
+java.sql.DatabaseMetaData（除了在高版本中引入的方法） 
+java.sql.ResultSetMetaData（除了在高版本中引入的方法） 
+包含下列需要的接口（“需要的接口”的定义见6.1） 
+java.sql.CallableStatement 
+java.sql.Connection 
+java.sql.PreparedStatement 
+java.sql.ResultSet 
+java.sql.Statement 
+ 
+
+6.4 JDBC 2.0 类库兼容性 
+与JDBC 2.0 类库兼容的驱动应满足以下条件： 
+
+遵守JDBC 1.0 类库需求 
+在DatabaseMetaData中增加下列方法的实现： 
+deletesAreDetected 
+getConnection 
+getUDTs 
+insertsAreDetected 
+othersDeletesAreVisible 
+othersInsertsAreVisible 
+othersUpdateAreVisible 
+ownDeletesAreVisible 
+ownInsertsAreVisible 
+ownUpdatesAreVisible 
+supportsBatchUpdates 
+supportsResultSetConcurrency 
+supportsResultSetType 
+updatesAreDetected 
+ 
+
+在ResultSetMetaData里增加下列方法的实现： 
+getColumnClassName 
+getColumnType 
+getColumnTypeName 
+ 
+
+6.5 JDBC 3.0 类库的兼容性 
+与JDBC 3.0 类库兼容的驱动应满足以下条件： 
+
+遵守JDBC 1.0 类库需求 
+包含下列需要的接口： 
+java.sql.ParameterMetaData 
+java.sql.Savepoint 
+在DatabaseMetaData中增加下列方法的实现： 
+supportsSavepoints 
+supportsNamedParameters 
+supportsMultipleOpenResults 
+supportsGetGeneratedKeys 
+getSuperTypes 
+getSuperTables 
+getAttributes 
+getResultSetHoldability 
+supportsResultSetHoldability 
+getSQLStateType 
+getDatabaseMajorVersion 
+getDatabaseMinorVersion 
+getJDBCMajorVersion 
+getJDBCMinorVersion 
+ 
+
+6.6 JDBC 4.0 类库的兼容性 
+与JDBC 4.0 类库兼容的驱动应满足以下条件： 
+
+遵守JDBC 3.0 类库需求 
+包含下列需要的接口： 
+java.sql.RowId 
+java.sql.QueryObjectGenerator 
+java.sql.DataSet 
+在DatabaseMetaData里增加下列方法的实现： 
+getRowIdLifetime 
+supportsStoredFunctionsUsingCallSyntax 
+providesQueryObjectGenerator 
+ 
+
+
+--------------------------------------------------------------------------------
+
+注意 ：这一段将在下一版草案更新 
+
+
+--------------------------------------------------------------------------------
+
+ 
+
+6.7 决定兼容级别 
+JDBC 类库是Java平台不可或缺的一部分。与JDBC类库规范兼容是与整个平台兼容的一个子集。 
+
+ 
+
+
+--------------------------------------------------------------------------------
+
+注意 ：在编写这个文档之际，还没有独立于平台检查JDBC类库兼容级别的。 
+
+
+--------------------------------------------------------------------------------
+
+ 
+
+6.8 不赞成使用的类库 
+不赞成使用是针对类、接口、构造器、方法或字段来说的，即不再被推荐使用，而且可能在将来某个版本不复存在。 
+
+JDBC 2.0类库中不赞成使用的构造器和方法： 
+
+java.sql.CallableStatement.getBigDecimal(int, int) 
+
+java.sql.Date(int, int, int)
+java.sql.Date.getHours()
+java.sql.Date.getMinutes()
+java.sql.Date.getSeconds()
+java.sql.Date.setHours(int)
+java.sql.Date.setMinutes(int)
+java.sql.Date.setSeconds(int)
+
+
+java.sql.DriverManager.getLogStream()
+java.sql.DriverManager.setLogStream(PrintStream?)
+
+
+java.sql.PreparedStatement.setUnicodeStream(int, InputStream?, int) 
+
+java.sql.ResultSet.getBigDecimal(int, int)
+java.sql.ResultSet.getBigDecimal(String, int)
+java.sql.ResultSet.getUnicodeStream(int)
+java.sql.ResultSet.getUnicodeStream(String) 
+
+java.sql.Time(int, int, int)
+java.sql.Time.getDate()
+java.sql.Time.getDay()
+java.sql.Time.getMonth()
+java.sql.Time.getYear()
+java.sql.Time.setDate(int)
+java.sql.Time.setMonth(int)
+java.sql.Time.setYear(int) 
+
+java.sql.Timestamp(int, int, int, int, int, int, int) 
+
+ 
+
+数据库元数据 
+第7章 数据库元数据 
+JDBC驱动通过实现DatabaseMetaData接口来提供底层数据源的信息。DatabaseMetaData接口主要被应用服务器和工具使用，以此决定怎样跟给定数据源交互。应用也可以通过DatabaseMetaData的方法得到数据源的信息，但这不常用。 
+
+DatabaseMetaData?接口有超过150个方法，根据提供的信息可以分为以下几类： 
+
+提供数据源的一般信息 
+判断数据源是否支持某种特性或具有某种能力 
+数据源的限制 
+数据源包含哪些SQL对象以及这些对象的属性 
+数据源提供的事务支持 
+DatabaseMetaData?接口还有超过40个字段，这些字段用于DatabaseMetaData中各种方法的常量返回值。 
+
+这一章粗略介绍一下DatabaseMetaData接口，通过举例子对元数据方法进行分类，同时介绍一些新的方法。详细介绍请参考JDBC 4.0 类库规范 
+
+JDBC中的ResultSetMetaData接口将在第15章“结果集”介绍。 
+
+ 
+
+7.1 创建DatabaseMetaData对象 
+DatabaseMetaData?对象由Connection的getMetaData方法创建，然后我们可以利用它来动态获取底层数据源的信息。代码示例 7-1 创建了一个DatabaseMetaData对象，并用它来查看表名允许的最大字符数。 
+
+ 
+
+// con是一个Connection对象
+DatabaseMetaData dbmd = con.getMetadata();
+int maxLen = dbmd.getMaxTableNameLength();
+代码示例 7-1 创建和使用DatabaseMetaData对象 
+
+ 
+
+7.2 获取一般信息 
+DatabaseMetaData?中有一类方法用于获取底层数据源的一般信息，或者它的一些实现细节。这类方法有： 
+
+getURL 
+getUserName 
+getDatabaseProductVersion, getDriverMajorVersion 和 getDriverMinorVersion 
+getSchemaTerm, getCatalogTerm 和 getProcedureTerm 
+nullsAreSortedHigh 和 nullsAreSortedLow 
+usesLocalFiles 和 usesLocalFilePerTable 
+getSQLKeywords 
+ 
+
+7.3 查看支持的特性 
+大量DatabaseMetaData方法可以用来判断驱动或底层数据源是否支持某个特性或特性集。还有一些方法可以告知提供支持的级别。 
+
+判断是否支持某个特性的方法如下： 
+
+supportsAlterTableWithDropColumn 
+supportsBatchUpdates 
+supportsTableCorrelationNames 
+supportsPositionedDelete 
+supportsFullOuterJoins 
+supportsStoredProcedures 
+supportsMixedCaseQuotedIdentifiers 
+查看特性支持级别的方法： 
+
+supportsANSI92EntryLevelSQL 
+supportsCoreSQLGrammar 
+ 
+
+7.4 数据源限制 
+另一组方法提供数据源对操作的限制信息，如下： 
+
+getMaxRowSize 
+getMaxStatementLength 
+getMaxTablesInSelect 
+getMaxConnections 
+getMaxCharLiteralLength 
+getMaxColumnsInTable 
+方法返回一个整型的限制数。0表示没有限制或未知限制。 
+
+ 
+
+7.5 SQL对象及其属性 
+DatabaseMetaData?中有一组方法提供组成数据源之SQL对象的信息。这组方法也包含获取SQL对象属性的方法。方法的返回值是一个ResultSet，ResultSet的每一行代表一个特定对象。例如，getUDTs方法返回的ResultSet里每一行都是数据源里定义的一个UDT（user-defined type）。这类方法主要有： 
+
+getSchemas 
+getCatalogs 
+getTables 
+getPrimaryKeys 
+getProcedures 
+getProcedureColumns 
+getUDTs 
+ 
+
+7.6 事务支持 
+一小部分方法提供数据源所支持事务的语义信息。这类方法主要有： 
+
+supportsMultipleTransactions 
+getDefaultTransactionIsolation 
+ 
+
+7.7 新增方法 
+JDBC 4.0 类库在DatabaseMetaData中引入了下列新方法： 
+
+getSchemas --- 重载了已有的getSchemas方法，使用目录和模式作为参数。 
+supportsStoredFunctionsUsingCallSyntax --- 判断用户或厂商自定义的方法是否可以使用存储过程转义语法来调用。 
+autoCommitFailureClosesAllResultSets --- 当autoCommit设置为true时，标示程序错误抛出SQLException后是否所有打开着的结果集（包括持久（holdable）结果集）都被关闭。 
+providesQueryObjectGenerator --- 标示JDBC驱动是否提供自己的QueryObjectGenerator实现。 
+getClientInfoProperties --- 获取驱动支持的客户端属性列表。 
+这些方法的完整定义见JDBC 4.0 类库规范（javadoc）。 
+
+ 
+
+7.8 经过修改的方法 
+JDBC 4.0 类库修改了DatabaseMetaData中下列方法的定义： 
+
+getTypeInfo --- 如果数据库支持SQL distinct类型，则getTypeInfo()返回一行TYPE_NAME字段为DISTINCT，DATA_TYPE字段为Types.DISTINCT的一行数据。如果数据库支持SQL结构化类型，则getTypeInfo()返回TYPE_NAME字段为STRUCT、DATA_TYPE为Types.STRUCT的一行数据。也添加了对SQLXML和ROWID这些新的数据类型的支持。 
+（原文：Clarified to indicate that if the database supports SQL distinct types, then getTypeInfo() will return a single row with a TYPE_NAME of DISTINCT and a DATA_TYPE of Types.DISTINCT. If the database supports SQL structured types, then getTypeInfo() will return a single row with a TYPE_NAME of STRUCT and a DATA_TYPE of Types.STRUCT. Support has also been added for the new data types SQLXML and ROWID.） 
+
+ 
+
+getCrossReference --- 得到给定外键表中外键列的描述信息，从父表返回的列数应该匹配外键列数。它们按照FKTABLE_CAT, FKTABLE_SCHEM, FKTABLE_NAME 和 KEY_SEQ排序。 
+（原文：Clarified that the method retrieves a description of the foreign key columns in the given foreign key table that reference the primary key or the unique constraint columns of the parent table (could be the same or a different table). The number of columns returned from the parent table must match the number of columns that make up the foreign key. They are ordered by FKTABLE_CAT, FKTABLE_SCHEM, FKTABLE_NAME, and KEY_SEQ.） 
+
+ 
+
+getColumns --- 阐明当COLUMN_DEF的返回值被引号括起来时，它应该被解释为一个字符串。 
+（Clarified that the return value for COLUMN_DEF that the default value for the column, should be interpreted as a string when the value is enclosed in quotes.） 
+
+ 
+
+getProcedures --- 添加了SPECIFIC_NAME列。返回行按照PROCEDURE_SCHEM，PROCEDURE_NAME 和 SPECIFIC_NAME 排序。 
+ 
+
+getProcedureColumns --- 添加了COLUMN_DEF，SQL_DATATYPE，SQL_DATETIME_SUB，CHAR_OCTET_LENGTH，ORDINAL_POSITION，IS_NULLABLE 和 SPECIFIC_NAME列。返回行按照PROCEDURE_SCHEM，PROCEDURE_NAME 和 SPECIFIC_NAME 排序。 
+JDBC 4.0 类库规范中有这些方法更新后的定义。

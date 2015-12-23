@@ -1,0 +1,53 @@
+module org{
+  module basic{
+    module corba{
+      module poa{//oldImplBase,poa
+        module fall{//fall,fallTIE
+          module entity{
+               enum Sex{Female,Male};
+               enum IconSizes { Micro, Small, Medium, Large };
+               enum IconFontSizes { NoLabel, SmallFont, MediumFont, LargeFont };
+               enum FontStyles { Plain, Bold, Italic, BoldItalic };
+               enum MapLayerIds {World, State, InterStateRoads, StateCounty, MajorCities, StateCities, StateRoads };
+               enum ViewAssocType {UserAssoc, SystemAssoc, BestFitCoord };     
+               struct Student{
+                 string stuName;
+                 IconSizes iconSize;
+                 Sex sex;  
+               };
+               struct Bounds
+               { 
+                    double left;
+                    double top;
+                    double right;
+                    double bottom;
+               };
+               
+               
+               
+               typedef sequence<string> StringList;
+         };
+         interface FileInterface{
+            struct Data
+            {
+                long viewId; //Numeric Id assigned by database
+                double overlap;
+                string name;
+                boolean filterLabels;
+                boolean systemView;
+                boolean overwrite;
+                boolean deleteThis;
+                entity::Bounds viewExtent;
+                entity::IconSizes iconSize; //enum IconSize { Micro, Small, Medium, Large };
+                entity::IconFontSizes iconFontSize; //enum IconFontSize { NoLabel, Small, Medium, Large };
+                entity::StringList geoEntities;
+            };
+            typedef sequence<Data> DataList;
+            DataList downloadFile(in string fileName);
+            entity::Student sayHi(in string user);
+          };
+        };      
+      };
+    };  
+  };      
+};

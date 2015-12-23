@@ -1,0 +1,16 @@
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+     <ns2:sayHello xmlns:ns2="http://www.jd6webservice.org/hello">
+        <sayHelloUserPart>test01</sayHelloUserPart>
+        <sayHelloAgePart>22</sayHelloAgePart>
+     </ns2:sayHello>
+  </S:Body>
+</S:Envelope>
+<?xml version='1.0' encoding='UTF-8'?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+     <ns2:sayHelloResponse xmlns:ns2="http://www.jd6webservice.org/hello">
+        <sayHelloPart>Hello:test01</sayHelloPart>
+     </ns2:sayHelloResponse>
+  </S:Body>
+</S:Envelope>

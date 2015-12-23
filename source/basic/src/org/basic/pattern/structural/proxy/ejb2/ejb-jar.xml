@@ -1,0 +1,257 @@
+<?xml version="1.0"?> 
+
+<!DOCTYPE ejb-jar PUBLIC 
+  '-//Sun Microsystems, Inc.//DTD Enterprise JavaBeans 2.0//EN' 
+  'http://java.sun.com/dtd/ejb-jar_2_0.dtd'>
+<ejb-jar>
+	<description>
+		This is an optional description of the ejb-jar file 
+  </description>
+	<display-name>Optional short name used by tools</display-name>
+	<small-icon>
+		The filename for a 16x16 GIF or JPEG image included in the
+		JAR to
+		represent the bean (optional).
+  </small-icon>
+	<large-icon>
+		The filename for a 32x32 icon image (optional).
+  </large-icon>
+
+	<enterprise-beans>
+		<!-- : (description?, display-name?, small-icon?, large-icon?, ejb-name, 
+			home?, remote?, local-home?, local?, ejb-class, session-type, transaction-type, 
+			env-entry*, ejb- ref*, ejb-local-ref*, security-role-ref*, security-identity?, 
+			resource-ref*, resource-env-ref*) -->
+		<session id="Ejb2ServiceSessionBean">
+			<description>optional</description>
+			<display-name>optional</display-name>
+			<small-icon>optional</small-icon>
+			<large-icon>optional</large-icon>
+			<ejb-name>Ejb2Service</ejb-name>
+			<!-- <home>org.basic.pattern.structural.proxy.ejb2.Ebj2ServiceHome</home> 
+				<remote>org.basic.pattern.structural.proxy.ejb2.Ejb2Service</remote> <local-home>org.basic.pattern.structural.proxy.ejb2.Ebj2ServiceHome</local-home> 
+				<local>org.basic.pattern.structural.proxy.ejb2.Ejb2Service</local> -->
+			<ejb-class>org.basic.pattern.structural.proxy.ejb2.Ejb2Service</ejb-class>
+			<!-- Stateful, Stateless -->
+			<session-type>Stateless</session-type>
+			<!-- Bean,Container -->
+			<transaction-type>Container</transaction-type>
+
+			<!-- A logical name for the bean assigned by the bean provider that is 
+				independent of its JNDI name assigned at deployment. This name must be unique 
+				among the EJB names defined in a single JAR file. -->
+			<ejb-ref><!-- ctx.lookup("java:/comp/env/ejb/Ejb2Service/remote"); -->
+				<ejb-ref-name>ejb/Ejb2Service/remote</ejb-ref-name>
+				<ejb-ref-type><!-- Entity, --></ejb-ref-type>
+				<home></home>
+				<remote></remote>
+			</ejb-ref>
+			<ejb-local-ref>
+				<ejb-ref-name>ejb/Ejb2Service/local</ejb-ref-name>
+				<ejb-ref-type></ejb-ref-type>
+				<local-home></local-home>
+				<local></local>
+			</ejb-local-ref>
+
+			<security-role-ref>
+				<description>The auction restricts some operations to valid bidders</description>
+				<!--EJBContext ctx; ctx.isCallerInRole("bidder") -->
+				<role-name>bidder</role-name>
+				<role-link>registered-bidder</role-link>
+			</security-role-ref>
+
+			<resource-ref>
+				<description>Define a reference to a resource manager connection
+					factory for the auction database</description>
+				<res-ref-name>jdbc/auctionSource</res-ref-name>
+				<res-type>javax.sql.DataSource</res-type>
+				<!-- Container or Application DataSource source = (DataSource)ctx.lookup("java:comp/env/jdbc/auctionSource"); 
+					Connection con = source.getConnection("MyUserName", "MyPassword"); -->
+				<res-auth>Container</res-auth>
+				<!-- The res-sharing-scope entry can be specified as either Shareable 
+					or NonShareable. This indicates whether a connection can be shared by multiple 
+					beans that access the same resource within the same transaction context. 
+					If this entry isn't included, the connections default to being shareable. -->
+				<res-sharing-scope></res-sharing-scope>
+			</resource-ref>
+			<resource-env-ref>
+				<!-- Context ctx = new InitialContext(); Queue conversionQueue = (Queue)initCtx.lookup( 
+					"java:comp/env/jms/exchangeUpdate"); -->
+				<description>Currency conversion updates are obtained through a
+					queue</description>
+				<resource-env-ref-name>jms/exchangeUpdate</resource-env-ref-name>
+				<resource-env-ref-type>javax.jms.Queue</resource-env-ref-type>
+			</resource-env-ref>
+
+		</session>
+		<!-- The content of element type "entity" must match "(description?,display-name?,small-icon?,large- 
+			icon?,ejb-name,home?,remote?,local-home?,local?,ejb-class,persistence-type,prim-key- 
+			class,reentrant,cmp-version?,abstract-schema-name?,cmp-field*,primkey-field?,env-entry*,ejb- 
+			ref*,ejb-local-ref*,security-role-ref*,security-identity?,resource-ref*,resource-env-ref*,query*)". -->
+		<entity>
+			<ejb-name>EnglishAuction</ejb-name>
+			<ejb-class></ejb-class>
+			<!-- Bean,Container -->
+			<persistence-type>Bean</persistence-type>
+			<prim-key-class>java.lang.Long</prim-key-class>
+			<reentrant>false</reentrant>
+			<cmp-version>2.x</cmp-version>
+			<abstract-schema-name>sadf</abstract-schema-name>
+			<cmp-field>
+				<field-name>employeeName</field-name>
+			</cmp-field>
+			<primkey-field>employeeId</primkey-field>
+			<security-role-ref>
+				<description />
+				<role-name>bidder</role-name>
+				<role-link>registered-bidder</role-link>
+			</security-role-ref>
+			<query>
+				<description></description>
+				<query-method>
+					<method-name>findHighBidAuctions</method-name>
+					<method-params>
+						<method-param>java.lang.Double</method-param>
+					</method-params>
+				</query-method>
+				<ejb-ql>SELECT OBJECT(auction) FROM EnglishAuctionBean AS auction,
+					IN (auction.bids) aBid WHERE aBid.amount &gt; ?1 
+                </ejb-ql>
+			</query>
+		</entity>
+		<!-- The content of element type "message-driven" is incomplete, it must 
+			match "(description?,display- name?,small-icon?,large-icon?,ejb-name,ejb-class,transaction-type,message-selector?,acknowledge- 
+			mode?,message-driven-destination?,env-entry*,ejb-ref*,ejb-local-ref*,security-identity?,resource- 
+			ref*,resource-env-ref*)". -->
+		<message-driven>
+			<description />
+			<ejb-name>sdf</ejb-name>
+			<ejb-class>asd</ejb-class>
+			<transaction-type></transaction-type>
+			<message-selector></message-selector>
+			<acknowledge-mode></acknowledge-mode>
+			<message-driven-destination>
+				<destination-type></destination-type>
+				<subscription-durability></subscription-durability>
+			</message-driven-destination>
+			<env-entry>
+				<env-entry-name></env-entry-name>
+				<env-entry-type></env-entry-type>
+			</env-entry>
+			<ejb-ref>
+				<ejb-ref-name></ejb-ref-name>
+				<ejb-ref-type></ejb-ref-type>
+				<home></home>
+				<remote></remote>
+				<ejb-link></ejb-link>
+			</ejb-ref>
+			<ejb-local-ref>
+				<description></description>
+				<ejb-ref-name></ejb-ref-name>
+				<ejb-ref-type></ejb-ref-type>
+				<local-home></local-home>
+				<local></local>
+			</ejb-local-ref>
+			<security-identity>
+				<run-as>
+					<description></description>
+					<role-name></role-name>
+				</run-as>
+				<!--<use-caller-identity /> -->
+			</security-identity>
+			<resource-ref>
+				<res-ref-name></res-ref-name>
+				<res-type></res-type>
+				<res-auth></res-auth>
+				<res-sharing-scope></res-sharing-scope>
+			</resource-ref>
+			<resource-env-ref>
+				<resource-env-ref-name></resource-env-ref-name>
+				<resource-env-ref-type></resource-env-ref-type>
+			</resource-env-ref>
+		</message-driven>
+	</enterprise-beans>
+
+	<relationships>
+		<ejb-relation>
+			<ejb-relation-name>EnglishAuction-AuctionBid</ejb-relation-name>
+			<ejb-relationship-role>
+				<ejb-relationship-role-name>auction-has-bids </ejb-relationship-role-name>
+				<multiplicity>one</multiplicity>
+				<relationship-role-source>
+					<ejb-name>EnglishAuction</ejb-name>
+				</relationship-role-source>
+				<cmr-field>
+					<cmr-field-name>bids</cmr-field-name>
+					<cmr-field-type>java.util.Collection</cmr-field-type>
+				</cmr-field>
+			</ejb-relationship-role>
+			<ejb-relationship-role>
+				<ejb-relationship-role-name>bid-belongs-to-auction</ejb-relationship-role-name>
+				<multiplicity>many</multiplicity>
+				<cascade-delete />
+				<relationship-role-source>
+					<ejb-name>AuctionBid</ejb-name>
+				</relationship-role-source>
+				<cmr-field>
+					<cmr-field-name>auction</cmr-field-name>
+				</cmr-field>
+			</ejb-relationship-role>
+		</ejb-relation>
+	</relationships>
+	<assembly-descriptor>
+		<security-role>
+			<description>A role to represent users who have registered with the
+				system as authorized auction participants </description>
+			<role-name>registered-bidder</role-name>
+		</security-role>
+		<method-permission>
+			<role-name>registered-bidder</role-name>
+			<role-name>authorized-agent</role-name>
+			<method>
+				<ejb-name>AuctionHouse</ejb-name>
+				<method-name>submitBid</method-name>
+			</method>
+		</method-permission>
+		<method-permission>
+			<unchecked />
+			<method>
+				<ejb-name>AuctionHouse</ejb-name>
+				<method-name>submitBid</method-name>
+			</method>
+		</method-permission>
+
+		<container-transaction>
+			<!-- If you needed a particular method in the EnglishAuction bean to have 
+				a transaction attribute other than Required, you could do something like 
+				this: <trans-attribute>NotSupported</trans-attribute> <trans-attribute>Supports</trans-attribute> 
+				<trans-attribute>Required</trans-attribute> <trans-attribute>RequiresNew</trans-attribute> 
+				<trans-attribute>Mandatory</trans-attribute> <trans-attribute>Never</trans-attribute> -->
+			<method>
+				<ejb-name>EnglishAuction</ejb-name>
+				<method-name>*</method-name>
+			</method>
+			<trans-attribute>Required</trans-attribute>
+		</container-transaction>
+		<container-transaction>
+			<method>
+				<ejb-name>EnglishAuction</ejb-name>
+				<method-name>getTimeLeft</method-name>
+			</method>
+			<trans-attribute>Supports</trans-attribute>
+		</container-transaction>
+
+
+
+		<exclude-list>
+			<description>A method that should not be available to clients</description>
+			<method>
+				<ejb-name>EnglishAuction</ejb-name>
+				<method-name>someUnavailableMethodName</method-name>
+			</method>
+		</exclude-list>
+
+	</assembly-descriptor>
+
+</ejb-jar> 
+  

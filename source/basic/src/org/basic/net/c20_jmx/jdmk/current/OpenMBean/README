@@ -1,0 +1,78 @@
+#
+# @(#)file      README
+# @(#)author    Sun Microsystems, Inc.
+# @(#)version   1.6
+# @(#)lastedit  04/04/16
+#
+# Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+# SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+
+
+                         Open MBean Example
+                         ==================
+
+
+-----------------------------------------------------------------------
+1. Overview
+-----------------------------------------------------------------------
+
+This example shows how to implement an open MBean and manage it
+through a simple JMX agent application, by:
+
+ - Developing a sample open MBean that uses some of the open data types
+   and correctly exposes its management interface at runtime through
+   the OpenMBean*Info classes.
+
+ - Developing a simple JMX agent for exercising the open MBean:
+    . Initializing the MBean server
+    . Creating and adding the sample open MBean to the MBean server
+    . Getting and displaying the open MBean management information
+    . Invoking some operations on the MBean
+
+
+-----------------------------------------------------------------------
+2. File List
+-----------------------------------------------------------------------
+
+This example is based on the following source files:
+
+ * SampleOpenMBean.java:
+
+    - An open MBean
+
+ * OpenAgent.java:
+
+    - Simple JMX agent for exercising the open MBean
+
+
+-----------------------------------------------------------------------
+3. Building and Running the Example
+-----------------------------------------------------------------------
+
+To build and run this example, make sure that your PATH environment variable
+is correctly set to use the Java 2 SDK, Standard Edition 1.4 or later.
+
+On J2SE 1.4, your CLASSPATH must contain the JAR files for the JMX runtime
+(jmx.jar), as well as the current directory (.).
+
+On J2SE 1.5, your CLASSPATH must contain the current directory (.).
+
+These instructions assume the classpath is set in an environment variable,
+though it may also be given on the command line with the -classpath option.
+
+Copy the example source files to your working directory and type the following
+commands:
+
+    cd <WORKING_DIR>
+
+    javac *.java
+
+To run the example using the classes you have just built, type the
+following command:
+
+    java OpenAgent
+
+You then interact with the agent through the standard input and output
+in the window where it was launched. The OpenAgent class displays
+information about each management step and waits for user input before
+continuing.

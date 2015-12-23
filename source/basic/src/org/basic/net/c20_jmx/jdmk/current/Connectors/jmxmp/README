@@ -1,0 +1,72 @@
+# @(#)file      README
+# @(#)author    Sun Microsystems, Inc.
+# @(#)version   1.5
+# @(#)lastedit  04/04/16
+#
+# Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+# SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+
+# ==============================================================================
+# 
+#  Example of a basic JMXMP connector
+# 
+# ==============================================================================
+#
+# In order to compile & run the example, make a copy of this
+# README file, update the variables to match your local installation,
+# and then simply cut & paste all variable definitions & commands 
+# as needed into a terminal window.
+#
+# Note that this README makes the assumption that you are running
+# UNIX, you are familiar with the JMX Remote API specification (in
+# particular JMXServiceURL), and with the Bourne or Korn shell syntax.
+#
+# All variable assignments and commands below are defined using 
+# UNIX korn shell syntax.
+#
+# If you're not running UNIX and the Korn shell you are expected
+# to be able to adapt these commands to your favorite OS/shell
+# environment.
+#
+
+# Update the following variables to match your local installation:
+#
+JDMK_HOME=@INSTALL_HOME_FOR_JDMK@
+JDMK_LIB=${JDMK_HOME}/lib
+
+classp=${JDMK_LIB}/jmx.jar:${JDMK_LIB}/jmxremote.jar:
+${JDMK_LIB}/jmxremote_optional.jar
+
+# JMX and JMX Remote API (mandatory) are integrated into J2SE 1.5 so
+#
+# classp=${JDMK_LIB}/jmxremote_optional.jar
+
+# Compile the Java classes
+#
+# * Server.java: creates an MBeanServer and creates and starts a JMXMP connector
+#                server listening on port 5555.
+#
+# * Client.java: creates a JMXMP connector, creates and registers a Simple
+#                standard MBean and performs operations on it.
+#
+# * ClientListener.java: implements a generic notification listener.
+#
+# * SimpleStandard.java: implements the Simple standard MBean.
+#
+# * SimpleStandardMBean.java: the management interface exposed by the Simple
+#                             standard MBean.
+#
+
+javac -classpath $classp *.java
+
+# Start the Server:
+#
+
+java -classpath .:$classp Server &
+
+# Start the Client:
+#
+
+java -classpath .:$classp Client
+
+# ==============================================================================

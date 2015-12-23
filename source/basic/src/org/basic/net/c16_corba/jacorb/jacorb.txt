@@ -1,0 +1,45 @@
+1. start Ns.bat
+    @echo off
+    rem Starts the JacORB name server
+    rem ns [-Djacorb.naming.ior filename=<filename>] [-DOAPort=port] [-Djacorb.naming.time out=<timeout>]
+    rem jaco jacorb.naming.NameServer [-Djacorb.naming.ior filename=<filename>] [-DOAPort=port] [-Djacorb.naming.time out=<timeout>]
+    
+    jaco org.jacorb.naming.NameServer -DOAPort=20000 %*
+    rem jaco org.jacorb.naming.NameServer /home/me/public html/NS Ref %*
+2. access NameService
+    字符集： 
+        -Dfile.encoding=UTF-8 -Dorg.omg.CORBA.ORBClass=org.jacorb.orb.ORB -Dorg.omg.CORBA.ORBSingletonClass=org.jacorb.orb.ORBSingleton
+    // get a reference to the naming service
+    ORB orb = ORB.init();
+    org.omg.CORBA.Object o =
+    orb.resolve_initial_references("NameService");
+    NamingContextExt rootContext =
+    NamingContextExtHelper.narrow( o );
+    // look up an object
+    NameComponent[] name = new NameComponent[1];
+    name[0] = new NameComponent("sub","context");
+    NamingContextExt subContext =
+    NamingContextExtHelper.narrow( rootContext.bind_new_context( name ));
+    
+    //corbaloc::localhost:34000/NameService
+    ParsedIOR.parse(object_reference)
+    if (object_reference.startsWith("IOR:"))
+        {
+            parse_stringified_ior(object_reference);
+        }
+        else if (object_reference.startsWith("corbaloc:"))
+        {
+            parse_corbaloc(object_reference);
+        }
+        else if (object_reference.startsWith("corbaname:"))
+        {
+            parse_corbaname(object_reference);
+        }
+        else if (object_reference.startsWith("resource:"))
+        {
+            parse_resource(object_reference.substring(9));
+        }
+        else if (object_reference.startsWith("jndi:"))
+        {
+            parse_jndi(object_reference.substring(5));
+        }

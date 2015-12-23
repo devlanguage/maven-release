@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Account">
+  <!--
+    Cache Model ：缓存模型。使用在Cache Model中定义好的缓存机制，只需在查询语句配置的cacheModel属性就可以很容易地缓存查询返回的数据集。
+    在iBatis中提供了三种的类型的缓存模式(Memory，LRU,FIFO)算法。
+    三种算法主要在于静态过期策略上的不同，而它们都有相同的动态过期依赖策略，即可以设置执行哪些statement时，缓存过期。
+    
+    注意：iBaits的缓存模型正常情况是非常好用的，但是因为缓存过期策略上的封装性，它在多个服务器，负载平衡场景下还是有它的局限性。
+    下面例子中，cacheModel的使用者缓存使用WEAK引用类型，每24小时刷新一次，或当更新的操作发生时刷新。
+    
+    缓存类型
+    Cache Model使用插件方式来支持不同的缓存算法。
+    它的实现在cacheModel的用type属性来指定（如上所示）。指定的实现类必须实现CacheController接口，或是下面4个别名中的其中之一。
+    Cache Model实现的其他配置参数通过cacheModel的property元素来设置。目前包括以下的4个实现：MEMORY,LRU,FIFO,OSCACHE
+    
+    “MEMORY" (com.ibatis.db.sqlmap.cache.memory.MemoryCacheController)
+    ==  MEMORY cache实现使用reference类型来管理cache的行为。
+    ==  垃圾收集器可以根据reference类型判断是否要回收cache中的数据。MEMORY实现适用于没有统一的对象重用模式的应用，或内存不足的应用。
+    拥有一个属性<property name="reference-type" value="WEAK" /> value:STRONG，SOFT和WEAK
+    WEAK（缺省）  大多数情况下，WEAK类型是最佳选择。如果不指定类型，缺省类型就是WEAK。它能大大提高常用查询的性能。
+    ==          但是对于当前不被使用的查询结果数据，将被清除以释放内存用来分配其他对象。
+    SOFT        在查询结果对象数据不被使用，同时需要内存分配其他对象的情况下，SOFT类型将减少内存不足的可能性。然而，
+    ==          这不是最具侵入性的reference类型，结果数据依然可能被清除。
+    STRONG      STRONG类型可以确保查询结果数据一直保留在内存中，除非Cache被刷新（例如，到了刷新的时间或执行了更新数据的操作）。
+    ==          对于下面的情况，这是理想的选择：
+    ==         1）结果内容数据很少，2）完全静态的数据，和3）频繁使用的数据。
+    ==          优点是对于这类查询性能非常好。缺点是，如果需要分配其他对象，内存无法释放（可能是更重要的数据对象）。
+    
+    “LRU" (com.ibatis.db.sqlmap.cache.lru.LruCacheController)
+    LRU Cache实现用“近期最少使用"原则来确定如何从Cache中清除对象。当Cache溢出时，最近最少使用的对象将被从Cache中清除。
+    使用这种方法，如果一个特定的对象总是被使用，它将保留在Cache中，而且被清除的可能性最小。对于在较长的期间内，某些用户经常使
+    用某些特定对象的情况（例如，在PaginatedList和常用的查询关键字结果集中翻页），LRU Cache是一个不错的选择。
+    LRU Cache实现只认可一个property元素。其名为“size"的属性值必须是整数，代表同时保存在Cache中对象的最大数（太多容易内存不足）
+    
+    “FIFO" (com.ibatis.db.sqlmap.cache.fifo.FifoCacheController)
+    FIFO Cache实现用“先进先出"原则来确定如何从Cache中清除对象。当Cache溢出时，最先进入Cache的对象将从Cache中清除。
+    对于短时间内持续引用特定的查询而后很可能不再使用的情况，FIFO Cache是很好的选择
+    FIFO Cache实现只认可一个property元素。其名为“size"的属性值必须是整数，代表同时保存在Cache中对象的最大数（太多容易内存不足）
+    
+    “OSCACHE" (com.ibatis.db.sqlmap.cache.oscache.OSCacheController)
+    OSCACHE Cache实现是OSCache2.0缓存引擎的一个Plugin。它具有高度的可配置性，分布式，高度的灵活性
+    OSCACHE实现不使用property元素，而是在类路径的根路径中使用标准的oscache.properties文件进行配置。
+    在oscache.properties文件中，您可以配置Cache的算法（和上面讨论的算法很类似），Cache的大小，持久化方法（内存，文件等）和集群方法
+    
+    
+    
+    框架同时支持只读和可读写缓存。
+    只读缓存可供所有用户共享，因此性能更好。但是，只读缓存的数据不应该被修改。
+    相反，要更新数据，必须从数据库（或读写缓存）中读出数据。因此，如果要读出数据并修改，则需要可读写缓存。
+    要使用只读缓存，在cacheModel设置readOnly=“true"。要使用可读写缓存，则设置readOnly=“false"。缺省为只读缓存（true）。
+    
+    只对当前Session有效的缓存对整体应用性能的提高作用有限。
+    Serializable可读写缓存可以提高整体应用（而不仅仅是每个Session）的性能。这种缓存为每一个Session返回缓存对象不同的实例（复本）。
+    因此每一个Session都可以安全修改返回的对象。不同之处在于，通常您希望从缓存中得到同一个对象，但这种情况下得到的是不同的对象。
+    还有，每一个缓冲在Serializable缓存的对象都必须是Serializable的。这意味着不能同时使用Serializable缓存和延迟加载，
+    因为延迟加载代理不是Serializable的。想知道如何把Serializable缓存，延迟加载和联合查询结合起来使用，最好的方法是尝试。
+    要使用Serializable缓存，设置readOnly=“false"和serialize=“true"。缺省情况下，缓存是只读模式，不使用Serializable缓存。只读缓存不需要Serializable。
+  -->
+  <cacheModel id="Account_Cache" type="LRU" readOnly="false" serialize="true">
+    <flushInterval hours="24" />
+    <property name="size" value="1000" />
+    <flushOnExecute statement="insertAccount" />
+    <flushOnExecute statement="updateAccount" />
+    <flushOnExecute statement="deleteAccountById" />
+  </cacheModel>
+
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <typeAlias alias="Alias_Class_Account" type="org.third.orm.ibatis.account.domain.persistence.Account" />
+  <!-- 
+    ResultMap(推荐使用), ResultClass: 同时指定，优先使用ResultMap           
+    ParameterMap(仅仅为了兼容而保留，在调用存储过程也多用,使用时强烈推荐设置class类型以优化性能), ParameterClass(推荐使用,预先知道类型，可以做一些优化性能)，
+    inline parameter也经常使用，！动态mapped statement只支持inline parameter，不支持parameter map。
+    
+    parameterMap的语法虽然简单，但很繁琐。还有一种更受欢迎更灵活的方法，可以大大简化定义和减少代码量。
+    这种方法把Java Bean的属性名称嵌在Mapped Statement的定义中（即直接写在SQL语句中）。
+    缺省情况下，任何没有指定parameterMap的Mapped Statement都会被解析成inline parameter（内嵌参数)
+    <statement id="insertAccount" parameterClass="com.domain.Product">
+    insert into PRODUCT (PRD_ID, PRD_DESCRIPTION, email, address, ) 
+    values (#id:NUMERIC:-999999#, #description:VARCHAR:NO_ENTRY#, #email#, #address:NUMERIC#);                
+    </statement>
+    注意！在内嵌参数中，要指定NULL的替代值，必须要先指定数据类型。
+    注意！如需要在查询时也使用NULL替代值，必须同时在resultMap中定义（如下说明）。
+    注意！如果您需要指定很多的数据类型和NULL替代值，可以使用外部的parameterMap元素，这样会使代码更清晰。
+  -->
+  <!-- 注意：
+    如果在一个statement中同时指定了resultMap和resultClass属性的话，那将会优先使用resultMap。
+    同时result Map也是一个实现对象复杂查询功能的重要手段，如：result map的继承（与discriminator配合使用），对象的1..1、1..N关系查询。
+    
+    参数映射的配置，它是被用来向一个语句(statement)提供所需参数的配置。
+    每一个Parameter Maps都有一个自己的ID，在需要的时候需要在statement 的 parameterMap属性中提供它的ID。
+    但是对一个语句来说，它并不是必须，在iBatis中还支持内联参数(Inline Parameter Maps)的形式，我们不需单独写一个Parameter Maps配置,
+    只需要向parameterClass提供参数的类型，可以是元数据类型，复合数据类型，IDictionary数型的弱类型对象(使用key,value的键值对)。
+    在内部访问数据类型的时候只使用#property#的形式访问对应的属性值。 -->
+  <parameterMap id="Parameter_Class_Account"
+    class="org.third.orm.ibatis.account.domain.persistence.Account_Map">
+    <parameter property="accountID" jdbcType="VARCHAR" mode="IN" />
+    <parameter property="accountName" jdbcType="VARCHAR" mode="INOUT" />
+    <parameter property="accountID" />
+  </parameterMap>
+  <parameterMap id="Parameter_Map_Account" class="java.util.Map"><!-- java.util.Map 也可以使用map替代 -->
+    <parameter property="accountID" />
+    <parameter property="accountName" nullValue="default_account_name" />
+    <parameter property="accountID" />
+  </parameterMap>
+  <!-- extends是resultMap可选的属性，可设定成另外一个resultMap的名字，并以它为基础。
+    和在Java中继承一个类相似，父resultMap的属性将作为子resutlMap的一部分。父resultMap的属性总是加到子resultMap属性的前面，
+    并且父resultMap必须要在子resultMap之前定义。父resultMap和子resultMap的class属性不一定要一致，它们可以没有任何关系。 -->
+  <resultMap id="Result_Class_Account" class="Alias_Class_Account">
+    <result property="id" column="ID" />
+    <result property="firstName" column="first_name" />
+    <result property="lastName" column="last_name" />
+    <result property="emailAddress" column="email_address" />
+  </resultMap>
+  <resultMap id="Result_Map_Account" class="java.util.HashMap">
+    <result property="id" column="ID" />
+    <result property="firstName" column="first_name" />
+    <result property="lastName" column="last_name" />
+    <result property="emailAddress" column="email_address" />
+  </resultMap>
+
+
+
+  <select id="getAccountByClassParam" parameterMap="Parameter_Class_Account"
+    resultMap="Result_Class_Account" cacheModel="Account_Cache">
+    <![CDATA[select * from HI_Account WHERE id>0*? and first_name like ? and id>?]]>
+  </select>
+  <select id="getAccountByMapParam" parameterMap="Parameter_Map_Account"
+    resultMap="Result_Map_Account" cacheModel="Account_Cache">
+    <![CDATA[select * from HI_Account WHERE id>0*? and first_name like ? and id>?]]>
+  </select>
+
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  <!-- 指定了操作ID，之后我们可以在代码中通过指定操作id 来执行此节点所定义的操作，如：
+    sqlMap.update("updateUser",user);
+    ID设定使得在一个配置文件中定义两个同名节点成为可能（两个update节点，以不同id区分）
+  -->
+  <select id="selectAllAccounts" parameterClass="Alias_Class_Account"
+    resultMap="Result_Class_Account">
+    <![CDATA[select * from HI_Account]]>
+
+    <dynamic>
+      <isParameterPresent>
+        <isNotEmpty property="sortField">order by $sortField$ </isNotEmpty>
+        <isEqual property="ascending" compareValue="true">asc</isEqual>
+        <isEqual property="ascending" compareValue="false">desc</isEqual>
+      </isParameterPresent>
+    </dynamic>
+  </select>
+  <!--
+    <statement id="account_id_condition">
+    <isNotEmpty prepend="and" property="id">(#id# > 1)</isNotEmpty>
+    </statement>
+    
+    Iterate 条件语句，遍历整个List
+    ##        prepend － 可被覆盖的SQL语句组成部分，添加在语句的前面（可选）
+    ##        property － 类型为java.util.List的用于遍历的元素（必选）
+    ##        open － 整个遍历内容体开始的字符串，用于定义括号（可选）
+    ##        close －整个遍历内容体结束的字符串，用于定义括号（可选）
+    ##        conjunction － 每次遍历内容之间的字符串，用于定义AND或OR（可选
+    <iterate prepend="AND" property="userNameList"  open="(" close=")" conjunction="OR"> 
+    ##        username=#userNameList[]#
+    </iterate>
+  -->
+  <select id="selectAccountsByAccount" parameterClass="Alias_Class_Account"
+    resultMap="Result_Class_Account">
+    <![CDATA[select * from HI_Account]]>
+    <dynamic prepend="WHERE">
+      <isNotNull prepend="AND" property="firstName">
+        (ACC_FIRST_NAME = #firstName#
+        <isNotNull prepend="OR" property="lastName">ACC_LAST_NAME = #lastName#</isNotNull>
+        )
+      </isNotNull>
+      <isNotNull prepend="AND" property="emailAddress">ACC_EMAIL like #emailAddress#</isNotNull>
+      <isGreaterThan prepend="AND" property="id" compareValue="0">ACC_ID = #id#</isGreaterThan>
+    </dynamic>
+    order by ACC_LAST_NAME
+  </select>
+
+  <!-- 当直接把查询结果映射成XML document时，属性xmlResultName的值等于XML document根元素的名称
+  -->
+  <select id="selectAccountById" parameterClass="Alias_Class_Account" resultClass="xml"
+    xmlResultName="account_root">
+    select ID as id, first_name, last_name as lastName, email_address as emailAddress from
+    HI_ACCOUNT
+    <isGreaterThan property="id" compareValue="0">where ID = #id#</isGreaterThan>
+    order by id asc
+  </select>
+
+
+  <!-- 
+    Mapped Statement可以使用任意的SQL语句，并拥有parameter map（输入）和result map（输出）。
+    如果是简单情况，Mapped Statement可以使用Java类来作为parameter和result。
+    Mapped Statement也可以使用缓存模型，在内存中缓存常用的数据         
+    
+    重要提示：虽然2.0向后兼容，但强烈建议使用parameterClass（除非没必要）。
+    通过提供parameterClass，您可以获得更好的性能，因为如果框架事先知道这个类，就可以优化自身的性能。
+    如果不指定parameterClass参数，任何带有合适属性（get/set方法）的Java Bean都可以作为输入参
+  -->
+  <statement id="updateAccountEmail" parameterClass="Alias_Class_Account">
+    update hi_account set email_address=#emailAddress# where id=#id#
+  </statement>
+
+  <!-- 
+    自动生成的主键
+    1. 支持预生成（如Oracle
+    <insert>
+    <selectKey resultClass="int" keyProperty="id" >
+    SELECT STOCKIDSEQUENCE.NEXTVAL AS ID FROM DUAL
+    </selectKey>
+    insert into PRODUCT (PRD_ID,
+    </insert>
+    2.后生成两种类型（如MS-SQL Server
+    <insert id="insertProduct-MS-SQL" parameterClass="com.domain.Product">
+    insert into PRODUCT (PRD_DESCRIPTION)   values (#description#)
+    <selectKey resultClass="int" keyProperty="id" >
+    SELECT @@IDENTITY AS ID
+    </selectKey>
+    </insert>        
+  -->
+  <insert id="insertAccount" parameterClass="Alias_Class_Account">
+    insert into HI_ACCOUNT ( ID, first_name, last_name, email_address values ( #id#, #firstName#,
+    #lastName#, #emailAddress# )
+  </insert>
+
+  <!-- Update example, using the Account parameter class -->
+  <update id="updateAccount" parameterClass="Alias_Class_Account">
+    update HI_ACCOUNT set first_name = #firstName#, last_name = #lastName#, email_address =
+    #emailAddress# where ID = #id#
+  </update>
+
+  <!-- Delete example, using an integer as the parameter class -->
+  <delete id="deleteAccountById" parameterClass="int">delete from ACCOUNT where ID = #id#</delete>
+
+
+  <parameterMap id="Parameter_Class_Account_Map"
+    class="org.third.orm.ibatis.account.domain.persistence.Account_Map">
+    <parameter property="accountID" jdbcType="VARCHAR" mode="IN" />
+    <parameter property="accountName" jdbcType="VARCHAR" mode="INOUT" />
+  </parameterMap>
+  <procedure id="retrieve_account_name_by_class" parameterMap="Parameter_Class_Account_Map">
+    {call retrieve_account_name(?,?)}
+  </procedure>
+
+  <parameterMap class="java.util.HashMap" id="retrieve_account_name_map_parameter">
+    <parameter property="accountID" jdbcType="VARCHAR" mode="IN" />
+    <parameter property="accountName" jdbcType="VARCHAR" mode="INOUT" />
+  </parameterMap>
+  <procedure id="retrieve_account_name_by_map" parameterMap="retrieve_account_name_map_parameter">
+    {call retrieve_account_name(?,?)}
+  </procedure>
+</sqlMap>

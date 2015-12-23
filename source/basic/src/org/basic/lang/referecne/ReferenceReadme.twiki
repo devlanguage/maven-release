@@ -1,0 +1,416 @@
+引用分为强(direc/strongt)、软(soft)、弱(weak)、虚引用(phantom)。引用强度依次递减。
+    强--就是平时 常用的引用。
+    软弱虚--就是可有可无的，一般用来做缓存实例用的。更详细看看jvm的垃圾回收和内存管理。
+
+如果你想写一个 Java 程序，观察某对象什么时候会被垃圾收集的执行绪清除，你必须要用一个 reference 记住此对象，以便随时观察，但是却因此造成此对象的 reference 数目一直无法为零， 使得对象无法被清除。
+
+　java.lang.ref.WeakReferences
+　　不过，现在有了 Weak Reference 之后，这就可以迎刃而解了。如果你希望能随时取得某对象的信息，但又不想影响此对象的垃圾收集，那么你应该用 Weak Reference 来记住此对象，而不是用一般的 reference。
+
+这类的技巧，在设计 Optimizer 或 Debugger 这类的程序时常会用到，因为这类程序需要取得某对象的信息，但是不可以 影响此对象的垃圾收集。
+Soft Reference 虽然和 Weak Reference 很类似，但是用途却不同。 被 Soft Reference 指到的对象，即使没有任何 Direct Reference，也不会被清除。一直要到 JVM 内存不足时且 没有 Direct Reference 时才会清除，SoftReference 是用来设计 object-cache 之用的。如此一来 SoftReference 不但可以把对象 cache 起来，也不会造成内存不足的错误 （OutOfMemoryError）。我觉得 Soft Reference 也适合拿来实作 pooling 的技巧。
+前两天看db4o，看到关于db4o的对象缓存中的对象是weak reference（弱引用），这样对于用户查询出来的大量对象结果，db4o使用弱引用，这样当垃圾回收时可以自己判断并进行垃圾回收。对于weak reference不是很了解，查点资料，整理一下。
+对于实现了自动垃圾回收的面向对象语言，都会有关于reference的一些实现，如java中在java.lang.ref中有下面几个类：
+Reference 
+   SoftReference 
+   WeakReference
+   PhantomReference 
+ReferenceQueue 
+表明了几种引用关系。而这种引用关系和垃圾回收紧密相关。可以看看jdk中api文档中对这几个类的解释也会有一个比较清晰的认识。
+
+垃圾收集概述
+引用类的主要功能就是能够引用仍可以被垃圾收集器回收的对象。在引入引用类之前，我们只能使用强引用（strong reference）。举例来说，下面一行代码显示的就是强引用 obj：
+
+
+Object obj = new Object();
+
+
+
+
+obj 这个引用将引用堆中存储的一个对象。只要 obj 引用还存在，垃圾收集器就永远不会释放用来容纳该对象的存储空间。
+
+当 obj 超出范围或被显式地指定为 null 时，垃圾收集器就认为没有对这个对象的其它引用，也就可以收集它了。然而您还需要注意一个重要的细节：仅凭对象可以被收集并不意味着垃圾收集器的一次指定运行就能够回收它。由于各种垃圾收集算法有所不同，某些算法会更频繁地分析生存期较短的对象，而不是较老、生存期较长的对象。因此，一个可供收集的对象可能永远也不会被回收。如果程序在垃圾收集器释放对象之前结束，这种情况就可能会出现。因此，概括地说，您永远无法保证可供收集的对象总是会被垃圾收集器收集。
+
+这些信息对于您分析引用类是很重要的。由于垃圾收集有着特定的性质，所以引用类实际上可能没有您原来想像的那么有用，尽管如此，它们对于特定问题来说还是很有用的类。软引用（soft reference）、弱引用（weak reference）和虚引用（phantom reference）对象提供了三种不同的方式来在不妨碍收集的情况下引用堆对象。每种引用对象都有不同的行为，而且它们与垃圾收集器之间的交互也有所不同。此外，这几个新的引用类都表现出比典型的强引用“更弱”的引用形式。而且，内存中的一个对象可以被多个引用（可以是强引用、软引用、弱引用或虚引用）引用。在进一步往下讨论之前，让我们来看看一些术语：
+    强可及对象（strongly reachable）：可以通过强引用访问的对象。
+    软可及对象（softly reachable）：不是强可及对象，并且能够通过软引用访问的对象。
+    弱可及对象（weakly reachable）：不是强可及对象也不是软可及对象，并且能够通过弱引用访问的对象。
+    虚可及对象（phantomly reachable）：不是强可及对象、软可及对象，也不是弱可及对象，已经结束的，可以通过虚引用访问的对象。
+
+清除：将引用对象的 referent 域设置为 null，并将引用类在堆中引用的对象声明为可结束的。
+SoftReference 类
+    SoftReference 类的一个典型用途就是用于内存敏感的高速缓存。SoftReference 的原理是：在保持对对象的引用时保证在 JVM 报告内存不足情况之前将清除所有的软引用。关键之处在于，垃圾收集器在运行时可能会（也可能不会）释放软可及对象。对象是否被释放取决于垃圾收集器的算法以及垃圾收集器运行时可用的内存数量。 
+WeakReference 类
+    WeakReference 类的一个典型用途就是规范化映射（canonicalized mapping）。另外，对于那些生存期相对较长而且重新创建的开销也不高的对象来说，弱引用也比较有用。关键之处在于，垃圾收集器运行时如果碰到了弱可及对象，将释放 WeakReference 引用的对象。然而，请注意，垃圾收集器可能要运行多次才能找到并释放弱可及对象。
+PhantomReference 类
+    PhantomReference 类只能用于跟踪对被引用对象即将进行的收集。同样，它还能用于执行 pre-mortem 清除操作。PhantomReference 必须与 ReferenceQueue 类一起使用。需要 ReferenceQueue 是因为它能够充当通知机制。当垃圾收集器确定了某个对象是虚可及对象时，PhantomReference 对象就被放在它的 ReferenceQueue 上。将 PhantomReference 对象放在 ReferenceQueue 上也就是一个通知，表明 PhantomReference 对象引用的对象已经结束，可供收集了。这使您能够刚好在对象占用的内存被回收之前采取行动。  
+
+垃圾收集器和引用交互
+垃圾收集器每次运行时都可以随意地释放不再是强可及的对象占用的内存。如果垃圾收集器发现了软可及对象，就会出现下列情况：
+
+SoftReference 对象的 referent 域被设置为 null，从而使该对象不再引用 heap 对象。
+
+
+SoftReference 引用过的 heap 对象被声明为 finalizable。
+
+
+当 heap 对象的 finalize() 方法被运行而且该对象占用的内存被释放，SoftReference 对象就被添加到它的 ReferenceQueue（如果后者存在的话）。
+如果垃圾收集器发现了弱可及对象，就会出现下列情况：
+
+WeakReference 对象的 referent 域被设置为 null，从而使该对象不再引用 heap 对象。
+
+
+WeakReference 引用过的 heap 对象被声明为 finalizable。
+
+
+当 heap 对象的 finalize() 方法被运行而且该对象占用的内存被释放时，WeakReference 对象就被添加到它的 ReferenceQueue（如果后者存在的话）。
+如果垃圾收集器发现了虚可及对象，就会出现下列情况：
+
+PhantomReference 引用过的 heap 对象被声明为 finalizable。
+
+
+与软引用和弱引用有所不同，PhantomReference 在堆对象被释放之前就被添加到它的 ReferenceQueue。（请记住，所有的 PhantomReference 对象都必须用经过关联的 ReferenceQueue 来创建。）这使您能够在堆对象被回收之前采取行动。
+请考虑清单 1 中的代码。
+
+清单 1. 使用 WeakReference 及 ReferenceQueue 的示例代码
+//Create a strong reference to an object
+MyObject obj = new MyObject(); //1
+
+//Create a reference queue
+ReferenceQueue rq = new ReferenceQueue(); //2
+
+//Create a weakReference to obj and associate our reference queue
+WeakReference wr = new WeakReference(obj, rq); //3
+
+
+
+行 //1 创建 MyObject 对象，而行 //2 则创建 ReferenceQueue 对象。行 //3 创建引用其引用对象 MyObject 的 WeakReference 对象，还创建它的 ReferenceQueue。请注意，每个对象引用（obj、rq 及 wr）都是强引用。要利用这些引用类，您必须取消对 MyObject 对象的强引用，方法是将 obj 设置为 null。前面说过，如果不这样做，对象 MyObject 永远都不会被回收，引用类的任何优点都会被削弱。
+
+每个引用类都有一个 get() 方法，而 ReferenceQueue 类有一个 poll() 方法。get() 方法返回对被引用对象的引用。在 PhantomReference 上调用 get() 总是会返回 null。这是因为 PhantomReference 只用于跟踪收集。poll() 方法返回已被添加到队列中的引用对象，如果队列中没有任何对象，它就返回 null。因此，执行清单 1 之后再调用 get() 和 poll() 的结果可能是：
+
+
+wr.get(); //returns reference to MyObject
+rq.poll(); //returns null
+
+
+
+
+现在我们假定垃圾收集器开始运行。由于 MyObject 对象没有被释放，所以 get() 和 poll() 方法将返回同样的值；obj 仍然保持对该对象进行强引用。实际上，对象布局还是没有改变，和图 1 所示的差不多。然而，请考虑下面的代码：
+
+
+obj = null;
+System.gc(); //run the collector
+
+
+
+
+
+
+
+现在，调用 get() 和 poll() 将产生与前面不同的结果：
+
+
+wr.get(); //returns null
+rq.poll(); //returns a reference to the WeakReference object
+
+
+
+
+这种情况表明，MyObject 对象（对它的引用原来是由 WeakReference 对象进行的）不再可用。这意味着垃圾收集器释放了 MyObject 占用的内存，从而使 WeakReference 对象可以被放在它的 ReferenceQueue 上。这样，您就可以知道当 WeakReference 或 SoftReference 类的 get() 方法返回 null 时，就有一个对象被声明为 finalizable，而且可能（不过不一定）被收集。只有当 heap 对象完全结束而且其内存被回收后，WeakReference 或 SoftReference 才会被放到与其关联的 ReferenceQueue 上。清单 2 显示了一个完整的可运行程序，它展示了这些原理中的一部分。这段代码本身就颇具说明性，它含有很多注释和打印语句，可以帮助您理解。
+
+清单 2. 展示引用类原理的完整程序
+import java.lang.ref.*;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
+
+class MyObject {
+
+    protected void finalize() throws Throwable {
+
+        System.out.println("In finalize method for this object: " + this);
+    }
+}
+
+class ReferenceUsage {
+
+    public static void main(String args[]) {
+
+        hold();
+        release();
+    }
+
+    public static void hold() {
+
+        System.out.println("Example of incorrectly holding a strong " + "reference");
+        // Create an object
+        MyObject obj = new MyObject();
+        System.out.println("object is " + obj);
+
+        // Create a reference queue
+        ReferenceQueue rq = new ReferenceQueue();
+
+        // Create a weakReference to obj and associate our reference queue
+        WeakReference weakRef = new WeakReference(obj, rq);
+
+        System.out.println("The weak reference is " + weakRef);
+
+        // Check to see if it´s on the ref queue yet
+        System.out.println("Polling the reference queue returns " + rq.poll());
+        System.out.println("Getting the referent from the " + "weak reference returns " + weakRef.get());
+
+        System.out.println("Calling GC");
+        System.gc();
+        System.out.println("Polling the reference queue returns " + rq.poll());
+        System.out.println("Getting the referent from the " + "weak reference returns " + weakRef.get());
+    }
+
+    public static void release() {
+
+        System.out.println("");
+        System.out.println("Example of correctly releasing a strong " + "reference");
+        // Create an object
+        MyObject obj = new MyObject();
+        System.out.println("object is " + obj);
+
+        // Create a reference queue
+        ReferenceQueue rq = new ReferenceQueue();
+
+        // Create a weakReference to obj and associate our reference queue
+        WeakReference wr = new WeakReference(obj, rq);
+
+        System.out.println("The weak reference is " + wr);
+
+        // Check to see if it´s on the ref queue yet
+        System.out.println("Polling the reference queue returns " + rq.poll());
+        System.out.println("Getting the referent from the " + "weak reference returns " + wr.get());
+
+        System.out.println("Set the obj reference to null and call GC");
+        obj = null;
+        System.gc();
+        System.out.println("Polling the reference queue returns " + rq.poll());
+        System.out.println("Getting the referent from the " + "weak reference returns " + wr.get());
+    }
+}
+
+
+
+用途和风格
+这些类背后的原理就是避免在应用程序执行期间将对象留在内存中。相反，您以软引用、弱引用或虚引用的方式引用对象，这样垃圾收集器就能够随意地释放对象。当您希望尽可能减小应用程序在其生命周期中使用的堆内存大小时，这种用途就很有好处。您必须记住，要使用这些类，您就不能保留对对象的强引用。如果您这么做了，那就会浪费这些类所提供的任何好处。
+
+另外，您必须使用正确的编程风格以检查收集器在使用对象之前是否已经回收了它，如果已经回收了，您首先必须重新创建该对象。这个过程可以用不同的编程风格来完成。选择错误的风格会导致出问题。请考虑清单 3 中从 WeakReference 检索被引用对象的代码风格：
+
+清单 3. 检索被引用对象的风格
+obj = wr.get();
+if (obj == null)
+{
+wr = new WeakReference(recreateIt()); //1
+obj = wr.get(); //2
+}
+//code that works with obj
+
+
+
+
+研究了这段代码之后，请看看清单 4 中从 WeakReference 检索被引用对象的另一种代码风格：
+
+清单 4. 检索被引用对象的另一种风格
+obj = wr.get();
+if (obj == null)
+{
+obj = recreateIt(); //1
+wr = new WeakReference(obj); //2
+}
+//code that works with obj
+
+
+
+
+请比较这两种风格，看看您能否确定哪种风格一定可行，哪一种不一定可行。清单 3 中体现出的风格不一定在所有情况下都可行，但清单 4 的风格就可以。清单 3 中的风格不够好的原因在于，if 块的主体结束之后 obj 不一定是非空值。请考虑一下，如果垃圾收集器在清单 3 的行 //1 之后但在行 //2 执行之前运行会怎样。recreateIt() 方法将重新创建该对象，但它会被 WeakReference 引用，而不是强引用。因此，如果收集器在行 //2 在重新创建的对象上施加一个强引用之前运行，对象就会丢失，wr.get() 则返回 null。
+
+清单 4 不会出现这种问题，因为行 //1 重新创建了对象并为其指定了一个强引用。因此，如果垃圾收集器在该行之后（但在行 //2 之前）运行，该对象就不会被回收。然后，行 //2 将创建对 obj 的 WeakReference。在使用这个 if 块之后的 obj 之后，您应该将 obj 设置为 null，从而让垃圾收集器能够回收这个对象以充分利用弱引用。清单 5 显示了一个完整的程序，它将展示刚才我们描述的风格之间的差异。（要运行该程序，其运行目录中必须有一个“temp.fil”文件。
+
+清单 5. 展示正确的和不正确的编程风格的完整程序。
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.lang.ref.WeakReference;
+
+class ReferenceIdiom {
+
+    public static void main(String args[]) throws FileNotFoundException {
+
+        broken();
+        correct();
+    }
+
+    public static FileReader recreateIt() throws FileNotFoundException {
+
+        return new FileReader("temp.fil");
+    }
+
+    public static void broken() throws FileNotFoundException {
+
+        System.out.println("Executing method broken");
+        FileReader obj = recreateIt();
+        WeakReference wr = new WeakReference(obj);
+
+        System.out.println("wr refers to object " + wr.get());
+
+        System.out.println("Now, clear the reference and run GC");
+        // Clear the strong reference, then run GC to collect obj.
+        obj = null;
+        System.gc();
+
+        System.out.println("wr refers to object " + wr.get());
+
+        // Now see if obj was collected and recreate it if it was.
+        obj = (FileReader) wr.get();
+        if (obj == null) {
+            System.out.println("Now, recreate the object and wrap it in a WeakReference");
+            wr = new WeakReference(recreateIt());
+            System.gc(); // FileReader object is NOT pinned...there is no
+            // strong reference to it. Therefore, the next
+            // line can return null.
+            obj = (FileReader) wr.get();
+        }
+        System.out.println("wr refers to object " + wr.get());
+    }
+
+    public static void correct() throws FileNotFoundException {
+
+        System.out.println("");
+        System.out.println("Executing method correct");
+        FileReader obj = recreateIt();
+        WeakReference wr = new WeakReference(obj);
+
+        System.out.println("wr refers to object " + wr.get());
+
+        System.out.println("Now, clear the reference and run GC");
+        // Clear the strong reference, then run GC to collect obj
+        obj = null;
+        System.gc();
+
+        System.out.println("wr refers to object " + wr.get());
+
+        // Now see if obj was collected and recreate it if it was.
+        obj = (FileReader) wr.get();
+        if (obj == null) {
+            System.out.println("Now, recreate the object and wrap it in a WeakReference");
+            obj = recreateIt();
+            System.gc(); // FileReader is pinned, this will not affect
+            // anything.
+            wr = new WeakReference(obj);
+        }
+        System.out.println("wr refers to object " + wr.get());
+    }
+}
+
+
+
+
+总结
+如果使用得当，引用类还是很有用的。然而，由于它们所依赖的垃圾收集器行为有时候无法预知，所以其实用性就会受到影响。能否有效地使用它们还取决于是否应用了正确的编程风格；关键在于您要理解这些类是如何实现的以及如何对它们进行编程。
+=================================================================================
+
+Java 对象的状态有:
+    * 已创建(created)
+    * 强可达(strong reachable)
+    * 不可见(invisible)
+    * 不可达(unreachable)
+    * 已收集(collected)
+    * 终化(finalized)
+    * 已回收(deallocated) 
+
+Java对象生命周期的状态转换: 引用对象
+三种新的引用类型:
+
+    * 软引用(soft reference)
+    * 弱引用(weak reference)
+    * 幻引用(phantom reference) 
+
+强可达(Strong Reachable)
+定义: ~An object is strong reachable if it can be reached by some thread without traversing any reference objects. A newly-created object is strong reachable by the thread that created it.~
+处于强可达状态的对象, 在任何情况下都不会被回收掉.
+ 软可达(Softly Reachable)
+定义:~An object is softly reachable if it is not strongly reachable but can be reached by traversing a soft reference.~
+含义是:当对象不处于强可达状态, 并且可以通过软引用进行访问时, 即处于软可达状态.
+当程序申请内存的时候, 垃圾收集器会判断是否开始回收处于软可达状态的对象, 如果决定回收某个对象, 那么垃圾收集器会清除所有指向该对象的软引用, 如果任何处于其它软可达状态的对象可以通过强引用访问该对象, 那么指向这些对象的软引用也会被清除掉. 垃圾收集器在决定哪些软可达状态的对象被收集时, 采用"最久未被使用"原则, 或称"最不常使用"原则. 垃圾收集器也保证在OutOfMemeryError产生以前, 所有的软引用都被清除.
+
+    * 产生和使用一个软引用 
+
+// createSoftReference sr = new SoftReference(new SomeObject());// getSomeObject o = (SomeObject) sf.get();// create in a reference queue;ReferenceQueue queue = new ReferenceQueue();SoftReference sr = new SoftReference(new SomeObject(), queue);
+
+弱可达(Weakly Reachable)
+定义:~An Object is weakly reachable if it is neither strongly nor softly reachable but can be reached by traversing a weak reference.~
+垃圾收集器会一次清除所有弱引用. 幻可达(Phantomly Reachable)
+定义:~An object is phantomly reachable if it is neither strongly, softly, nor weakly reachable, it has been finalized, and some phantom reference refers to it.~
+幻引用不能直接创建. 必须通过向引用队列等级的途径来创建:
+
+ReferenceQueue queue = new ReferenceQueue();PhantomReference pr = new PhantomReference (new SomeObject(), queue);
+
+你不可能从幻引用再次得到对象, pr.get()永远返回null. 另外, 必须调用Reference.clear()手工清除幻引用. All About ReferenceObjects No InterWiki reference defined in properties for Wiki called '[http'!)]
+Reference Objects No InterWiki reference defined in properties for Wiki called '[http'!)]
+Reference Objects and Garbage Collection No InterWiki reference defined in properties for Wiki called '[http'!)]
+\[Jike Thread\?Soft, Weak, and Phantom References|http://www-124.ibm.com/pipermail/jikesrvm-core/2003-May/000365.html]
+
+1.SoftReference ，软引用对象，在响应内存需要时，由垃圾回收器决定是否清除此对象。软引用对象最常用于实现内存敏感的缓存。 
+假定垃圾回收器确定在某一时间点某个对象是软可到达对象。这时，它可以选择自动清除针对该对象的所有软引用，以及通过强引用链，从其可以到达该对象的针对任何其他软可到达对象的所有软引用。在同一时间或晚些时候，它会将那些已经向引用队列注册的新清除的软引用加入队列。 
+软可到达对象的所有软引用都要保证在虚拟机抛出 OutOfMemoryError 之前已经被清除。否则，清除软引用的时间或者清除不同对象的一组此类引用的顺序将不受任何约束。然而，虚拟机实现不鼓励清除最近访问或使用过的软引用。 
+此类的直接实例可用于实现简单缓存；该类或其派生的子类还可用于更大型的数据结构，以实现更复杂的缓存。只要软引用的指示对象是强可到达对象，即正在实际使用的对象，就不会清除软引用。例如，通过保持最近使用的项的强指示对象，并由垃圾回收器决定是否放弃剩余的项，复杂的缓存可以防止放弃最近使用的项。一般来说，weakReference我们用来防止内存泄漏，保证内存对象被VM回收。
+
+2.WeakReference，弱引用对象，它们并不禁止其指示对象变得可终结，并被终结，然后被回收。弱引用最常用于实现规范化的映射。 
+假定垃圾回收器确定在某一时间点上某个对象是弱可到达对象。这时，它将自动清除针对此对象的所有弱引用，以及通过强引用链和软引用，可以从其到达该对象的针对任何其他弱可到达对象的所有弱引用。同时它将声明所有以前的弱可到达对象为可终结的。在同一时间或晚些时候，它将那些已经向引用队列注册的新清除的弱引用加入队列。 softReference多用作来实现cache机制，保证cache的有效性。
+
+3.PhantomReference，虚引用对象，在回收器确定其指示对象可另外回收之后，被加入队列。虚引用最常见的用法是以某种可能比使用 Java 终结机制更灵活的方式来指派 pre-mortem 清除操作。
+如果垃圾回收器确定在某一特定时间点上虚引用的指示对象是虚可到达对象，那么在那时或者在以后的某一时间，它会将该引用加入队列。 
+为了确保可回收的对象仍然保持原状，虚引用的指示对象不能被检索：虚引用的 get 方法总是返回 null。 
+与软引用和弱引用不同，虚引用在加入队列时并没有通过垃圾回收器自动清除。通过虚引用可到达的对象将仍然保持原状，直到所有这类引用都被清除，或者它们都变得不可到达。
+
+下面贴一些我写的例子：
+
+ReferenceAndGCExample.java：
+
+public class ReferenceAndGCExample {
+public static void main(String[] args) {
+   // TODO Auto-generated method stub
+   YDateProxy ob = new YDateProxy();
+   ob.testObj();
+   System.gc();
+   ob.testObj();
+}
+}
+
+YDateProxy.java：
+
+import java.lang.ref.WeakReference;
+import java.util.Date;
+
+public class YDateProxy {
+WeakReference wr;
+
+public YDateProxy() {
+   wr = new WeakReference(new YDate());
+}
+public void testObj() {
+   if (wr.get() == null)
+    System.out.println("obj 已经被清除了 ");
+   else
+    System.out.println("obj 尚未被清除，其信息是 " + wr.get().toString());
+}
+
+class YDate extends Date{
+   public void finalize() {
+    try {
+     super.finalize();
+    } catch (Throwable e) {
+     e.printStackTrace();
+    }
+   }
+}
+}
+
+运行结果：
+obj 尚未被清除，其信息是 Fri Nov 16 09:08:26 CST 2007
+obj 已经被清除了
+
+在两次db.testObj()中，加入System.gc()；这时虚拟机进行垃圾回收，弱引用对象被回收，所以第二次访问结果是obj已经被回收了。

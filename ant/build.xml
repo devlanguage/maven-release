@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     2009-6-29 下午01:19:45                                                        
+
+     project    
+     description
+                   
+     ygong                                                                
+     ====================================================================== -->
+<project name="project" default="default">
+	<description>
+            description
+    </description>
+
+	<target name="init">
+		<property name="sign.init.start" value="yes" />
+		<echo message="execute init" />
+		<antstructure output="ant_dtd.dtd" />
+		<antcall target="checkExist">
+			<param name="file.name" value="ant_build_01.xml" />
+		</antcall>
+
+		<property name="sign.init.end" value="yes" />
+	</target>
+	<target name="checkExist">
+		<echo message="${file.name}" />
+		<condition property="file.${file.name}.exist">
+			<and>
+				<os family="windows" arch="x86" name="Windows XP" version="5.1" />
+				<socket server="sunshapp12" port="17177" />
+				<filesmatch file1="ant_dtd_01.dtd" file2="ant_dtd_02.dtd" />
+				<available file="${file.name}" />
+				<available classname="org.apache.tools.ant.Main" property="ant.core.Main" />
+			</and>
+		</condition>
+		<macrodef name="dbpurge">
+			<attribute file="file" />
+			<sequential>
+				<java jar="utils/dbpurge.jar" fork="true">
+					<arg file="@{file}" />
+				</java>
+			</sequential>
+		</macrodef>
+		<parallel threadCount="4"
+          failonany="false"
+          threadsperprocessor="3"
+          timeout="1000"
+          pollinterval="1000">
+			<dbpurge file="db/one" >
+				<sleep seconds="2" />
+			</dbpurge>
+			<dbpurge file="db/two">
+				<nice currentpriority="2" newpriority="4" />
+			</dbpurge>
+			<dbpurge file="db/three" />
+			<dbpurge file="db/four" />
+			<daemons>
+				<dbpurge file="db/five">
+					<waitfor maxwait="10"
+			         maxwaitunit="second"
+			         checkevery="1"
+			         checkeveryunit="second"
+			         timeoutproperty="property.after.timeout">
+						<and>
+							<socket server="dbserver" port="1521" />
+							<http url="http://webserver/mypage.html" />
+							<available file="errors.log" />
+						</and>
+					</waitfor>
+				</dbpurge>
+				<dbpurge file="db/six" />
+				<dbpurge file="db/seven" />
+				<dbpurge file="db/eight" />
+			</daemons>
+			<!-- repeated about 40 times -->
+		</parallel>
+		<echo message="${file.ant_build_01.xml.exist}" />
+	</target>
+
+	<target name="compile" depends="init" if="sign.init.end" unless="sign.compile.end">
+		<property name="sign.compile.start" value="yes" />
+		<echo message="execute compile" />
+		<antcall target="compile_01" inheritall="ture" inheritrefs="true">
+			<param name="p1" value="exp01" />
+		</antcall>
+		<antcall target="compile_02" inheritall="ture" inheritrefs="true">
+			<param name="p1" value="exp01" />
+		</antcall>
+		<property name="sign.compile.end" value="yes" />
+	</target>
+	<target name="compile_01">
+		<property name="sign.compile_01.start" value="yes" />
+		<echo message="execute compile_01" />
+		<echo message="${p1}" />
+		<javac destdir="classes" srcdir="src">			
+		</javac>
+		<property name="sign.compile_01.end" value="yes" />
+	</target>
+	<target name="compile_02">
+		<property name="sign.compile_02.start" value="yes" />
+		<echo message="execute compile_02" />
+		<echo message="${p1}" />
+		<property name="sign.compile_02.end" value="yes" />
+	</target>
+
+
+	<!-- ================================= 
+    target: default              
+   ================================= -->
+	<target name="default" depends="compile" description="--> description">
+	</target>
+
+</project>
+

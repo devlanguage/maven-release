@@ -1,0 +1,219 @@
+JDK 7 Features 
+Summary
+Features are listed in order, more or less, from lowest to highest in the overall JDK  software stack.
+<ul><li>vm JSR 292: Support for dynamically-typed languages (InvokeDynamic) 
+ Strict class-file checking </li>
+<li>lang JSR 334: Small language enhancements (Project Coin)  </li>
+core Upgrade class-loader architecture 
+ Method to close a URLClassLoader 
+ Concurrency and collections updates (jsr166y) </li>
+<li>i18n Unicode 6.0 
+ Locale enhancement 
+ Separate user locale and user-interface locale </li>
+<li>ionet JSR 203: More new I/O APIs for the Java platform (NIO.2) 
+ NIO.2 filesystem provider for zip/jar archives 
+ SCTP (Stream Control Transmission Protocol) 
+ SDP (Sockets Direct Protocol) 
+ Use the Windows Vista IPv6 stack 
+ TLS 1.2 </li>
+<li>sec Elliptic-curve cryptography (ECC) </li>
+<li>jdbc JDBC 4.1 </li>
+<li>client XRender pipeline for Java 2D 
+ Create new platform APIs for 6u10 graphics features 
+ Nimbus look-and-feel for Swing 
+ Swing JLayer component 
+ Gervill sound synthesizer </li>
+<li>web Update the XML stack </li>
+<li>mgmt Enhanced MBeans </li>
+</ul>
+Features that were once planned for JDK 7 but later deferred to JDK 8 or a later release are listed at the bottom of this page.
+
+<ul>
+  <li>asdf
+  <ul><li>asdf</li></ul>
+  <ul><li>asdf</li></ul>
+  </li>
+</ul>
+<ul>
+  <li>Virtual machine
+    <ul>
+      <li>
+JSR 292: Support for dynamically-typed languages (InvokeDynamic)
+Extensions to the JVM, the Java language, and the Java SE API to support the implementation of dynamically-typed languages at performance levels near to that of the Java language itself
+Lead: John Rose
+Spec: JSR 292; java.lang.invoke
+Links: project page; wiki page; mailing list
+Milestone target: M3
+      </li>
+    </ul>
+  </li>
+  <ul>
+      <li>
+Strict class-file checking
+As specified in JSR 202, which was part of Java SE 6, and in the recently-approved maintenance revision of JSR 924, class files of version 51 (SE 7) or later must be verified with the typechecking verifier; the VM must not fail over to the old inferencing verifier.
+Lead: Karen Kinnear
+Spec: JSR 202 §4.11.1
+Milestone target: M9
+      </li>
+    </ul>
+  </li>
+
+Language
+JSR 334: Small language enhancements (Project Coin)
+A set of small language changes intended to simplify common, day-to-day programming tasks: Strings in switch statements, try-with-resources statements, improved type inference for generic instance creation ("diamond"), simplified varargs method invocation, better integral literals, and improved exception handling (multi-catch)
+Lead: Joe Darcy
+Spec: JSR 334
+Links: project page; mailing list
+Milestone target: M11
+Core
+Upgrade class-loader architecture
+Modifications to the ClassLoader API and implementation to avoid deadlocks in non-hierarchical class-loader topologies
+Lead: Karen Kinnear
+Spec: java.lang.ClassLoader: registerAsParallelCapable, getClassLoadingLock
+Links: summary
+Milestone target: M3
+Method to close a URLClassLoader
+A method that frees the underlying resources, such as open files, held by a URLClassLoader
+Lead: Michael McMahon
+Spec: java.net.URLClassLoader.close
+Links: summary
+Milestone target: M2
+Concurrency and collections updates (jsr166y)
+A lightweight fork/join framework, flexible and reusable synchronization barriers, transfer queues, concurrent linked double-ended queues, and thread-local pseudo-random number generators
+Lead: Doug Lea
+Spec: java.util.concurrent: ForkJoinPool, Phaser, TransferQueue, ConcurrentLinkedDeque, ThreadLocalRandom
+Links: overview; draft api; wiki
+Milestone target: M5
+Internationalization
+Unicode 6.0
+Upgrade the supported version of Unicode to 6.0
+Lead: Yuka Kamiya
+Spec: Unicode 6.0; java.lang.Character
+Milestone target: M11
+Locale enhancement
+Upgrade the java.util.Locale class to support IETF BCP 47 (Tags for Identifying Languages) and UTR 35 (Local Data Markup Language)
+Spec: IETF BCP 47 : java.util.Locale: forLanguageTag, toLanguageTag; UTR 35 : java.util.Locale: getUnicodeLocaleAttributes, getUnicodeLocaleType, getUnicodeLocaleKeys
+Links: overview
+Milestone target: M11
+Separate user locale and user-interface locale
+Upgrade the handling of locales to separate formatting locales from user-interface language locales
+Spec: java.util.Locale: getDefault, setDefault; Locale.Category
+Milestone target: M11
+I/O and Networking
+JSR 203: More new I/O APIs for the Java platform (NIO.2)
+New APIs for filesystem access, scalable asynchronous I/O operations, socket-channel binding and configuration, and multicast datagrams
+Lead: Alan Bateman
+Spec: JSR 203
+Links: project page; interview; talk video; java.net article
+Milestone target: M2
+NIO.2 filesystem provider for zip/jar archives
+A fully-functional and supported NIO.2 filesystem provider for zip and jar files
+Lead: Alan Bateman
+Milestone target: M11
+SCTP (Stream Control Transmission Protocol)
+An implementation-specific API for the Stream Control Transmission Protocol on Solaris
+Lead: Chris Hegarty
+Links: project page; mailing list
+Milestone target: M3
+SDP (Sockets Direct Protocol)
+Implementation-specific support for reliable, high-performance network streams over Infiniband connections on Solaris and Linux
+Lead: Alan Bateman
+Milestone target: M3
+Use the Windows Vista IPv6 stack
+Upgrade the networking code to use the Windows Vista IPv6 stack, when available, in preference to the legacy Windows stack
+Lead: Michael McMahon
+Milestone target: M1
+TLS 1.2
+Add support for Transport Layer Security version 1.2 (RFC 5246)
+Lead: Brad Wetmore
+Spec: RFC 5246, RFC 5289, RFC 5469; javax.net.ssl: ExtendedSSLSession, SSLSocket.getHandshakeSession
+Milestone target: M11
+Security & Cryptography
+Elliptic-curve cryptography (ECC)
+A portable implementation of the standard Elliptic Curve Cryptographic (ECC) algorithms, so that all Java applications can use ECC out-of-the-box
+Lead: Vincent Ryan
+Milestone target: M5
+Database Connectivity
+JDBC 4.1
+Upgrade to JDBC 4.1 and Rowset 1.1
+Lead: Lance Andersen
+Spec: java.sql; javax.sql.rowset: RowSetFactory, RowSetProvider
+Milestone target: M11
+Client
+XRender pipeline for Java 2D
+A new Java2D graphics pipeline based upon the X11 XRender extension, which provides access to much of the functionality of modern GPUs
+Lead: Clemens Eisserer; team:Dmitri Trembovetski
+Milestone target: M9
+Create new platform APIs for 6u10 graphics features
+Create new platform APIs for features originally implemented in the 6u10 release: Translucent and shaped windows, and heavyweight/lightweight component mixing
+Lead: Anthony Petrov
+Spec: java.awt: Window: setShape, setOpacity; Component
+Milestone target: M3
+Nimbus look-and-feel for Swing
+A next-generation cross-platform look-and-feel for Swing
+Lead: Jasper Potts; team:Richard Bair, Peter Zhelezniakov
+Spec: javax.swing.plaf.nimbus
+Links: project page
+Milestone target: M3
+Swing JLayer component
+Add the SwingLabs JXLayer component decorator to the platform
+Lead: Alexander Potochkin
+Spec: javax.swing.JLayer
+Links: JXLayer project
+Milestone target: M5
+Gervill sound synthesizer
+Drop the old, proprietary, encumbered sound synthesizer in favor of Gervill, a synthesizer created as a proposal for the Audio Synthesis Engine Project
+Lead: Karl Helgason
+Links: project page
+Milestone target: M1
+Web
+Update the XML stack
+Upgrade the components of the XML stack to the most recent stable versions: JAXP 1.4, JAXB 2.2a, and JAX-WS 2.2
+Lead: Joe Wang
+Spec: Corresponding maintenance reviews of JSR 206 (JAXP), JSR 222 (JAXB), and JSR 224 (JAX-WS)
+Milestone target: M12
+Management
+Enhanced MBeans
+Enhancements to the existing com.sun.management MBeans to report the recent CPU load of the whole system, the CPU load of the JVM process, and to send JMX notifications when GC events occur (this feature previously included an enhanced JMX Agent, but that was dropped due to lack of time)
+Lead: Frederic Parain
+Spec: com.sun.management: OperatingSystemMXBean, GarbageCollectorMXBean
+Milestone target: M13
+Deferred to JDK 8 or later
+JSR 294: Language and VM support for modular programming
+Enhancements to the Java language and virtual-machine specifications to support modular programming, at both compile time and run time
+Lead: Alex Buckley
+Spec: JSR 294
+Links: mailing list
+JSR 308: Annotations on Java types
+An extension to the Java annotation syntax to permit annotations on any occurrence of a type
+Lead: Michael Ernst; team:Jonathan Gibbons
+Spec: JSR 308
+Links: project page; detailed project page
+JSR TBD: Language support for collections
+Literal expressions for immutable lists, sets, and maps, and indexing-access syntax for lists and maps
+Lead: Joe Darcy
+Links: project page; mailing list
+JSR TBD: Project Lambda
+Lambda expressions (informally, "closures") and defender methods for the Java programming language
+Lead: Brian Goetz; team:Alex Buckley, Jonathan Gibbons, Mark Reinhold
+Links: project page; mailing list
+Modularization (Project Jigsaw)
+A simple, low-level module system focused upon the goal of modularizing the JDK, and the application of that system to the JDK itself
+Lead: Mark Reinhold; team:Alex Buckley, Jonathan Gibbons
+Links: introduction; project page; mailing list
+JSR 296: Swing application framework
+An API to define the basic structure of a typical Swing application, thereby eliminating lots of boilerplate code and providing a much-improved initial developer experience
+Lead: Alexander Potochkin
+Spec: JSR 296
+Swing JDatePicker component
+Add the SwingLabs JXDatePicker component to the platform
+Lead: Alexander Potochkin
+Links: JXDatePicker api
+</li></ul>
+
+Java 7 New Functions
+1.Java 7提供了一个新API访问文件系统，但除此之外，JSR 203(NIO.2)还包含其它很多新特性，这个新版本的确新增了很多改善I/O编程的类，本文将会介绍下面的新特性：
+  · SeekableByteChannel：随机访问通道;
+  · MulticastChannel：允许IP多播的通道;
+  · NetworkChannel：新的网络通道超级接口;
+  · 异步I/O API：新的API使I/O操作可以异步进行。

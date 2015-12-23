@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.hibernate3.hello.many_to_one">
+  <class name="Account" table="hi_account">
+    <id name="accountId" column="account_id" access="field" unsaved-value="-1">
+      <generator class="native" />
+    </id>
+    <property name="accountName" column="account_name" access="field" not-null="true" />
+  </class>
+  <class name="User" table="hi_user">
+    <id name="userId" column="user_id">
+      <generator class="sequence">
+        <param name="name">seq_user</param>
+      </generator>
+    </id>
+    <property name="userName" column="user_name" access="field" not-null="true" />
+    <!--  outer-join关键字 (many-to-one的情况)
+      outer-join 关键字有3个值，分别是true,false,auto,默认是 auto。
+      1） true: 表示使用外连接抓取关联的内容，这里的意思是
+      当使用load(Magazine.class)
+      如果true: select * from User u left join Account a on a.account_id = p.person_id. 将禁用lazy加载
+      如果false: select * from Magazine m where m.magazine_id=?, select * from Person p where p.person_id =?。 方便Lazy加载
+      2）auto: 其含义是false, 或者 true, 取决于：hibernate.cfg.xml的propery: max_fetch_depth
+      
+      不过最好使用fetch属性来表示，及fetch="join"或者fetch="select"。
+    -->
+    <many-to-one name="account" column="account_id" class="Account" cascade="all" outer-join="true"/>
+  </class>
+</hibernate-mapping>

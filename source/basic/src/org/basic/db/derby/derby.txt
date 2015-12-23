@@ -1,0 +1,83 @@
+Common Connection URL Format:
+1. jdbc:derby:<Path>/DbName;create=true
+   "jdbc:derby://localhost:1527/../test1;create=true";      
+   create:true|fasle; logDevice:<path>
+   
+2. jdbc:derby:;databaseName=DbName;create=true;user=userName
+   jdbc:derby:encryptedDB;create=true;dataEncryption=true;bootPassword=DBpassword
+   jdbc:derby:encDB;create=true;dataEncryption=true;encryptionAlgorithm=DES/CBC/NoPadding;encryptionKey=6162636465666768 
+3.  You can access read-only databases in jar or zip files by specifying jar as the subsubprotocol, like this:
+	jdbc:derby:jar:(pathToArchive)databasePathWithinArchive 	
+   
+    ----if jar is in classpath.
+	jdbc:derby:/databasePathWithinArchive 
+4. jdbc:derby:;shutdown=true	
+6. Booting an encrypted database    
+   jdbc:derby:wombat;bootPassword=clo760uds2caPe 
+   jdbc:derby:flintstone;encryptionAlgorithm=AES/CBC/NoPadding;encryptionKey=c566bab9ee8b62a5ddb4d9229224c678 
+   
+-----------------------------------
+Running Testing in c/s mode
+1. Start:
+---Server will listen only on localhost and clients cannot access the server from another host.
+   java -cp "derby.jar;derbynet.jar" org.apache.derby.drda.NetworkServerControl start
+---Server runs on 192.168.3.18 and also listens for clients from other hosts. Clients must specify the server in the URL or DataSource as 192.168.3.18
+   java -cp "derby.jar;derbynet.jar" org.apache.derby.drda.NetworkServerControl start -h 192.168.3.18
+---Start the Network Server so that it will listen on all interfaces and accept all client requests originated from localhost or others   
+   java -cp "derby.jar;derbynet.jar" org.apache.derby.drda.NetworkServerControl start -h 0.0.0.0
+--Shutdown Server   
+   java -cp "derby.jar;derbynet.jar" org.apache.derby.drda.NetworkServerControl shutdown [-h 0.0.0.0]
+Parameter: -h hostName;  maxthreads: 0|Int; timeslice:milliseconds; logconnections:on|off; trace: on|off; traceDirectory:<Path>
+   
+   Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+   Connection conn = DriverManager.getConnection(
+      "jdbc:derby://192.168.3.18:1527/../databases/demoDB;create=true");
+   
+-------------------------------------
+Running Testing in embed mode
+1. 
+   Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+   conn = DriverManager.getConnection("jdbc:derby:toursDB;create=true")
+
+------------------------------------------------------------------------------------------------------
+Connection Parameter:
+------------------------------------------------------------------------------------------------------
+	bootPassword=key 
+	create=true 
+	databaseName=nameofDatabase 
+	dataEncryption=true 
+	encryptionProvider=providerName 
+	encryptionAlgorithm=algorithm 
+	territory=ll_CC 
+	logDevice=logDirectoryPath 
+	createFrom=BackupPath 
+	restoreFrom=BackupPath 
+	rollForwardrecoveryFrom=BackupPath 
+	password=userPassword 
+	shutdown=true 
+	user=userName 
+	
+------------------------------------------------------------------------------------------------------
+1. Work with Authentication
+------------------------------------------------------------------------------------------------------
+  By default user authentication is disable. When you try to connect to Derby Database, user name and
+   password is necessary.
+  1. Enable Authentication(modify the Derby_HOME/bin/derby.properties)
+    derby.connection.requireAuthentication=true
+  2. Define the valid user.
+   1) Built-in user
+     derby.authentication.provider=BUILTIN
+     derby.user."FRed"=javaPwd
+
+   Database Level User,Visible just for current database. 
+   You set the property once for each user. To delete a user, set that user's password to null.
+	     -- adding the user sa with password 'derbypass'
+		CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('derby.user.sa', 'derbypass')
+		-- adding the user mary with password 'little7xylamb'
+		CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('derby.user.mary', 'little7xylamb')
+		-- removing mary by setting password to null
+		CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('derby.user.mary', null)
+   System Level User. Just the edit derby.properties
+     derby.user.sa=derbypass
+     derby.user.mary=little7xylamb
+  

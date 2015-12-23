@@ -1,0 +1,101 @@
+# @(#)file      README
+# @(#)author    Sun Microsystems, Inc.
+# @(#)version   1.4
+# @(#)lastedit  04/05/06
+#
+# Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+# SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+
+# ==============================================================================
+#
+#  Example of a secure RMI connector (using Security Manager and Policy File).
+#
+#  This example uses:
+#
+#  - the SSL RMI socket factories for encryption,
+#  - the password authenticator based on the JMXAuthenticator interface for
+#    user authentication,
+#  - the JAAS and the J2SE Security Architecture based on the use of security
+#    managers and policy files for user access level authorization.
+#
+# ==============================================================================
+#
+# In order to compile & run the example, make a copy of this
+# README file, update the variables to match your local installation,
+# and then simply cut & paste all variable definitions & commands 
+# as needed into a terminal window.
+#
+# Note that this README makes the assumption that you are running
+# UNIX, you are familiar with the JMX Remote API specification (in
+# particular JMXServiceURL), and with Bourne or Korn shell syntax.
+#
+# All variable assignments and commands below are defined using 
+# UNIX Korn shell syntax.
+#
+# If you are not running UNIX and the Korn shell you are expected
+# to be able to adapt these commands to your favorite OS/shell
+# environment.
+#
+
+# Update the following variables to match your local installation:
+#
+JDMK_HOME=@INSTALL_HOME_FOR_JDMK@
+JDMK_LIB=${JDMK_HOME}/lib
+
+classp=${JDMK_LIB}/jmx.jar:${JDMK_LIB}/jmxremote.jar:${JDMK_LIB}/rmissl.jar:.
+
+# JMX, JMX Remote API (mandatory) and the SSL RMI Socket Factories are
+# integrated into J2SE 1.5 so
+#
+# classp=.
+
+# Compile Java classes
+#
+# * Server.java: creates an MBeanServer and creates and starts a secure RMI
+#                connector server (JRMP).
+#
+# * Client.java: creates a secure RMI connector (JRMP), creates and registers
+#                a Simple standard MBean and performs operations on it.
+#
+# * ClientListener.java: implements a generic notification listener.
+#
+# * SimpleStandard.java: implements the Simple standard MBean.
+#
+# * SimpleStandardMBean.java: the management interface exposed by the Simple
+#                             standard MBean.
+#
+
+javac -classpath $classp \
+      mbeans/SimpleStandard.java \
+      mbeans/SimpleStandardMBean.java \
+      server/Server.java \
+      client/Client.java \
+      client/ClientListener.java
+
+# Start the RMI registry:
+#
+
+export CLASSPATH=server:$classp ; rmiregistry 9999 &
+
+# Start the Server:
+#
+# Before starting the server create a "java.policy" file from the supplied
+# "java.policy.template" file. Edit the "java.policy" file and replace the
+# paths as needed.
+#
+
+java -classpath server:mbeans:$classp \
+     -Djavax.net.ssl.keyStore=config/keystore \
+     -Djavax.net.ssl.keyStorePassword=password \
+     -Djava.security.manager \
+     -Djava.security.policy=config/java.policy Server &
+
+# Start the Client:
+#
+
+java -classpath client:server:mbeans:$classp \
+     -Djavax.net.ssl.trustStore=config/truststore \
+     -Djavax.net.ssl.trustStorePassword=trustword \
+     Client
+
+# ==============================================================================

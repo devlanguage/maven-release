@@ -1,0 +1,63 @@
+4. 并发工具增强 
+
+4.1.fork-join 
+ 最大的增强，充分利用多核特性，将大问题分解成各个子问题，由多个cpu可以同时解决多个子问题，最后合并结果，继承RecursiveTask，实现compute方法，然后调用fork计算，最后用join合并结果。
+
+  class Fibonacci extends RecursiveTask<Integer> {
+  final int n;
+  Fibonacci(int n) {
+  this.n = n;
+  }
+  private int compute(int small) {
+  final int[] results = { 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89 };
+  return results[small];
+  }
+  public Integer compute() {
+  if (n <= 10) {
+  return compute(n);
+  }
+  Fibonacci f1 = new Fibonacci(n - 1);
+  Fibonacci f2 = new Fibonacci(n - 2);
+  System.out.println("fork new thread for " + (n - 1));
+  f1.fork();
+  System.out.println("fork new thread for " + (n - 2));
+  f2.fork();
+  return f1.join() + f2.join();
+  }
+  } 
+
+ 4.2.ThreadLocalRandon 并发下随机数生成类，保证并发下的随机数生成的线程安全，实际上就是使用threadlocal
+
+    final int MAX = 100000;
+  ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+  long start = System.nanoTime();
+  for (int i = 0; i < MAX; i++) {
+  threadLocalRandom.nextDouble();
+  }
+  long end = System.nanoTime() - start;
+  System.out.println("use time1 : " + end);
+  long start2 = System.nanoTime();
+  for (int i = 0; i < MAX; i++) {
+  Math.random();
+  }
+  long end2 = System.nanoTime() - start2;
+  System.out.println("use time2 : " + end2); 
+
+     
+4.3. phaser 类似cyclebarrier和countdownlatch，不过可以动态添加资源减少资源
+
+   void runTasks(List<Runnable> tasks) {
+  final Phaser phaser = new Phaser(1); // "1" to register self
+  // create and start threads
+  for (final Runnable task : tasks) {
+  phaser.register();
+  new Thread() {
+  public void run() {
+  phaser.arriveAndAwaitAdvance(); // await all creation
+  task.run();
+  }
+  }.start();
+  }
+  // allow threads to start and deregister self
+  phaser.arriveAndDeregister();
+  } 

@@ -1,0 +1,50 @@
+注意，有几点明显的改变： 
+1．            对象创建时，明确给出类型，如GenericsFoo<String>。 
+2．            对象通过getX方法取出时，不需要进行类型转换。 
+3．            对各个方法的调用，如果参数类型与创建时指定的类型不匹配时，编译器就会报错。 
+那么我们为什么要泛型呢？ 有两个好处： 
+1. 可以在编译时检查存储的数据是否正确。我们开发有一个趋向就是尽早的发现错误，最好就是在编译阶段， 泛型正好符合这一条件。 
+2. 减少了强制转换， String str = (String)strList.get(0）；这样的操作属于一种向下转型， 是比较危险的操作， 当List内存储的对象不适String时就会抛出异常。 
+
+有三种泛型应用，应用在接口、类、方法
+  public interface ValuePair_Intf<A, B extends Object & Serializable> {
+  	    public B getB();
+  	    public <T> A genericMethod(T v);
+  }
+  public class ValuePair_Class<A, B> implements ValuePair_Intf<A, B> {
+  }
+  
+希望对可用的类型进行限制
+<T extends parentClass & inf1 & intf2>:	限制泛型类型必须为某个类或接口的后代，包括本类型。 
+
+通配符泛型
+问题：
+ 	Box<Object> boxObj = new Box<Object>(); 
+	Box<String> boxStr = new Box<String>(); 
+	虽然 String 是 Object 的子类，但是 Box<String> 和 Box<Object> 之间并没有什么关系——Box<String> 不是 Box<Object> 的子类或者子类型，因此，以下赋值语句是非法的： 
+	boxObj = boxStr;     // 无法通过编译 
+		void print(List<?>    lst)	
+		void print(List<? super   ChildClass>    lst)
+		void print(List<? extends SuperClass>  lst) { 
+
+###### 泛型深入 
+public class GenericsFoo <T> { 
+    private T x; 
+    public T getX() { 
+        return x; 
+    } 
+
+    public void setX(T x) { 
+        this.x = x; 
+    } 
+    
+    public static void main(String[] args) { 
+          GenericsFoo<String> gf = new GenericsFoo<String>(); 
+          gf.setX("Hello"); 
+          
+          GenericsFoo<?> gf2 = gf; 
+          gf2.setX("World");                 // 报错！！！ 
+          String str = gf2.getX();          // 报错！！！ 
+          gf2.setX(gf2.getX());             // 报错！！！ 
+    } 
+} 

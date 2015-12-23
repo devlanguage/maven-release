@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--<!DOCTYPE digester-rules PUBLIC
+	"-//Jakarta Apache //DTD digester-rules XML V1.0//EN"
+	"digester-rules.dtd">
+-->
+<digester-rules>
+	<object-create-rule pattern="catalog" classname="org.xml.parser.digester.catalog.Catalog" />
+	<set-properties-rule pattern="catalog">
+		<alias attr-name="library" prop-name="library" />
+	</set-properties-rule>
+	　　
+	<pattern value="catalog/book">
+		<object-create-rule classname="org.xml.parser.digester.catalog.Book" />
+		<call-method-rule pattern="author" methodname="setAuthor" paramcount="0" />
+		<call-method-rule pattern="title" methodname="setTitle" paramcount="0" />
+		<set-next-rule methodname="addBook" />
+		<set-top-rule methodname="setCatalog"/>
+	</pattern>
+
+	<pattern value="catalog/magazine">
+		<object-create-rule classname="org.xml.parser.digester.catalog.Magazine" />
+		<call-method-rule pattern="name" methodname="setName" paramcount="0" />
+		<pattern value="article">
+			<object-create-rule classname="org.xml.parser.digester.catalog.Article" />
+			<set-properties-rule>
+				<alias attr-name="page" prop-name="page" />
+			</set-properties-rule>
+			<call-method-rule pattern="headline" methodname="setHeadline" paramcount="0" />
+			<set-next-rule methodname="addArticle" />
+		</pattern>
+		<!-- 可见set-next-rule所指定的方法为parent的方法 -->
+		<set-next-rule methodname="addMagazine" />
+	</pattern>
+</digester-rules>

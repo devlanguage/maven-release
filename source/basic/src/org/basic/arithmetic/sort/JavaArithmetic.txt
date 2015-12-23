@@ -1,0 +1,88 @@
+数据结构的概述
+
+数据结构      优点                                                         缺点
+-------------------------------------------------------------------------------------------------------------------
+数组          插入快，如果知道下标，可以非常快地存取                    查找慢，删除慢，大小固定
+有序数组      比无序的数组查找快                                      删除和插入慢，大小固定
+栈            提供后进先出方式的存取                                  存取其他项很慢
+队列          提供先进先出方式的存取                                  存取其他项很慢
+链表          插入快、删除快                                          查找慢
+--------------------------------------------------------------------------------------------------------------------
+二叉权        查找、插入、删除都快（如果树保持平衡）                                       删除算法复杂
+红－黑树      查找、插入、删除都快。权总是平衡的                         算法复杂
+2-3-4树      查找、插入、删除都快。树总是平衡的。类似的树对磁盘存储有用   算法复杂
+哈希表        如果关键字已知则存取极快。插入快                          删除慢，如果不知道关键字则存取很慢，对存储空间使用不充分
+堆                    插入、删除快，对最大数据项的存取很快                       对其他数据项存取慢
+图            对现实世界建模                                          有些算法慢且复杂
+
+
+Collection  无参数的构造函数用于创建一个空的Collection, 支持一个iterator(用于遍历), toArray
+ ├-List         顺序的Collection, 允许有相同的元素, listIterator(遍历和CRUD)
+ │ ├LinkedList    允许多个null,双向LinkedList, Unsynchronized,Used as list/stack/queue/deque;
+ │ ├                在头尾增删很好，中间最差; 随机访问很差【O(i)】, 定位次数: idx或length-idx
+ │ ├ArrayList     允许多个null,Growable Array,Unsynchronized,ensureCapacity();initCapacity=10,容量不够变为(oldCapacity * 3)/2 + 1; 
+ | ├                增删的元素越靠前性能越差,需扔掉当前元素，数组拷贝(size-idx-1)个元素; 随机读取或更新/末尾增删【O(1)】, 增删很差【O(n-i)】 
+ │ └Vector        允许多个null,Synchronized ArrayList, 正在iterator时被人更改，抛ConcurrentModificationException
+ │　   |              initCapacity=10,capacityIncrement=0; 如果capacityIncrement=0, 容量不够则翻一倍，否则增加capacityIncrement
+ │　   ├Stack        允许多个null,Vector with extra method: pop/push/peek/empty/search 
+ |
+ └Set           自排序的Collection, 不允许有相同的元素, 允许一个null, 注意Mutable Object的equals改变
+ │
+ └Queue
+  ├Deque(intf) 
+  | ├ArrayDeque
+  | ├LinkedBlockingDeque
+  | ├LinkedList        
+  ├BlockingQueue(intf): 获取元素时等待队列变为非空，以及存储元素时等待空间变得可用
+  |  ├ArrayBlockingQueue(一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序)
+  |  ├DelayQueue(无界阻塞队列，只有在延迟期满时才能从中提取元素)
+  |  ├LinkedBlockingQueue(一个基于已链接节点的、范围任意的 blocking queue。此队列按 FIFO（先进先出）排序元素)
+  |  ├LinkedBlockingDeque
+  |  ├PriorityBlockingQueue(无界优先级sorted队列)
+  |  ├SynchronousQueue(capacity=0)
+  |  ├BlockingDeque(intf)
+  |    ├LinkedBlockingDeque(一个基于已链接节点的、任选范围的阻塞双端队列,如果未指定容量，那么容量将等于 Integer.MAX_VALUE)
+  ├AbstractQueue(ArrayBlockingQueue, ConcurrentLinkedQueue, DelayQueue, LinkedBlockingDeque, LinkedBlockingQueue, PriorityBlockingQueue, PriorityQueue, SynchronousQueue )
+    ├ConcurrentLinkedQueue(  
+    一个基于链接节点的无界线程安全队列。此队列按照 FIFO（先进先出）原则对元素进行排序。队列的头部 是队列中时间最长的元素。队列的尾部 是队列中时间最短的元素。新的元素插入到队列的尾部，队列获取操作从队列头部获得元素。当多个线程共享访问一个公共 collection 时，ConcurrentLinkedQueue 是一个恰当的选择。此队列不允许使用 null 元素。 
+
+此实现采用了有效的“无等待 (wait-free)”算法，
+    
+ 
+Map        key-value映射,不允许重复key
+ ├Hashtable   Synchronized,  key/value都不可为null,
+ ├HashMap     UnSynchornized,key/value都可以为null;增大load factor,将节省空间，但加长查询时间; capacity(不是size)决定iterator时间
+ └WeakHashMap 不被外界引用的key,能被GC收集
+
+
+集合类          功能
+-------------------------------------------------------------------------------------------------------------------- 
+LinkedList  允许多个null， double-linked list/stack/fifo queue/double-ended queue
+            unsynchronized,  quick-fail to iterator, 
+            boolean add/offer/void addLast(Add in end), 
+            void addFirst (add in header)
+            E poll(remove first and return it, return null if empty)
+            E remove/removeFirst(remove first and return it, throw exception if empty)
+            E remove(obj/idx), E removeFirst/removeLast
+            E peek(retrive the first and return it, return null if empty)
+            E element/getFirst(retrive the first and return it, throw exception if empty))
+Vector      Growable array       
+
+### 排序的稳定性
+在待排序的文件中，若存在多个关键字相同的记录，经过排序后这些具有相同关键字的记录之间的相对次序保持不变，该排序方法是稳定的；
+若具有相同关键字的记录之间的相对次序发生变化，则称这种排序方法是不稳定的。
+### 排序方法的分类
+1．按是否涉及数据的内、外存交换分
+    　在排序过程中，若整个文件都是放在内存中处理，排序时不涉及数据的内、外存交换，则称之为内部排序(简称内排序)；
+        反之，若排序过程中要进行数据的内、外存交换，则称之为外部排序。
+    注意：　    ① 内排序适用于记录个数不很多的小文件    　② 外排序则适用于记录个数太多，不能一次将其全部记录放人内存的大文件。
+2．按策略划分内部排序方法
+    　可以分为五类：插入排序、选择排序、交换排序、归并排序和分配排序
+    
+    
+按照散列函数的定义，
+  如果两个对象相同，即obj1.equals(obj2)=true，则它们的hashCode必须相同，
+  但如果两个对象不同，则它们的hashCode不一定不同，
+  如果两个不同对象的hashCode相同，这种现象称为冲突，冲突会导致操作哈希表的时间开销增大，所以尽量定义好的hashCode()方法，能加快哈希表的操作。
+  如果相同的对象有不同的hashCode，对哈希表的操作会出现意想不到的结果（期待的get方法返回null），要避免这种问题，只需要牢记一条：要同时复写equals方法和hashCode方法，而不要只写其中一个。
+     

@@ -1,0 +1,174 @@
+SSL协议的三次握手
+SSL是Secure Socket Layer的缩写,是由Netscape公司研发,SSL协议有三次握手过程: 
+假设现在有一个客户端A,一个SSL服务器B,使用IE浏览器. 
+1.1客户A通过IE浏览器,发起一个消息请求,传递IE浏览器所支持的加密算法列表. 
+1.2服务器B回复A的信息,并将SSL站点证书的公钥传递给IE浏览器.(服务器上存有所有的加密算法) 
+2.1IE浏览器产生对称的Session key,并使用服务器发送的公钥加密,然后传送给SSL服务器. 
+2.2SSL服务器接收到加密后的Session key,用密钥(与传送给客户端的公钥对应)解密. 
+2.3客户端将证书传递给ssl服务器进行客户端证书的校验. 
+开始加密通信. 
+
+ssl认证的三种方式： 
+单项ssl：客户端不需要提交证书. 
+双向SSL Require:客户端必须提交证书，通常都采用这种方式. 
+双向SSL Request:客户端可提交证书，也可不提交证书. 
+如果认证方式为SSL或SSL Request,则2.3步可以不用.如果为SSL Require,则必须有第2.3步. 
+
+位码
+即tcp标志位,
+有6种标示:SYN(synchronous建立联机) ACK(acknowledgement 确认) PSH(push传送) FIN(finish结束) RST(reset重置) URG(urgent紧急)
+Sequence number(顺序号码) Acknowledge number(确认号码)
+
+CLOSED  表示插槽没被使用。  
+LISTENING  表示正在监听进入的连接。  
+SYN_SENT  表示正在试着建立连接。  
+SYN_RECEIVED  进行连接初始同步。  
+ESTABLISHED  表示连接已被建立。  
+CLOSE_WAIT  表示远程计算机关闭连接，正在等待插槽的关闭。  
+FIN_WAIT_2  插槽关闭后，等待来自远程计算机的关闭信号。  
+FIN_WAIT_1  表示插槽关闭，正在关闭连接。  
+TIME_WAIT  连接关闭后，等待远程计算机关闭重发。
+CLOSING  先关闭本地插槽，然后关闭远程插槽，最后等待确认信息。  
+LAST_ACK  远程计算机关闭后，等待确认信号。  
+
+
+使用close操作的话,那么会等到socket buffer中所有数据都发送完后才会调用close
+主动close的一方的socket会进入time_wait状态
+
+我们的系统应用中出现这样一个问题。系统A为client，系统B为server。在作tcp/ip通信中server端总出现大量FIN_WAIT_2状态。初步认为是网络堵塞，server先close socket，进入FIN_WAIT_2，然后没有收到client的close socket 不能转入TIME_WAIT状态
+
+public void setSoLinger(boolean on, int linger) throws SocketException 
+on=true, linger=0 (seconds)  套接口关闭时tcp立即关闭，缓冲区中没有送出的数据会被扔掉
+这样可以避免tcp的TIME_WAIT状态(TCp关闭时 会等待一段时间才会释放这个连接 这段时间最长是2分钟) 但是 如果在很短的时间内创建一个新连接的话 也有可能会使老连接的数据被不正确的发送到新连接上
+
+TCP协议握手协商通信详解
+
+1、建立连接协议（三次握手） Figure 2: TCP three way handshake, connection initiation. 
+     Client                           Server
+        -----------                      -------------------
+        |Closed                           |Listener    
+     New|-----Syn(sync=j)-------|         |
+Syn_Send|                       |-------->|
+        |                               |Syn_Recv
+        |<-----Syn(ack=j+1), Syn(syn=k)---|  
+   Estab|                                 |
+        |-----Ack(ack=k+1)--------------->|ESTAB
+    
+ (1) 第一次握手：客户端发送带SYN标志的TCP报文syn包(syn=j),随机产生seq number=1234567的数据包到服务器，并进入SYN_SEND状态，等待服务器确认
+ (2) 第2个报文: 报文同时带ACK标志和SYN标志。 服务器收到syn包请求后要确认联机信息，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），
+   即SYN+ACK包，发送ack number=(主机A的seq+1),syn=1,ack=1,随机产生seq=7654321的包给客户端，此时服务器进入SYN_RECV状态；
+    因此它表示对刚才客户端SYN报文的回应；同时又标志SYN给客户端，询问客户端是否准备好进行数据通讯。
+(3)第三次握手：客户端收到服务器的SYN＋ACK包后检查ack number是否正确，即第一次发送的seq number+1,以及位码ack是否为1，
+   若正确，客户段会再发送ack number=(server端的seq+1),ack=1自己从Sync_Send进入ESTABLISHED状态。
+     Server端收到后确认seq值与ack=1则连接建立成功。server端由Sync_Recv进入ESTABLISHED状态
+实例:
+
+IP 192.168.1.116.3337 > 192.168.1.123.7788: S 3626544836:3626544836
+IP 192.168.1.123.7788 > 192.168.1.116.3337: S 1739326486:1739326486 ack 3626544837
+IP 192.168.1.116.3337 > 192.168.1.123.7788: ack 1739326487,ack 1
+
+第一次握手：192.168.1.116发送位码syn＝1,随机产生seq number=3626544836的数据包到192.168.1.123,192.168.1.123由SYN=1知道192.168.1.116要求建立联机;
+
+第二次握手：192.168.1.123收到请求后要确认联机信息，向192.168.1.116发送ack number=3626544837,syn=1,ack=1,随机产生seq=1739326486的包;
+
+第三次握手：192.168.1.116收到后检查ack number是否正确，即第一次发送的seq number+1,以及位码ack是否为1，若正确，192.168.1.116会再发送ack number=1739326487,ack=1，192.168.1.123收到后确认seq=seq+1,ack=1则连接建立成功。
+
+
+完成三次握手，客户端与服务器开始传送数据，在上述过程中，还有一些重要的概念： 
+ 未连接队列：在三次握手协议中，服务器维护一个未连接队列，该队列为每个客户端的SYN包（syn=j）开设一个条目，该条目表明服务器已收到SYN包，并向客户发出确认，正在等待客户的确认包。这些条目所标识的连接在服务器处于Syn_RECV状态，当服务器收到客户的确认包时，删除该条目，服务器进入ESTABLISHED状态。 
+Backlog参数：表示未连接队列的最大容纳数目。 
+ SYN-ACK 重传次数 服务器发送完SYN－ACK包，如果未收到客户确认包，服务器进行首次重传，等待一段时间仍未收到客户确认包，进行第二次重传，如果重传次数超过系统规定的最大重传次数，系统将该连接信息从半连接队列中删除。注意，每次重传等待的时间不一定相同。 
+ 半连接存活时间：是指半连接队列的条目存活的最长时间，也即服务从收到SYN包到确认这个报文无效的最长时间，该时间值是所有重传请求包的最长等待时间总和。有时我们也称半连接存活时间为Timeout时间、SYN_RECV存活时间。 
+
+
+2、连接终止协议（四次握手）
+　　由于TCP连接是全双工的，因此每个方向都必须单独进行关闭。这原则是当一方完成它的数据发送任务后就能发送一个FIN来终止这个方向的连接。收到一个 FIN只意味着这一方向上没有数据流动，一个TCP连接在收到一个FIN后仍能发送数据。首先进行关闭的一方将执行主动关闭，而另一方执行被动关闭。
+　　（1） TCP客户端发送一个FIN，用来关闭客户到服务器的数据传送（报文段4）。 
+          (Client主动发送FIN后，然后自己进入FIN_WAIT_1， 主动关闭方)
+　　（2） 服务器收到这个FIN，它发回一个ACK，确认序号为收到的序号加1（报文段5）。和SYN一样，一个FIN将占用一个序号          
+          Client收到ACK, 然后Client进入FIN_WAIT_2. 但是如果Client在ACK之前收到FIN，他将进入Closing
+          
+　　（3） 服务器关闭客户端的连接，发送一个FIN给客户端（报文段6）。           
+　　（4） 客户段发回ACK报文确认，并将确认序号设置为收到序号加1（报文段7）。
+     CLOSED            ----  Closed.  The socket  is  not  being used. 
+     LISTEN            ----  Listening for incoming connections. 
+     SYN_SENT          ----  Actively trying to  establish  connection. 
+     SYN_RECEIVED      ----  Initial synchronization of the connection under way. 
+     ESTABLISHED       ----  Connection has been established. 
+     CLOSE_WAIT        ----  Remote shut down; waiting  for  the socket to close. 
+     FIN_WAIT_1        ----  Socket closed; shutting  down  connection. 
+     CLOSING           ----  Closed,   then   remote   shutdown; awaiting acknowledgement. 
+     LAST_ACK          ----  Remote  shut  down,  then   closed ;awaiting acknowledgement. 
+     FIN_WAIT_2        ----  Socket closed; waiting for shutdown from remote. 
+     TIME_WAIT         ----  Wait after close for  remote  shutdown retransmission. 
+     
+　　CLOSED： 这个没什么好说的了，表示初始状态。
+　　LISTEN： 这个也是非常容易理解的一个状态，表示服务器端的某个SOCKET处于监听状态，可以接受连接了。
+　　SYN_RCVD： 这个状态表示接受到了SYN报文，在正常情况下，这个状态是服务器端的SOCKET在建立TCP连接时的三次握手会话过程中的一个中间状态，很短暂，基本上用netstat你是很难看到这种状态的，除非你特意写了一个客户端测试程序，故意将三次TCP握手过程中最后一个ACK报文不予发送。因此这种状态时，当收到客户端的ACK报文后，它会进入到ESTABLISHED状态。
+　　SYN_SENT： 这个状态与SYN_RCVD遥想呼应，当客户端SOCKET执行CONNECT连接时，它首先发送SYN报文，因此也随即它会进入到了SYN_SENT状态，并等待服务端的发送三次握手中的第2个报文。SYN_SENT状态表示客户端已发送SYN报文。
+　　ESTABLISHED：这个容易理解了，表示连接已经建立了。
+　　FIN_WAIT_1： 这个状态要好好解释一下，其实FIN_WAIT_1和FIN_WAIT_2状态的真正含义都是表示等待对方的FIN报文。而这两种状态的区别是：FIN_WAIT_1状态实际上是当SOCKET在ESTABLISHED状态时，它想主动关闭连接，向对方发送了FIN报文，此时该SOCKET即进入到FIN_WAIT_1状态。而当对方回应ACK报文后，则进入到FIN_WAIT_2状态，当然在实际的正常情况下，无论对方何种情况下，都应该马上回应ACK报文，所以FIN_WAIT_1状态一般是比较难见到的，而FIN_WAIT_2状态还有时常常可以用netstat看到。
+　　FIN_WAIT_2：上面已经详细解释了这种状态，实际上FIN_WAIT_2状态下的SOCKET，表示半连接，也即有一方要求close连接，但另外还告诉对方，我暂时还有点数据需要传送给你，稍后再关闭连接。
+　　TIME_WAIT： 表示收到了对方的FIN报文，并发送出了ACK报文，就等2MSL后即可回到CLOSED可用状态了。如果FIN_WAIT_1状态下，收到了对方同时带FIN标志和ACK标志的报文时，可以直接进入到TIME_WAIT状态，而无须经过FIN_WAIT_2状态。
+　　CLOSING： 这种状态比较特殊，实际情况中应该是很少见，属于一种比较罕见的例外状态。正常情况下，当你发送FIN报文后，按理来说是应该先收到（或同时收到）对方的ACK报文，再收到对方的FIN报文。但是CLOSING状态表示你发送FIN报文后，并没有收到对方的ACK报文，反而却也收到了对方的FIN报文。什么情况下会出现此种情况呢？其实细想一下，也不难得出结论：那就是如果双方几乎在同时close一个SOCKET的话，那么就出现了双方同时发送FIN报文的情况，也即会出现CLOSING状态，表示双方都正在关闭SOCKET连接。
+　　CLOSE_WAIT： 这种状态的含义其实是表示在等待关闭。怎么理解呢？当对方close一个SOCKET后发送FIN报文给自己，你系统毫无疑问地会回应一个ACK报文给对方，此时则进入到CLOSE_WAIT状态。接下来呢，实际上你真正需要考虑的事情是察看你是否还有数据发送给对方，如果没有的话，那么你也就可以close这个SOCKET，发送FIN报文给对方，也即关闭连接。所以你在CLOSE_WAIT状态下，需要完成的事情是等待你去关闭连接。
+　　LAST_ACK： 这个状态还是比较容易好理解的，它是被动关闭一方在发送FIN报文后，最后等待对方的ACK报文。当收到ACK报文后，也即可以进入到CLOSED可用状态了。
+
+　　最后有2个问题的回答，我自己分析后的结论（不一定保证100%正确）
+　　1、 为什么建立连接协议是三次握手，而关闭连接却是四次握手呢？
+　　这是因为服务端的LISTEN状态下的SOCKET当收到SYN报文的建连请求后，它可以把ACK和SYN（ACK起应答作用，而SYN起同步作用）放在一个报文里来发送。但关闭连接时，当收到对方的FIN报文通知时，它仅仅表示对方没有数据发送给你了；但未必你所有的数据都全部发送给对方了，所以你可以未必会马上会关闭SOCKET，也即你可能还需要发送一些数据给对方之后，再发送FIN报文给对方来表示你同意现在可以关闭连接了，所以它这里的ACK报文和FIN报文多数情况下都是分开发送的。
+
+　　2、 为什么TIME_WAIT状态还需要等2MSL后才能返回到CLOSED状态？
+　　这是因为：虽然双方都同意关闭连接了，而且握手的4个报文也都协调和发送完毕，按理可以直接回到CLOSED状态（就好比从SYN_SEND状态到ESTABLISH状态那样）；但是因为我们必须要假想网络是不可靠的，你无法保证你最后发送的ACK报文会一定被对方收到，因此对方处于LAST_ACK状态下的SOCKET可能会因为超时未收到ACK报文，而重发FIN报文，所以这个TIME_WAIT状态的作用就是用来重发可能丢失的ACK报文
+现在，我们来看一个完整的流程，在一个TCP socket上系统调用connect究竟是如何建立起一个到对端的连接的。我们还是以实验环境client向server的端口5002发起连接请求为例。
+    第一步，client向server发起连接请求，发送一个SYN段，指明目的端口5002，通告自己的初始序号（ISN，由协议栈随机产生的一个32位数），设置确认序号为0(因为还没有收到过对端的数据)，通告自己的滑动窗口大小为5840(对端是5792，这似乎有问题，有待进一步细查)，窗口扩大因子为2(在首部选项中)，通告最大报文段长度为1460(本地局域网)，下面是数据内容(已剥去链路层的以太网首部和网络层的IP首部)：
+        数据内容                            含义
+基本首部
+        80 0e                               源端口(32782)
+        13 8a                               目的端口(5002)
+        00 00 07 bc                         初始序号ISN
+        00 00 00 00                         确认序号
+        a                                   首部长度
+        0 02                                标志位，SYN=1
+        16 d0                               滑动窗口大小(5840)
+        64 9e                               校验和
+        00 00                               紧急指针
+TCP选项
+        02 04 05 b4                         最大报文段长度(1460)
+        04 02                               允许SACK
+        08 0a 00 0a 79 14 00 00 00 00       时间戳(0x000a7914)，回显时间戳(0)
+        01                                  占位。
+        03 03 02                            窗口扩大因子(2)
+    第二步，server收到请求包，检查标志位，发现SYN=1，认为这是一个初始化连接的请求，回应这个SYN，同时也发送自己的SYN段(即ACK,SYN同时置位)。因为SYN本身要占用一个序号（还有标志FIN也要占用一个序号）。所以，确认序号设置为client的ISN加1(即server期望收到来自client的下一个包的第一个序号为0x07bd。同时也要通告自己的初始序号，滑动窗口大小，窗口扩大因子，最大报文段长度等，下面是数据内容：
+        数据内容                            含义
+基本TCP首部
+        13 8a                               源端口(5002)
+        80 0e                               目的端口(32782)
+        98 8e 40 91                         初始序号ISN
+        00 00 07 bd                         确认序号(对端ISN+1)
+        a                                   首部长度
+        0 12                                标志位，ACK=1, SYN=1
+        16 a0                               滑动窗口大小
+        65 d7                               校验和
+        00 00                               紧急指针
+TCP选项
+        02 04 05 b4                         最大报文段长度(1460)
+        04 02                               允许SACK
+        08 0a 00 3c 25 8a 00 0a 79 14       时间戳(0x003c258a)，回显时间戳(000a7914)
+        01                                  占位
+        03 03 02                            窗口扩大因子(2)
+    第三步，client对来自server的SYN段进行确认，至此，TCP三次握手协议完成，连接建立，在client收到SYN段时，将自己对应的socket的状态由TCP_SYN_SENT改为TCP_ESTABLISHED，进入连接建立状态，下面是数据内容：
+        数据内容                            含义
+        80 0e                               源端口(32782)
+        13 8a                               目的端口(5002)
+        00 00 07 bd                         序号(已不是ISN了)
+        98 8e 40 92                         确认序号（对端ISN+1)
+        8                                   首部长度(8*4=32,有12字节的选项)
+        0 10                                标志，ACK=1
+        05 b4                               滑动窗口大小(1460，有问题？待确认)
+        a5 8a                               校验和
+        00 00                               紧急指针
+
+        01                                  占位
+        01                                  占位
+        08 0a 00 0a 79 14 00 3c 25 8a       时间戳(0x0a007914), 回显时间戳(0x003c258a)

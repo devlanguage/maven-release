@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<person sex="FEMALE" name="JAXB2">
+	<birthDay>2007-09-14T15:00:49.300+08:00</birthDay>
+	<gender>MALE</gender>
+	<xmlList>list1 list2 list3</xmlList>
+	<friend>Zhangsan</friend>
+	<friend>Lisi</friend>
+	<addresses>
+		<CAddress country="China">
+			<city>Beijing</city>
+			<street>ShangDi</street>
+			<zipcode>zipcode</zipcode>
+			<province>province</province>
+		</CAddress>
+		<AAddress country="American">
+			<city>Los-Angels</city>
+			<street>ShangDi West</street>
+			<zipcode>100080</zipcode>
+			<state>Los-Angels</state>
+		</AAddress>
+	</addresses>
+</person>

@@ -1,0 +1,43 @@
+<HTML>
+
+<HEAD><TITLE>Template Method</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Define the skeleton of an algorithm in an operation, deferring some
+steps to subclasses. Template Method lets subclasses redefine
+certain steps of an algorithm without changing the algorithm's
+structure.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>ConcreteClass relies on AbstractClass to implement the invariant steps of 
+the algorithm.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/tmethod.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>AbstractClass</B> (Application)<P></P>
+<UL><LI>defines abstract <STRONG>primitive operations</STRONG> that concrete
+subclasses define to implement steps of an algorithm.</LI><P></P>
+
+<LI>implements a template method defining the skeleton of an algorithm.
+The template method calls primitive operations as well as operations
+defined in AbstractClass or those of other objects.</LI></UL><P></P>
+
+<LI><B>ConcreteClass</B> (MyApplication)<P></P>
+<UL><LI>implements the primitive operations to carry out subclass-specific
+steps of the algorithm.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Template Method design pattern is not known by another name.</P>
+
+</BODY>
+
+</HTML>

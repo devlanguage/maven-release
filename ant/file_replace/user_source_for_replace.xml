@@ -1,0 +1,8 @@
+<users>
+  <user id="@user.id@" token="@filter.token@">
+    <name>@user.name@</name>
+    <age>@user.age@</age>
+    <address>@user.address@</address>
+    <street>@user.street@</street>
+  </user>
+</users>

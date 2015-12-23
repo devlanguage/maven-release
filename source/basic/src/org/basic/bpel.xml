@@ -1,0 +1,184 @@
+<bpel:process name="houseloanbrokerProcess" targetNamespace="urn:sample:soa:houseloanbroker" xmlns:tns="urn:sample:soa:houseloanbroker"
+ xmlns:ca="urn:sample:soa:houseloanagency" xmlns:bk="urn:sample:soa:bank" xmlns:svc="urn:sample:soa:service"
+ suppressJoinFailure="yes" xmlns:bpel="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:sm="http://servicemix.apache.org/schemas/bpe/1.0"
+ xsi:schemaLocation="http://schemas.xmlsoap.org/ws/2003/03/business-process/ http://schemas.xmlsoap.org/ws/2003/03/business-process/">
+ <!-- <bpel:import importType="http://schemas.xmlsoap.org/wsdl/" location="houseloanbroker.wsdl" namespace="urn:sample:soa:houseloanbroker" 
+  /> -->
+
+
+ <bpel:partnerLinks>
+  <bpel:partnerLink myRole="HouseLoanBrokerService" name="HouseLoanBroker" partnerLinkType="tns:HouseLoanBrokerPL" />
+  <bpel:partnerLink partnerRole="HouseLoanAgencyService" name="HouseLoanAgency" partnerLinkType="ca:HouseLoanAgencyPL" />
+  <bpel:partnerLink partnerRole="BankService" name="Bank0" partnerLinkType="bk:BankPL" />
+  <bpel:partnerLink partnerRole="BankService" name="Bank1" partnerLinkType="bk:BankPL" />
+  <bpel:partnerLink partnerRole="BankService" name="Bank2" partnerLinkType="bk:BankPL" />
+  <bpel:partnerLink partnerRole="BankService" name="Bank3" partnerLinkType="bk:BankPL" />
+ </bpel:partnerLinks>
+
+ <bpel:variables>
+  <bpel:variable name="request" messageType="tns:getLoanQuoteRequest" />
+  <bpel:variable name="response" messageType="tns:getLoanQuoteResponse" />
+  <bpel:variable name="ca-housenumber-request" messageType="ca:getHouseNumberRequest" />
+  <bpel:variable name="ca-housenumber-response" messageType="ca:getHouseNumberResponse" />
+  <bpel:variable name="bk-loanquote-request" messageType="bk:getLoanQuoteRequest" />
+  <bpel:variable name="bk-loanquote-response-0" messageType="bk:getLoanQuoteResponse" />
+  <bpel:variable name="bk-loanquote-response-1" messageType="bk:getLoanQuoteResponse" />
+  <bpel:variable name="bk-loanquote-response-2" messageType="bk:getLoanQuoteResponse" />
+  <bpel:variable name="bk-loanquote-response-3" messageType="bk:getLoanQuoteResponse" />
+  <bpel:variable name="unknownNAME" messageType="tns:unknownNAMEFault" />
+ </bpel:variables>
+ <scope name="bank-loan-scope">
+  <compensationHandler>
+   <bpel:invoke name="bank0" partnerLink="Bank0" portType="bk:Bank" operation="canelLoanQuote"
+    inputVariable="bk-loanquote-request" outputVariable="bk-loanquote-response-0" sm:endpoint="urn:sample:soa:bank:Bank0:bank">
+   </bpel:invoke>
+  </compensationHandler>
+  <bpel:invoke name="bank0" partnerLink="Bank0" portType="bk:Bank" operation="getLoanQuote" inputVariable="bk-loanquote-request"
+   outputVariable="bk-loanquote-response-0" sm:endpoint="urn:sample:soa:bank:Bank0:bank">
+  </bpel:invoke>
+ </scope>
+
+ <bpel:faultHandlers>
+  <bpel:catch faultName="ca:UnkownNAME">
+   <bpel:sequence>
+    <bpel:assign>
+     <bpel:copy>
+      <bpel:from variable="request" part="payload" query="/tns:getLoanQuoteRequest/tns:name" />
+      <bpel:to variable="unknownNAME" part="payload" query="/tns:unknownNAMEFault/tns:name" />
+     </bpel:copy>
+    </bpel:assign>
+    <bpel:reply name="response" partnerLink="HouseLoanBrokerResponse" portType="tns:HouseLoanBroker"
+     operation="getLoanQuote" variable="unknownNAME" faultName="tns:unknownNAME">
+    </bpel:reply>
+   </bpel:sequence>
+  </bpel:catch>
+ </bpel:faultHandlers>
+
+ <bpel:sequence>
+  <bpel:receive name="request" partnerLink="HouseLoanBroker" portType="tns:HouseLoanBroker" operation="getLoanQuote"
+   variable="request" createInstance="yes">
+  </bpel:receive>
+  <bpel:flow>
+   <bpel:sequence>
+    <bpel:assign>
+     <bpel:copy>
+      <bpel:from variable="request" part="payload" query="/tns:getLoanQuoteRequest/tns:name" />
+      <bpel:to variable="ca-housenumber-request" part="payload" query="/ca:getHouseNumberRequest/ca:name" />
+     </bpel:copy>
+    </bpel:assign>
+    <bpel:invoke name="service" partnerLink="HouseLoanAgency" portType="ca:HouseLoanAgency" operation="getHouseNumber"
+     inputVariable="ca-housenumber-request" outputVariable="ca-housenumber-response" />
+   </bpel:sequence>
+  </bpel:flow>
+  <bpel:assign>
+   <bpel:copy>
+    <bpel:from variable="ca-housenumber-response" part="payload" query="/ca:getHouseNumberResponse/ca:housenumber" />
+    <bpel:to variable="bk-loanquote-request" part="payload" query="/bk:getLoanQuoteRequest/bk:housenumber" />
+   </bpel:copy>
+  </bpel:assign>
+  <bpel:switch>
+   <bpel:case
+    condition="getVariableData('bk-loanquote-request', 'payload', 
+                                                                 '/bk:getLoanQuoteRequest/bk:housenumber') = 0 ">
+    <bpel:sequence>
+     <bpel:flow>
+
+      <bpel:invoke name="bank0" partnerLink="Bank0" portType="bk:Bank" operation="getLoanQuote"
+       inputVariable="bk-loanquote-request" outputVariable="bk-loanquote-response-0" sm:endpoint="urn:logicblaze:soa:bank:Bank0:bank" />
+     </bpel:flow>
+     <bpel:assign>
+      <bpel:copy>
+       <bpel:from
+        expression="getVariableData('bk-loanquote-response-0', 
+                                              'payload', '/bk:getLoanQuoteResponse/
+                                              bk:rate')" />
+       <bpel:to variable="response" part="payload"
+        query="/tns:getLoanQuoteResponse/
+                                              tns:rate" />
+      </bpel:copy>
+      <bpel:copy>
+       <bpel:from
+        expression="getVariableData('bk-loanquote-response-0', 
+                            'payload', '/bk:getLoanQuoteResponse/bk:firstpaidratio')" />
+       <bpel:to variable="response" part="payload" query="/tns:getLoanQuoteResponse/tns:firstpaidratio" />
+      </bpel:copy>
+
+     </bpel:assign>
+    </bpel:sequence>
+   </bpel:case>
+   <bpel:case
+    condition="getVariableData('bk-loanquote-request', 'payload', 
+                                       '/bk:getLoanQuoteRequest/
+                                       bk:housenumber') = 1 ">
+    <bpel:sequence>
+     <bpel:flow>
+      <bpel:invoke name="bank0" partnerLink="Bank0" portType="bk:Bank" operation="getLoanQuote"
+       inputVariable="bk-loanquote-request" outputVariable="bk-loanquote-response-0" sm:endpoint="urn:logicblaze:soa:bank:Bank0:bank" />
+     </bpel:flow>
+     <bpel:assign>
+      <bpel:copy>
+       <bpel:from
+        expression="getVariableData('bk-loanquote-response-0', 
+                                              'payload', '/bk:getLoanQuoteResponse/
+                                              bk:rate')" />
+       <bpel:to variable="response" part="payload"
+        query="/tns:getLoanQuoteResponse/
+                                              tns:rate" />
+      </bpel:copy>
+      <bpel:copy>
+       <bpel:from
+        expression="getVariableData('bk-loanquote-response-0', 
+                            'payload', '/bk:getLoanQuoteResponse/bk:firstpaidratio')" />
+       <bpel:to variable="response" part="payload" query="/tns:getLoanQuoteResponse/tns:firstpaidratio" />
+      </bpel:copy>
+
+     </bpel:assign>
+    </bpel:sequence>
+   </bpel:case>
+   <bpel:otherwise>
+    <bpel:sequence>
+     <bpel:flow>
+      <bpel:invoke name="bank3" partnerLink="Bank3" portType="bk:Bank" operation="getLoanQuote"
+       inputVariable="bk-loanquote-request" outputVariable="bk-loanquote-response-3" sm:endpoint="urn:logicblaze:soa:bank:Bank3:bank" />
+     </bpel:flow>
+     <bpel:assign>
+      <bpel:copy>
+       <bpel:from
+        expression="getVariableData('bk-loanquote-response-3', 
+                                              'payload', '/bk:getLoanQuoteResponse/
+                                              bk:rate')" />
+       <bpel:to variable="response" part="payload" query="/tns:getLoanQuoteResponse/tns:rate" />
+      </bpel:copy>
+      <bpel:copy>
+       <bpel:from expression="getVariableData('bk-loanquote-response-3', 'payload', '/bk:getLoanQuoteResponse/bk:firstpaidratio')" />
+       <bpel:to variable="response" part="payload" query="/tns:getLoanQuoteResponse/tns:firstpaidratio" />
+      </bpel:copy>
+     </bpel:assign>
+    </bpel:sequence>
+   </bpel:otherwise>
+  </bpel:switch>
+  <bpel:reply name="response" partnerLink="HouseLoanBroker" portType="tns:HouseLoanBroker" operation="getLoanQuote"
+   variable="response" />
+ </bpel:sequence>
+</bpel:process>
+
+<component name="xs:NCName">
+ *
+ <implementation . implementation-type />
+
+ <properties>
+  ?
+  <v:property-name override="no or may or must" ? modulePropertyName="xs:NCName" ?>
+   property-value
+  </v:property-name>
+
+ </properties>
+
+ <references>
+  ?
+  <v:reference-name>wire-target-URI</v:reference-name>
+
+ </references>
+
+</component>

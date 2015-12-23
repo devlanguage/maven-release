@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DaoConfigs>
+  <DaoConfig name="hibernateDao" class="org.third.orm.ibatis.account.dao.hibernate.HibernateDaoLoader">
+    <ConfigFile>
+      <LoadFrom>system</LoadFrom>      
+      <Path>/org/third/orm/ibatis/account/dao/hibernate/hibernate.cfg.xml</Path>
+    </ConfigFile>
+  </DaoConfig>
+
+  <DaoConfig name="IbatisDao" class="org.third.orm.ibatis.account.dao.ibatis.IbatisDaoLoader"
+    default="true">
+    <ConfigFile>
+      <LoadFrom>classpath</LoadFrom>
+      <Path>org/third/orm/ibatis/account/dao/ibatis/ibatis_daoConfig.xml</Path>
+    </ConfigFile>
+  </DaoConfig>
+</DaoConfigs>

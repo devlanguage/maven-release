@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE project SYSTEM "ant_dtd.dtd">
+<!-- ====================================================================== 
+  2009-6-29 下午01:19:45                                                        
+  
+  project    
+  description
+  
+  ygong                                                                
+  ====================================================================== -->
+<project name="project" default="default">
+  <description>ant_build_01.xml</description>
+
+  <target name="init">
+    <echo message="execute the [init] in build file ant_build_01.xml" />
+  </target>
+  <echoproperties destfile="ant_internal_properties.xml" failonerror="true" taskname="print"></echoproperties>
+
+  <!-- - - - - - - - - - - - - - - - - - 
+    target: depends                      
+    - - - - - - - - - - - - - - - - - -->
+  <target name="print_internal_properties" depends="init">
+
+  </target>
+  <target name="compile" depends="print_internal_properties">
+
+  </target>
+
+  <!-- ================================= 
+    target: default              
+    ================================= -->
+  <target name="default" depends="compile" description="--> description">
+
+  </target>
+</project>

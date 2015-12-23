@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="org.testdata.user.domain">
+	<class name="User" table="sp_user">
+		<id name="id" column="user_id"></id>
+		<property name="name" column="user_name"></property>
+		<property name="password" column="user_password"></property>
+		<one-to-one foreign-key="user_address_id" name="address" class="Address"></one-to-one>
+	</class>
+	<class name="Address" table="sp_address">
+		<id name="id" column="address_id"></id>
+		<property name="country" column="address_country"></property>
+		<property name="city" column="address_city"></property>
+	</class>
+	<query name="getAllUsers">from User</query>
+	<query name="getUserById">from User u WHERE u.id=:id</query>
+	<query name="getUserByName">from User u WHERE u.name LIKE :name</query>
+	<query name="getUserNameById">
+		SELECT name, password FROM User u WHERE u.id=:id
+	</query>
+</hibernate-mapping>

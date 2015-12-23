@@ -1,0 +1,73 @@
+#### Result 和 Parameter
+  ResultMap(推荐使用), ResultClass: 同时指定，优先使用ResultMap
+  ParameterMap(仅仅为了兼容而保留), ParameterClass(推荐使用)        
+
+    如果在一个statement中同时指定了resultMap和resultClass属性的话，那将会优先使用resultMap。
+  同时result Map也是一个实现对象复杂查询功能的重要手段，如：result map的继承（与discriminator配合使用），对象的1..1、1..N关系查询。       
+
+###### 圈圈1：statement简单来说就是存储sql语句的配置信息，一个最简单的statement：
+<statement id=”insertTestProduct” >
+    insert into PRODUCT (PRD_ID, PRD_DESCRIPTION) values (1, “Shih Tzu”)
+</statement>
+
+其中id属性是这个statement的唯一标识，全局不能重复。  以上当然是最简单的了，没有参数也不需要返回值，但实际情况下基本都需要传入参数，下面就是介绍参数。
+
+### 圈圈2：参数对象主要分两种类型：parameterMap、parameterClass和Inline Parameter。
+ ### 其中parameterMap是配置文件定义传入参数表，如下：
+         <parameterMap id=”insert-product-param” class=”com.domain.Product”>
+             <parameter property=”id”/>
+             <parameter property=”description”/>
+         </parameterMap>
+         <statement id=”insertProduct” parameterMap=”insert-product-param”>
+             insert into PRODUCT (PRD_ID, PRD_DESCRIPTION) values (?,?);
+         </statement>
+ ### 而parameterClass是传入参数对象（JavaBean），如下：
+         <statement id=”statementName” parameterClass=” examples.domain.Product”>
+                 insert into PRODUCT values (#id#, #description#, #price#)
+         </statement>
+ ### Inline Parameter则是强化版的parameterClass，如下：
+        <statement id=”insertProduct” parameterClass=”com.domain.Product”>
+             insert into PRODUCT (PRD_ID, PRD_DESCRIPTION)
+                 values (#id:NUMERIC:-999999#, #description:VARCHAR:NO_ENTRY#);
+         </statement>
+
+　　其中第一种方法看着就复杂，实际是为了兼容老版本留下来的，所以parameterClass是我们最常用的方法。官方文档对parameterClass介绍很详细，因为这是核心之一，具体请自己查阅。
+
+有3个特性说明一下：
+　　a. parameterClass对象可以传入一个Map对象（or Map子类）。
+        本来如果是传入JavaBean，程序会通过get/set来分析取得参数；
+        而Map是key-value结构的，那程序会直接通过key来分析取参数。
+　　b. 看以下语句：
+         <statement id=”statementName” parameterClass=” examples.domain.Product”>
+             insert into PRODUCT values (#id#, #description#, #price#, #classify.id#)
+         </statement>
+       #classify.id#: 翻译过来实际是product.getClassify().getId()，classify是Product对象的一个子对象。
+　　c. 在模板sql语句中除了“#”以外，还有“$”，它们两代表的意思当然不同了：
+         <statement id=”getProduct” resultMap=”get-product-result”>
+             select * from PRODUCT order by $preferredOrder$
+         </statement>
+
+　　“#”: 在生成sql语句的过程中，会变成“?”，同时在参数表中增加一个参数；
+　　“$”: 则会直接替换成参数对象对应的值，例如上面的preferredOrder的值可能是“price”，则生成的sql语句就是：select * from PRODUCT order by price。
+
+　　*需要特别说明的是传入参数这一部分将会是后面正题“通用持久层对象”的核心，怎么个通用法，怎么设计模板sql语句，都是在这部分上。
+
+####  圈圈3：结果对象跟参数对象差不多，也有两种，resultMap和resultClass，如下：
+
+　　resultMap就是配置文件中预定义了要取得的字段：
+         <resultMap id=”get-product-result” class=”com.ibatis.example.Product”>
+             <result property=”id” column=”PRD_ID”/>
+             <result property=”description” column=”PRD_DESCRIPTION”/>
+         </resultMap>
+         <statement id=”getProduct” resultMap=”get-product-result”>
+             select * from PRODUCT
+         </statement>
+　　resultClass则是通过分析返回的字段，来填充结果对象：
+         <statement id="getPerson" parameterClass=”int” resultClass="examples.domain.Person">
+             SELECT PER_ID as id, PER_FIRST_NAME as firstName 
+                 FROM PERSON WHERE PER_ID = #value#
+         </statement>
+　　跟参数对象相反，结果对象一般使用resultMap形式。
+    引用官方的话：使用resultClass的自动映射存在一些限制，无法指定输出字段的数据类型（如果需要的话），无法自动装入相关的数据（复杂属性），
+    并且因为需要ResultSetMetaData的信息，会对性能有轻微的不利影响。但使用resultMap，这些限制都可以很容易解决。
+

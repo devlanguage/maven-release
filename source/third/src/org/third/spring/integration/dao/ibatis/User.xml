@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="user">
+	<typeAlias alias="userAlias" type="org.testdata.user.domain.User" />
+	<resultMap id="userResult" class="org.testdata.user.domain.User">
+		<result property="id" column="user_id" columnIndex="1" />
+		<result property="name" column="user_name" columnIndex="2" />
+		<result property="password" column="user_password" columnIndex="3" />
+	</resultMap>
+
+	<select id="listUsers" resultMap="userResult">
+		select user_id, user_name, user_password FROM sp_user
+		<!--
+			<dynamic prepend="where">
+			<iterate property="keywordList" open="(" close=")" conjunction="OR">
+			lower(name) like #keywordList[]# OR lower(category) like #keywordList[]# OR lower(descn) like
+			#keywordList[]#
+			</iterate>
+			</dynamic>
+		-->
+	</select>
+
+
+	<select id="getUserById" parameterClass="userAlias" resultMap="userResult">
+		select user_id, user_name, user_password FROM sp_user
+		<dynamic prepend="where">		
+			<isNotEmpty property="id" prepend="and">
+				user_id=#id#
+			</isNotEmpty>			
+		</dynamic>
+		Order By user_id
+	</select>
+
+	<insert id="insertUser" parameterClass="userAlias">
+		INSERT INTO sp_user(user_id, user_name, user_password) VALUES(sp_userid.nextval, #name#, #password#);
+	</insert>
+	<update id="updateUser" parameterClass="userAlias">
+		update sp_user set user_name=#name#, user_password=#password# WHERE user_id=#id#
+	</update>
+	<delete id="deleteUser" parameterClass="userAlias">delete from sp_user WHERE user_id=#id#</delete>
+</sqlMap>
+

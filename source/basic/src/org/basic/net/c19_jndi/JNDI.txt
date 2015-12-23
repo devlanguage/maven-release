@@ -1,0 +1,37 @@
+JNDI(Java Naming and Directory Interface)
+   是一个应用程序设计的API，为开发人员提供了查找和访问各种命名和目录服务的通用、统一的接口，类似JDBC都是构建在抽象层上。 
+
+JNDI可访问的现有的目录及服务有： 
+     DNS、XNam 、Novell目录服务、LDAP(Lightweight Directory Access Protocol 轻型目录访问协议)、
+     CORBA对象服务、文件系统、Windows XP/2000/NT/Me/9x的注册表、RMI、DSML v1&v2、NIS
+1：上下文INITIAL_CONTEXT_FACTORY的值       Name Service Provider Factory 
+ File System                   com.sun.jndi.fscontext.RefFSContextFactory 
+ LDAP                          com.sun.jndi.ldap.LdapCtxFactory 
+ RMI                           com.sun.jndi.rmi.registry.RegistryContextFactory 
+ CORBA                         com.sun.jndi.cosnaming.CNCtxFactory 
+ DNS                           com.sun.jndi.dns.DnsContextFactory
+ 
+
+连接名字服务：                 
+  System.setProperty(Context.INITIAL_CONTEXT_FACTORY," 
+  com.sun.jndi.fscontext.FSContextFactory"); 
+  InitialContext ctx = new InitialContext();
+
+连接目录服务：
+  Hashtable env = new Hashtable(); 
+   env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory"); 
+   env.put(Context.PROVIDER_URL, "ldap://myserver.com/");
+   env.put(Context.SECURITY_AUTHENTICATION, "simple"); 
+    //登录ldap server需要的用户名 
+   env.put(Context.SECURITY_PRINCIPAL, "ldapuser"); 
+  //登录ldap server需要的密码 
+   env.put(Context.SECURITY_CREDENTIALS, "mypassword"); 
+  InitialDirContext ctx = new InitialDirContext(env); 
+  
+多服务提供者：如果应用包含多个服务提供者，在连接时略有不同。以名字服务为例
+Hashtable env = new Hashtable(); 
+  env.put(Context.INITIAL_CONTEXT_FACTORY, 
+"com.sun.jndi.rmi.registry.RegistryContextFactory"); 
+  env.put(Context.PROVIDER_URL, "rmi://myserver.com:1099"); 
+  //使用不同的构造函数 
+InitialContext ctx = new InitialContext(env);   

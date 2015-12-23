@@ -1,0 +1,97 @@
+# @(#)file      README
+# @(#)author    Sun Microsystems, Inc.
+# @(#)version   1.1
+# @(#)lastedit  04/02/05
+#
+# Copyright 2004 Sun Microsystems, Inc. All rights reserved.
+# SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+
+---------------------------------------------------
+----- Microsoft Windows 2000 Active Directory -----
+---------------------------------------------------
+
+-----------------------
+Step-by-Step Guidelines
+-----------------------
+
+1/ Install Windows 2000 Advanced Server Edition
+
+2/ Log in as Administrator
+
+3/ Using the Administration Tools (Active Directory Users and Computers) add
+   yourself as Schema Administrator
+
+4/ Modify the registry to allow schema updates
+
+   To enable any schema modifications the following registry
+   property must be created and set to (DWORD) 1:
+
+       HKEY_LOCAL_MACHINE
+         System
+           CurrentControlSet
+             Services
+               NTDS
+                 Parameters
+                   Schema Update Allowed
+
+5/ Import the Java and JMX LDAP schemas into Active Directory
+
+   Active Directory manages its schema by using an internal format. To update
+   the schema, you can use either the Active Directory Management Console
+   snap-in, ADSIEdit, the command-line utility LDIFDE or the CreateJavaSchema
+   and CreateJmxSchema utilities, following the instructions for Active
+   Directory.
+
+   Due to the way auxiliary classes are supported the Active Directory. Only
+   the names of structural classes (not auxiliary) may appear in the object
+   class attribute of an entry. Therefore, the abstract and auxiliary classes
+   in the Java and JMX schema definitions are re-defined as structural.
+
+   If the directory's administration tool supports turning off schema
+   checking then do so before running the CreateJavaSchema or
+   CreateJmxSchema programs.
+
+   When you run these programs, you need to login as the directory
+   administrator, quoting the "-n" option if there are blanks in the
+   distinguished name. After updating the schema, you should use the
+   directory server's administration tool to verify that the changes
+   have been properly applied. If the schema has not been properly
+   updated, use the administration tool to correct it.
+
+   NOTE: If you are using Microsoft Active Directory you need to use
+         the "-sad" option to workaround schema bugs in the server.
+
+6/ Using the Administration Tools (Active Directory Users and Computers) add
+   a new organizational unit (ou=Test) under your domain and take this into
+   account when specifying the LDAP suffix to be used by the Lookup examples.
+
+7/ Run the JMX Remote API Lookup examples following the instructions on each
+   example's README file.
+
+Windows Active Directory Limitation: Context.rebind() (in the API reference
+documentation) and DirContext.rebind() (in the API reference documentation)
+do not work against Active Directory because these methods work by reading
+the attributes of the entry to be updated, removing the entry, and then adding
+a new entry that contains the modified attributes. Active Directory returns
+some attributes that cannot be set by the user, causing the final addition step
+to fail. The workaround for this problem is to use DirContext.getAttributes()
+(in the API reference documentation) to obtain and save the attributes that you
+want to keep. Then, remove the entry and add it back with the saved attributes
+(and any others that you want to add) using DirContext.bind() (in the API
+reference documentation).
+
+This limitation means that after running any example using the JNDI LDAP URL
+the cn=x,ou=Test,<dc=...> LDAP entry will have to be removed manually as the
+Server examples do not call unbind as they are terminated with a Control+C.
+
+------------
+Useful links
+------------
+
+1/ JNDI Tutorial: Java Objects and the Directory.
+
+   http://java.sun.com/products/jndi/tutorial/objects/index.html
+
+2/ Active Directory documentation on MSDN.
+
+   http://msdn.microsoft.com/library/default.asp?url=/library/en-us/netdir/adsi/directory_services.asp

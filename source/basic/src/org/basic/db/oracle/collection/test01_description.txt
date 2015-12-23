@@ -1,0 +1,6 @@
+Connection pool set up, total connection=1
+Take out the connection ConnectionAgent:[inUse=true,connection=oracle.jdbc.driver.OracleConnection@1194a4e]
+Test Submit Object: 
+2
+Release the connection ConnectionAgent:[inUse=false,connection=oracle.jdbc.driver.OracleConnection@1194a4e]
+Close the connection ConnectionAgent:[inUse=false,connection=oracle.jdbc.driver.OracleConnection@1194a4e]

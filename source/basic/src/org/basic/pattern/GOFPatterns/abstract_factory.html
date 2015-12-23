@@ -1,0 +1,50 @@
+<HTML>
+
+<HEAD><TITLE>Abstract Factory</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Provide an interface for creating families of related or dependent
+objects, without specifying their concrete classes.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Normally a single instance of a ConcreteFactory class is created at run-time. This 
+concrete factory creates product objects having a particular implementation. To create 
+different product objects, clients should use a different concrete factory.</LI><P></P>
+
+<LI>AbstractFactory defers creation of product objects to its ConcreteFactory subclass.</LI><P></P>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/abfac108.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>AbstractFactory</B> (WidgetFactory)</LI><P></P>
+<UL><LI>declares an interface for operations that create abstract product objects.</LI></UL><P></P>
+
+<LI><B>ConcreteFactory</B> (MotifWidgetFactory, PMWidgetFactory)</LI><P></P>
+<UL><LI>implements the operations to create concrete product objects.</LI></UL><P></P>
+
+<LI><B>AbstractProduct</B> (Window, ScrollBar)</LI><P></P>
+<UL><LI>declares an interface for a type of product object.</LI></UL><P></P>
+
+<LI><B>ConcreteProduct</B> (MotifWindow, MotifScrollBar)</LI><P></P>
+<UL><LI>defines a product object to be created by the corresponding concrete factory.</LI></UL><P></P>
+<UL><LI>implements the AbstractProduct interface.</LI></UL><P></P>
+
+<LI><B>Client</B></LI><P></P>
+<UL><LI>uses only interfaces declared by AbstractFactory and AbstractProduct classes.</LI></UL>
+
+</UL>
+
+<H2>Classification</H2>
+
+<P>The Abstract Factory design pattern is also known as the Kit.</P>
+
+</BODY>
+
+</HTML>

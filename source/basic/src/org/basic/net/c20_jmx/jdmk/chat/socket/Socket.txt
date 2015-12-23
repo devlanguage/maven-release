@@ -1,0 +1,83 @@
+在客户/服务器通信模式中，服务器端需要创建监听特定端口的ServerSocket，ServerSocket负责接收客户连接请求。
+
+本章首先介绍ServerSocket类的各个构造方法，以及成员方法的用法，接着介绍服务器如何用多线程来处理与多个客户的通信任务。
+
+本章提供线程池的一种实现方式。
+  线程池包括一个工作队列和若干工作线程。
+    服务器程序向工作队列中加入与客户通信的任务，工作线程不断从工作队列中取出任务并执行它。
+本章还介绍了java.util.concurrent包中的线程池类的用法，在服务器程序中可以直接使用它们。
+
+3.1  构造ServerSocket
+
+ServerSocket的构造方法有以下几种重载形式：
+
+	◆ServerSocket()throws IOException 
+	◆ServerSocket(int port) throws IOException 
+	◆ServerSocket(int port, int backlog) throws IOException
+	◆ServerSocket(int port, int backlog, InetAddress bindAddr) throws IOException   
+
+在以上构造方法中，参数port指定服务器要绑定的端口（服务器要监听的端口），参数backlog指定客户连接请求队列的长度，参数bindAddr指定服务器要绑定的IP地址。 
+
+3.1.1  绑定端口
+
+除了第一个不带参数的构造方法以外，其他构造方法都会使服务器与特定端口绑定，该端口由参数port指定。例如，以下代码创建了一个与80端口绑定的服务器：
+
+   ServerSocket serverSocket=new ServerSocket(80); 
+
+
+如果运行时无法绑定到80端口，以上代码会抛出IOException，更确切地说，是抛出BindException，它是IOException的子类。BindException一般是由以下原因造成的：
+
+ ◆端口已经被其他服务器进程占用；
+ ◆在某些操作系统中，如果没有以超级用户的身份来运行服务器程序，那么操作系统不允许服务器绑定到1~1023之间的端口。
+
+如果把参数port设为0，表示由操作系统来为服务器分配一个任意可用的端口。由操作系统分配的端口也称为匿名端口。
+对于多数服务器，会使用明确的端口，而不会使用匿名端口，因为客户程序需要事先知道服务器的端口，才能方便地访问服务器。
+在某些场合，匿名端口有着特殊的用途，本章3.4节会对此作介绍。
+
+3.1.2  设定客户连接请求队列的长度
+
+当服务器进程运行时，可能会同时监听到多个客户的连接请求。例如，每当一个客户进程执行以下代码：
+
+    Socket socket=new Socket(www.javathinker.org,80); 
+
+
+就意味着在远程www.javathinker.org主机的80端口上，监听到了一个客户的连接请求。
+管理客户连接请求的任务是由操作系统来完成的。操作系统把这些连接请求存储在一个先进先出的队列中。
+许多操作系统限定了队列的最大长度，一般为50。
+当队列中的连接请求达到了队列的最大容量时，服务器进程所在的主机会拒绝新的连接请求。
+只有当服务器进程通过ServerSocket的accept()方法从队列中取出连接请求，使队列腾出空位时，队列才能继续加入新的连接请求。
+
+对于客户进程，如果它发出的连接请求被加入到服务器的队列中，就意味着客户与服务器的连接建立成功，
+客户进程从Socket构造方法中正常返回。如果客户进程发出的连接请求被服务器拒绝，Socket构造方法就会抛出ConnectionException。
+
+ServerSocket构造方法的backlog参数用来显式设置连接请求队列的长度，它将覆盖操作系统限定的队列的最大长度。
+值得注意的是，在以下几种情况中，仍然会采用操作系统限定的队列的最大长度：
+
+    ◆backlog参数的值大于操作系统限定的队列的最大长度；
+    ◆backlog参数的值小于或等于0；
+    ◆在ServerSocket构造方法中没有设置backlog参数。
+
+以下例程3-1的Client.java和例程3-2的Server.java用来演示服务器的连接请求队列的特性。
+
+例程3-1  Client.java
+
+public class SocketClient {
+
+    public static void main(String args[]) throws Exception {
+
+        final int length = 100;
+        String host = "localhost";
+        int port = 8000;
+        Socket[] sockets = new Socket[length];
+        for (int i = 0; i < length; i++) {
+            sockets[i] = new Socket(host, port);
+            System.out.println("第" + (i + 1) + "次连接成功");
+        }
+
+        Thread.sleep(3000);
+
+        for (int i = 0; i < length; i++) {
+            sockets[i].close(); // 断开连接
+        }
+    }
+}

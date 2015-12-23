@@ -1,0 +1,22 @@
+<project>
+	<target name="setup">
+	</target>
+	<target name="build-server-java" depends="setup">
+		<apt fork="true" debug="${debug}" verbose="${verbose}" destdir="${build.classes.home}" sourcedestdir="${build.classes.home}" sourcepath="${basedir}/src">
+			<classpath>
+				<path refid="jaxws.classpath" />
+				<pathelement location="${basedir}/src" />
+			</classpath>
+			<option key="r" value="${build.home}" />
+			<source dir="${basedir}/src">
+				<include name="**/server/*.java" />
+			</source>
+		</apt>
+	</target>
+	<target name="generate-client-async" depends="setup">
+		<wsimport debug="${debug}" verbose="${verbose}" keep="${keep}" extension="${extension}" destdir="${build.classes.home}" wsdl="${client.wsdl}">
+			<binding dir="${basedir}/etc" includes="${schema.binding}" />
+			<binding dir="${basedir}/etc" includes="${client.binding.async}" />
+		</wsimport>
+	</target>
+</project>

@@ -1,0 +1,58 @@
+<HTML>
+
+<HEAD><TITLE>Proxy</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Provide a surrogate or placeholder for another object to control
+access to it.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Proxy forwards requests to RealSubject when appropriate,
+depending on the kind of proxy.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/proxy017.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Proxy</B> (ImageProxy)</LI><P></P>
+<UL><LI>maintains a reference that lets the proxy access the
+    real subject.  Proxy may refer to a Subject if the
+    RealSubject and Subject interfaces are the same.</LI><P></P>
+<LI>provides an interface identical to Subject's so that a proxy can
+    by substituted for the real subject.</LI><P></P>
+<LI>controls access to the real subject and may be responsible for
+    creating and deleting it.</LI><P></P>
+<LI>other responsibilities depend on the kind of proxy:</LI><P></P>
+
+<UL><LI><EM>remote proxies</EM> are responsible for encoding a
+        request and its arguments and for sending the encoded request to
+        the real subject in a different address space.</LI><P></P>
+<LI><EM>virtual proxies</EM> may cache additional information
+        about the real subject so that they can postpone accessing it.
+        For example, the ImageProxy from the Motivation caches
+        the real image's extent.</LI><P></P>
+<LI><EM>protection proxies</EM> check that the caller has the
+        access permissions required to perform a request.</LI></UL>
+</UL><P></P>
+
+<LI><B>Subject</B> (Graphic)<P></P>
+<UL><LI>defines the common interface for RealSubject and
+    Proxy so that a Proxy can be used anywhere a
+    RealSubject is expected.</LI></UL><P></P>
+
+<LI><B>RealSubject</B> (Image)<P></P>
+<UL><LI>defines the real object that the proxy represents.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Proxy design pattern is also known as the Surrogate.</P>
+
+</BODY>
+
+</HTML>

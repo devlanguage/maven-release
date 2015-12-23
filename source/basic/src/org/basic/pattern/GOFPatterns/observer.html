@@ -1,0 +1,55 @@
+<HTML>
+
+<HEAD><TITLE>Observer</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Define a one-to-many dependency between objects so that when one
+object changes state, all its dependents are notified and updated
+automatically.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>ConcreteSubject notifies its observers whenever a change
+occurs that could make its observers' state inconsistent with its own.</LI><P></P>
+
+<LI>After being informed of a change in the concrete subject, a
+ConcreteObserver object may query the subject for information.
+ConcreteObserver uses this information to reconcile its state with that
+of the subject.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/observer.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Subject</B></LI><P></P>
+<UL><LI>knows its observers. Any number of Observer objects may
+    observe a subject.</LI><P><!-- extra space --></P>
+<LI>provides an interface for attaching and detaching Observer
+    objects.</LI></UL><P></P>
+
+<LI><B>Observer</B></LI><P></P>
+<UL><LI>defines an updating interface for objects that should be
+    notified of changes in a subject.</LI></UL><P></P>
+
+<LI><B>ConcreteSubject</B><P></P>
+<UL><LI>stores state of interest to ConcreteObserver objects.<P><!-- extra space --></P>
+<LI>sends a notification to its observers when its state changes.</UL><P></P>
+
+<LI><B>ConcreteObserver</B><P></P>
+<UL><LI>maintains a reference to a ConcreteSubject object.<P><!-- extra space --></P>
+<LI>stores state that should stay consistent with the subject's.<P><!-- extra space --></P>
+<LI>implements the Observer updating interface to keep
+    its state consistent with the subject's.</UL>
+</UL>
+
+<H2>Classification</H2>
+<P>The Observer design pattern is also known as the Dependents, and the Publish-Subscribe.</P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,23 @@
+<ehcache>
+	<!-- DiskStore configuration：net.sf.ehcache.config.DiskStoreConfiguration.java Sets the path to the directory where cache files are created. If the path is a Java System Property it is replaced by its 
+		value in the running VM. The following properties are translated: * user.home - User's home directory * user.dir - User's current working directory * java.io.tmpdir - Default temp file path; Subdirectories 
+		can be specified below the property e.g. java.io.tmpdir/one * ehcache.disk.store.dir <diskStore path="java.io.tmpdir" /> -->
+	<diskStore path="C:\software\Java_Dev\eclipse_proj\JavaBasic" />
+
+	<cacheManagerEventListenerFactory class="org.cache.ehcache.CacheManagerEventListenerFactoryImpl" properties="a=b,c=d" />
+	<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateAsynchronously=true,replicatePuts=true,replicateUpdates=true, replicateUpdatesViaCopy=true, replicateRemovals=true" />
+	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory" properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1, multicastGroupPort=40000" />
+	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory" properties="peerDiscovery=manual, rmiUrls=//192.168.1.104:40001/MY_CACHE" />
+	<cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory" properties="hostName=192.168.1.104,port=40005, socketTimeoutMillis=200000" />
+
+	<!-- Mandatory Default Cache configuration. These settings will be applied to caches created programmtically using CacheManager.add(String cacheName) * memoryStoreEvictionPolicy: "LRU"(least recently 
+		used), "LFU"(least frequent used) or "FIFO"(first in first out) * maxElementsInMemory="10" * maxElementsOnDisk="10000" * eternal="false" //缓存是不是永远不超时 * diskPersistent="true" * diskExpiryThreadIntervalSeconds="120" 
+		* timeToIdleSeconds="3600" * timeToLiveSeconds="10" //缓存中每个元素的超时时间,如果eternal="false"，超过指定的时间，这个元素就被移走了 * overflowToDisk="true" -->
+	<defaultCache maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true" maxElementsOnDisk="10000000" diskPersistent="true"
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+
+	<cache name="cache1" memoryStoreEvictionPolicy="LRU" maxElementsInMemory="15" eternal="false" diskPersistent="true" diskExpiryThreadIntervalSeconds="120" timeToIdleSeconds="100"
+		timeToLiveSeconds="100" overflowToDisk="true" maxElementsOnDisk="1000000" />
+
+	<cache name="goncha.hb.bean.Address" maxElementsInMemory="10" eternal="false" timeToIdleSeconds="100" timeToLiveSeconds="100" overflowToDisk="false" />
+</ehcache> 

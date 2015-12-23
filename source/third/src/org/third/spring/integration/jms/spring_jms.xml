@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+      http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-2.5.xsd">
+	<!--		
+		<bean id="imqResourceAdapter" class="org.springframework.jca.support.ResourceAdapterFactoryBean">
+		<property name="imqResourceAdapter">
+	-->
+
+	<bean id="imqResourceAdapter" class="com.sun.messaging.jms.ra.ResourceAdapter">
+		<property name="connectionURL" value="mq://localhost:7676" />
+		<property name="userName" value="admin" />
+		<property name="password" value="admin" />
+	</bean>
+	<!--	</property>
+		</bean>
+	-->
+	<bean id="imqManagedConnectionFactory" class="com.sun.messaging.jms.ra.ManagedConnectionFactory">
+		<property name="resourceAdapter" ref="imqResourceAdapter" />
+	</bean>
+	<bean id="imqLocalConnectionFactory" class="org.springframework.jca.support.LocalConnectionFactoryBean">
+		<property name="managedConnectionFactory">
+			<ref local="imqManagedConnectionFactory" />
+		</property>
+	</bean>
+
+	<bean id="activeMqConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="tcp://localhost:61616" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="activeMqResourceAdapter" class="org.springframework.jca.support.ResourceAdapterFactoryBean">
+		<property name="resourceAdapter">
+			<bean class="org.apache.activemq.ra.ActiveMQResourceAdapter">
+				<property name="serverUrl" value="tcp://localhost:61616" />
+			</bean>
+		</property>
+		<property name="workManager">
+			<bean class="org.springframework.jca.work.SimpleTaskWorkManager" />
+		</property>
+	</bean>
+
+	<!-- JMS JNDI Config  -->
+	<!--
+		
+		<bean id="jmsJndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+		<props>
+		<prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory</prop>
+		<prop key="java.naming.provider.url">localhost</prop>
+		<prop key="java.naming.factory.url.pkgs">org.jnp.interfaces:org.jboss.naming</prop>
+		</props>
+		</property>
+		</bean>
+		<bean id="jmsQueueConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate">
+		<ref bean="jmsJndiTemplate" />
+		</property>
+		<property name="jndiName">
+		<value>java:/UIL2ConnectionFactory</value>
+		</property>
+		</bean>
+		<bean id="jmsQueue" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate">
+		<ref bean="jmsJndiTemplate" />
+		</property>
+		<property name="jndiName">
+		<value>queue/A</value>
+		</property>
+		</bean>
+		<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate102">
+		<property name="connectionFactory">
+		<ref bean="jmsQueueConnectionFactory" />
+		</property>
+		<property name="defaultDestination">
+		<ref bean="destination" />
+		</property>
+		<property name="receiveTimeout">
+		<value>30000</value>
+		</property>
+		</bean>
+	-->
+</beans>

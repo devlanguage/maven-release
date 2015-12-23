@@ -1,0 +1,48 @@
+<HTML>
+
+<HEAD><TITLE>Bridge</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Decouple an abstraction from its implementation so that the two
+can vary independently.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Abstraction forwards client requests to its Implementor object.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/bridge.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Abstraction</B> (Window)<P></P>
+<UL><LI>defines the abstraction's interface.</LI><P></P>
+<LI>maintains a reference to an object of type Implementor.</LI></UL><P></P>
+
+<LI><B>RefinedAbstraction</B> (IconWindow)<P></P>
+<UL><LI>Extends the interface defined by Abstraction.</LI></UL><P></P>
+
+<LI><B>Implementor</B> (WindowImp)<P></P>
+<UL><LI>defines the interface for implementation classes.  This
+	interface doesn't have to correspond exactly to Abstraction's
+	interface; in fact the two interfaces can be quite different.
+	Typically the Implementor interface provides only primitive
+	operations, and Abstraction defines higher-level
+	operations based on these primitives.</UL><P></P>
+
+<LI><B>ConcreteImplementor</B> (XWindowImp, PMWindowImp)<P></P>
+<UL><LI>implements the Implementor interface and defines its
+        concrete implementation.</UL>
+</UL>
+
+<H2>Classification</H2>
+
+<P>The Bridge design pattern is also known as the Handle/Body.</P>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,113 @@
+#
+# @(#)file      README
+# @(#)author    Sun Microsystems, Inc.
+# @(#)version   1.13
+# @(#)lastedit  04/03/05
+#
+# Copyright 2004 Sun Microsystems, Inc.  All rights reserved. Use is subject to license terms.
+
+
+                         Context Example
+                         ===============
+
+
+-----------------------------------------------------------------------
+1. Overview
+-----------------------------------------------------------------------
+
+The example in this directory shows how a context can be sent from a remote
+client to a connector. The ContextAgent class is a simple Java DMK agent with
+HTTP and RMI connectors. Each connector has an MBeanServerChecker inserted
+between it and the MBean server. This checker allows an operation only if
+the client context exists and is an object whose toString() method returns
+the string "nice". The ContextClient class contains code for both an
+HTTP connector client and an RMI connector client, and chooses which one
+to create depending on whether the command-line contains an argument "-rmi".
+In either case, it establishes a "nice" context by default.
+
+The example also shows how the AuthInfo class can be used by the client to
+establish its credentials to the HTTP connector, and by the server to verify
+those credentials.
+
+
+-----------------------------------------------------------------------
+2. Programs
+-----------------------------------------------------------------------
+
+The ContextAgent class can be run with command-line arguments. These
+arguments should be in pairs, with the first element of each pair
+being a login string and the second a password string. These will be
+used to build an authentication list against which the login and
+password of a received HTTP request will be checked (There is
+currently no provision for the transmission of login and password
+information in the RMI connector). If no arguments are given, there
+is no authentication checking.
+
+By default, the ContextClient class establishes a connection to an
+HTTP server on port 8081 of the local machine, which is the port that
+the ContextAgent class listens on. Command-line arguments can change
+this behaviour:
+
+   -host    followed by the name of the host the agent is running on
+            (default is the local host);
+   -port    followed by the port number the agent is running on
+            (default is 1099 for RMI or 8081 for HTTP);
+   -ident   followed by two words: the login and password to be used
+            as the user identity for the HTTP connector (default is
+            not to set any identity);
+   -context followed by the string to be set as the result of the
+            toString() on the context object associated with the
+            connector (default is the string "nice", or null if
+            -old is given);
+   -rmi     use an RMI connector (default is an HTTP connector);
+
+
+-----------------------------------------------------------------------
+3. Building and Running the Example
+-----------------------------------------------------------------------
+
+To build and run this example, make sure that your PATH environment variable
+is correctly set to use the Java 2 SDK, Standard Edition 1.4 or later.
+
+On J2SE 1.4, your CLASSPATH must contain the jar files for the JMX runtime
+(jmx.jar) and the Java DMK runtime (jdmkrt.jar), as well as the current
+directory (.).
+
+On J2SE 1.5, your CLASSPATH must contain the jar files for the Java DMK
+runtime (jdmkrt.jar), as well as the current directory (.).
+
+These instructions assume the classpath is set in an environment variable,
+though it may also be given on the command line with the -classpath option.
+
+Copy the example source files to your working directory and type the following
+commands:
+
+    cd <WORKING_DIR>
+
+    javac *.java
+
+To run the example using the classes you have just built, type the
+following command in one window:
+
+    java ContextAgent
+
+and then these commands in another window:
+
+    cd <WORKING_DIR>
+
+    java ContextClient
+
+Both programs run until interrupted. The ContextAgent listens for client
+connections and shows the context checking it does on each operation
+received from a client. The ContextClient establishes a connection to the
+ContextAgent and performs a number of operations before waiting for user
+input. It then performs the operations again, and so on until
+interrupted.
+
+You can add command-line arguments to either or both commands as
+described above. For instance, running
+
+    java ContextClient -context notnice
+
+shows what happens if the context checking in the ContextAgent program
+rejects incoming operations.

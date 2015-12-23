@@ -1,0 +1,47 @@
+<HTML>
+
+<HEAD><TITLE>Mediator</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+
+<p>Define an object that encapsulates how a set of objects interact. 
+Mediator promotes loose coupling by keeping objects from referring 
+to each other explicitly, and it lets you vary their interaction 
+independently.</p>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Colleagues send and receive requests from a Mediator object. 
+The mediator implements the cooperative behavior by routing 
+requests between the appropriate colleague(s).</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/mediator.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Mediator</B> (DialogDirector)</LI><P></P>
+<UL><LI>defines an interface for communicating with Colleague objects.
+</LI></UL><P></P>
+
+<LI><B>ConcreteMediator</B> (FontDialogDirector)</LI><P></P>
+<UL><LI>implements cooperative behavior by coordinating 
+Colleague objects.</LI>
+<LI>knows and maintains its colleagues.</LI></UL><P></P>
+
+<LI><B>Colleague classes</B> (ListBox, EntryField)</LI><P></P>
+<UL><LI>each Colleague class knows its Mediator object.</LI>
+<LI>each colleague communicates with its mediator whenever it would 
+have otherwise communicated with another colleague.</LI></UL><P></P>
+</UL>
+
+<H2>Classification</H2>
+<P>The Mediator design pattern is not known by another name.</P>
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+	<user uuid="1">
+		<uuid>1</uuid>
+		<myname>ydd</myname>
+		<sex>male</sex>
+		<age>26</age>
+	</user>
+	<user uuid="1">
+		<uuid>2</uuid>
+		<myname>shwin</myname>
+		<sex>male</sex>
+		<age>25</age>
+	</user>
+</users>

@@ -1,0 +1,43 @@
+<HTML>
+
+<HEAD><TITLE>Adapter</TITLE></HEAD>
+
+<BODY>
+
+<H2>Intent</H2>
+<P>Convert the interface of a class into another interface clients
+expect.  Adapter lets classes work together that couldn't otherwise
+because of incompatible interfaces.</P>
+
+<H2>Solution Overview</H2>
+
+<UL>
+<LI>Clients call operations on an Adapter instance.  In turn, the adapter
+calls Adaptee operations that carry out the request.</LI>
+</UL>
+
+<P ALIGN=LEFT><IMG SRC="Pictures/adapt106.gif">
+
+<H3>Participants</H3>
+
+<UL>
+<LI><B>Target</B> (Shape)<P></P>
+<UL><LI>defines the domain-specific interface that Client uses.</LI></UL><P></P>
+
+<LI><B>Client</B> (DrawingEditor)<P></P>
+<UL><LI>collaborates with objects conforming to the Target interface.</LI></UL><P></P>
+
+<LI><B>Adaptee</B> (TextView)<P></P>
+<UL><LI>defines an existing interface that needs adapting.</LI></UL><P></P>
+
+<LI><B>Adapter</B> (TextShape)<P></P>
+<UL><LI>adapts the interface of Adaptee to the Target interface.</LI></UL>
+</UL>
+
+<H2>Classification</H2>
+
+<P>The Adapter design pattern is also known as the Wrapper.</P>
+
+</BODY>
+
+</HTML>

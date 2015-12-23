@@ -1,0 +1,82 @@
+#
+# @(#)file      README
+# @(#)author    Sun Microsystems, Inc.
+# @(#)version   1.9
+# @(#)lastedit  04/03/05
+#
+# Copyright 2004 Sun Microsystems, Inc.  All rights reserved. Use is subject to license terms.
+
+
+                         Notification Example
+                         ====================
+
+
+-----------------------------------------------------------------------
+1. Overview
+-----------------------------------------------------------------------
+
+This example shows how to use Java DMK notification service. The communication
+between the agent and the client is done via an RMI connector.
+
+-----------------------------------------------------------------------
+2. File List
+-----------------------------------------------------------------------
+
+This example is based on the following source file:
+
+ * BaseAgent.java:
+
+        - It is same as the BaseAgent example.
+
+ * Client.java
+
+        - It is used to show how to configure the Java DMK notification
+          service, and how to receive notifications from a remote MBean.
+
+ * NotificationEmitter.java
+
+        - An MBean that emits notifications.
+
+ * NotificationEmitterMBean.java:
+
+        - The management interface of the NotificationEmitter MBean.
+
+
+-----------------------------------------------------------------------
+3. Building and Running the Example
+-----------------------------------------------------------------------
+
+To build and run this example, make sure that your PATH environment variable
+is correctly set to use the Java 2 SDK, Standard Edition 1.4 or later.
+
+On J2SE 1.4, your CLASSPATH must contain the jar files for the JMX runtime
+(jmx.jar) and the Java DMK runtime (jdmkrt.jar), as well as the current
+directory (.).
+
+On J2SE 1.5, your CLASSPATH must contain the jar files for the Java DMK
+runtime (jdmkrt.jar), as well as the current directory (.).
+
+These instructions assume the classpath is set in an environment variable,
+though it may also be given on the command line with the -classpath option.
+
+Copy the example source files to your working directory and type the following
+commands:
+
+    cd <WORKING_DIR>
+
+    javac *.java
+
+To run the agent, type:
+
+    cd <WORKING_DIR>
+
+    java BaseAgent
+
+To run the client, type in another shell window:
+
+    cd <WORKING_DIR>
+
+    java Client <agent_hostname>
+
+The <agent_hostname> indicates at which machine the agent is running. If no
+agent hostname is specified, 'localhost' is used by default.
