@@ -20,9 +20,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.basic.common.util.BasicRuntimeException;
-import org.basic.common.util.StreamUtil;
 import org.basic.common.util.StringUtil;
-import org.basic.common.util.SystemUtil;
 import org.third.cxf.rest.RestServiceUtil;
 import org.third.cxf.service.teacher.binding.ListData;
 import org.third.cxf.service.teacher.binding.PageData;
@@ -31,8 +29,6 @@ import org.third.cxf.service.teacher.binding.SimpleData;
 import org.third.cxf.service.teacher.binding.SingleData;
 import org.third.cxf.service.teacher.dao.Student;
 import org.third.cxf.service.teacher.dao.Teacher;
-
-import com.sybase.jdbc3.a.b.o;
 
 /**
  * Created on Aug 19, 2014, 2:11:39 PM

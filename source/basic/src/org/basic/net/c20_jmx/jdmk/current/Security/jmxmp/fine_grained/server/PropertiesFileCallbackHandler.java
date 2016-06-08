@@ -27,55 +27,51 @@ public final class PropertiesFileCallbackHandler implements CallbackHandler {
      * @param pwFile name of file containing name/password pairs
      */
     public PropertiesFileCallbackHandler(String pwFile) throws IOException {
-	pwDb = new Properties();
-	pwDb.load(new FileInputStream(pwFile));
+        pwDb = new Properties();
+        pwDb.load(new FileInputStream(pwFile));
     }
 
-    public void handle(Callback[] callbacks)
-	throws IOException, UnsupportedCallbackException {
+    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
         // Retrieve callbacks
         //
         for (int i = 0; i < callbacks.length; i++) {
             if (callbacks[i] instanceof AuthenticateCallback) {
-		AuthenticateCallback authnCb =
-		    (AuthenticateCallback) callbacks[i];
+                AuthenticateCallback authnCb = (AuthenticateCallback) callbacks[i];
                 String authenticationID = authnCb.getAuthenticationID();
                 char[] passwd = authnCb.getPassword();
-		String password = new String(passwd);
-		// Clear char array password
-		//
-		for (int j = 0; j < passwd.length; j++)
-		    passwd[j] = ' ';
-		passwd = null;
-		// Set authentication flag to false
-		//
-		authnCb.setAuthenticated(false);
-		// Verification of username and password
-		//
-		if (authenticationID != null && password != null) {
-		    // Process retrieval of password; can get password iff
-		    // authenticationID is available in AuthenticateCallback
-		    //
-		    String pw = pwDb.getProperty(authenticationID);
-		    if (pw == null || !pw.equals(password)) {
-			throw new SaslException("Authentication failed! " +
-						"Invalid username/password!");
-		    }
-		    // Set authentication flag to true
-		    //
-		    authnCb.setAuthenticated(true);
-		} else {
-		    throw new SaslException("Authentication failed! " +
-					    "Username or password is null!");
-		}
-	    } else if (callbacks[i] instanceof AuthorizeCallback) {
-		AuthorizeCallback authzCb = (AuthorizeCallback) callbacks[i];
-		authzCb.setAuthorizedID(authzCb.getAuthorizationID());
-		authzCb.setAuthorized(true);
-	    } else {
+                String password = new String(passwd);
+                // Clear char array password
+                //
+                for (int j = 0; j < passwd.length; j++)
+                    passwd[j] = ' ';
+                passwd = null;
+                // Set authentication flag to false
+                //
+                authnCb.setAuthenticated(false);
+                // Verification of username and password
+                //
+                if (authenticationID != null && password != null) {
+                    // Process retrieval of password; can get password iff
+                    // authenticationID is available in AuthenticateCallback
+                    //
+                    String pw = pwDb.getProperty(authenticationID);
+                    if (pw == null || !pw.equals(password)) {
+                        throw new SaslException("Authentication failed! " + "Invalid username/password!");
+                    }
+                    // Set authentication flag to true
+                    //
+                    authnCb.setAuthenticated(true);
+                } else {
+                    throw new SaslException("Authentication failed! " + "Username or password is null!");
+                }
+            } else if (callbacks[i] instanceof AuthorizeCallback) {
+                AuthorizeCallback authzCb = (AuthorizeCallback) callbacks[i];
+                authzCb.setAuthorizedID(authzCb.getAuthorizationID());
+                authzCb.setAuthorized(true);
+            } else {
                 throw new UnsupportedCallbackException(callbacks[i]);
             }
-	}
+        }
     }
 
     private Properties pwDb;

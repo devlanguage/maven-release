@@ -11,7 +11,8 @@
 package org.third.jms.activemq.embeded;
 
 import org.apache.activemq.broker.BrokerService;
-import org.apache.activemq.store.jdbc.JDBCPersistenceAdapter;
+import org.apache.activemq.store.memory.MemoryPersistenceAdapter;
+import org.codehaus.activemq.store.jdbc.JDBCPersistenceAdapter;
 
 /**
  * Created on Mar 5, 2014, 5:23:17 PM
@@ -31,7 +32,7 @@ public class MqServer {
         // org.apache.activemq.console.Main.main(args);
         BrokerService broker = new BrokerService();
         try {
-            broker.setPersistenceAdapter(new JDBCPersistenceAdapter());
+            broker.setPersistenceAdapter(new MemoryPersistenceAdapter());
         } catch (Exception e1) {
             e1.printStackTrace();
         }

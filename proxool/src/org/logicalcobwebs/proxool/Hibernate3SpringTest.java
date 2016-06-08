@@ -1,5 +1,5 @@
 package org.logicalcobwebs.proxool;
-
+import static org.junit.Assert.*; 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.HibernateException;

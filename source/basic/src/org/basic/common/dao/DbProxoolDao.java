@@ -64,7 +64,7 @@ public class DbProxoolDao extends DbDao {
 
         try {
             // org.logicalcobwebs.proxool.ProxoolFacade.killAllConnections(proxoolAlias, "", false);
-            org.logicalcobwebs.proxool.ProxoolFacade.shutdown();
+            org.logicalcobwebs.proxool.ProxoolFacade.shutdown(1);
         } catch (Exception e) {
             //
         }

@@ -28,7 +28,7 @@ package org.basic.net.c16_corba.jacorb;
  * Description: Utility class for using the CORBA Naming Service
  */
 
-import org.jacorb.orb.giop.CodeSet;
+//import org.jacorb.orb.giop.CodeSet;
 import org.omg.CORBA.ORB;
 import org.omg.CosNaming.Binding;
 import org.omg.CosNaming.BindingHolder;
@@ -181,8 +181,9 @@ public class JacorbTest {
 
     public static void main(String args[]) {
 
-       int JacorbCodeSet= CodeSet.UTF16;
-
+//       int JacorbCodeSet= CodeSet.UTF16;
+    	int JacorbCodeSet= 1;
+    	
         JacorbTest wrapper = new JacorbTest();
         wrapper.initOrb();
 

@@ -10,11 +10,8 @@
  */
 package org.third.spring.basic.aware;
 
-import org.apache.derby.tools.sysinfo;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-
-import com.sybase.jdbc4.a.b.ar;
 
 /**
  * Created on Apr 11, 2014, 9:30:01 AM

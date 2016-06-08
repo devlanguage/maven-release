@@ -1,9 +1,8 @@
 package org.basic.jdk.jdk7.e2_concurrent.transfer_queue;
 
-import io.netty.util.internal.ThreadLocalRandom;
-
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Test;
 

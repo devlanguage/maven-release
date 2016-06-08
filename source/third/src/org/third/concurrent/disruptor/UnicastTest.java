@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import com.lmax.disruptor.BatchEventProcessor;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.SequenceBarrier;
-import com.lmax.disruptor.SingleThreadedClaimStrategy;
+import com.lmax.disruptor.SleepingWaitStrategy;
 import com.lmax.disruptor.YieldingWaitStrategy;
 
 class UnicastProducer implements Runnable {
@@ -47,8 +47,8 @@ class UnicastConsumeEventHandler implements com.lmax.disruptor.EventHandler<Valu
 public class UnicastTest {
     private static final int BUFFER_SIZE = 512;
 
-    private final RingBuffer<ValueEvent> ringBuffer = new RingBuffer<ValueEvent>(ValueEvent.EVENT_FACTORY, new SingleThreadedClaimStrategy(
-            BUFFER_SIZE), new YieldingWaitStrategy());
+    private final RingBuffer<ValueEvent> ringBuffer = RingBuffer.createSingleProducer(ValueEvent.EVENT_FACTORY, BUFFER_SIZE,
+            new YieldingWaitStrategy());
     private final SequenceBarrier sequenceBarrier = ringBuffer.newBarrier();
 
     private final UnicastConsumeEventHandler handler = new UnicastConsumeEventHandler();
@@ -59,7 +59,7 @@ public class UnicastTest {
             handler);
 
     public UnicastTest() {
-        ringBuffer.setGatingSequences(batchEventProcessor.getSequence());
+        ringBuffer.addGatingSequences(batchEventProcessor.getSequence());
     }
 
     public void consume() {

@@ -20,6 +20,5 @@ public class AopConfigStyleTester {
 
         UserService UserService = (UserService) ctx.getBean("userService");
         UserService.createUser("userTest1");
-
     }
 }
