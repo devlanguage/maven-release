@@ -7,17 +7,6 @@ import java.util.Properties;
 import oracle.jdbc.pool.OracleConnectionCacheManager;
 import oracle.jdbc.pool.OracleDataSource;
 
-/****************************************************************************
- *                 TELLABS PROPRIETARY AND CONFIDENTIAL
- *              UNPUBLISHED WORK COPYRIGHT 2009 TELLABS
- *                          ALL RIGHTS RESERVED
- *      NO PART OF THIS DOCUMENT MAY BE USED OR REPRODUCED WITHOUT
- *                   THE WRITTEN PERMISSION OF TELLABS.
- *  Last modifed on 3:09:04 PM Mar 14, 2014
- *
- *****************************************************************************
- */
-
 /**
  * Created on Mar 14, 2014, 3:09:04 PM
  */
