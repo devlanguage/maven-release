@@ -2,8 +2,8 @@ package org.basic.db.oracle;
 
 import org.basic.common.bean.PoolType;
 import org.basic.common.util.BasicException;
-import org.basic.db2.proxool.DbDao;
-import org.basic.db2.proxool.DbDaoFactory;
+import org.basic.db.util.DbDao;
+import org.basic.db.util.DbDaoFactory;
 
 public abstract class OracleDbTest {
 

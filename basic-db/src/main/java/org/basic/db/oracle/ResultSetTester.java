@@ -14,8 +14,8 @@ import org.basic.common.util.BasicException;
 import org.basic.common.util.DbUtil;
 import org.basic.db.PropertiesTest;
 import org.basic.db.oracle.collection.SqlTypeAddress;
-import org.basic.db2.proxool.DbDao;
-import org.basic.db2.proxool.DbDaoFactory;
+import org.basic.db.util.DbDao;
+import org.basic.db.util.DbDaoFactory;
 
 /**
  * 

@@ -11,8 +11,8 @@ import org.basic.common.bean.DatabaseType;
 import org.basic.common.bean.PoolType;
 import org.basic.common.util.BasicException;
 import org.basic.common.util.DbUtil;
-import org.basic.db2.proxool.DbDao;
-import org.basic.db2.proxool.DbDaoFactory;
+import org.basic.db.util.DbDao;
+import org.basic.db.util.DbDaoFactory;
 
 import oracle.sql.BLOB;
 import oracle.sql.CLOB;
