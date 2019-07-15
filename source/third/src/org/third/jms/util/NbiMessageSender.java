@@ -1,4 +1,3 @@
-package org.third.jms.util;
 
 import org.basic.common.util.BasicException;
 import org.third.jms.util.bean.BaseQueue;

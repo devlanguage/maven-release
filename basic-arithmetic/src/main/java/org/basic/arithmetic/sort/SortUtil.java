@@ -1,4 +1,3 @@
-package org.basic.arithmetic.sort;
 
 import org.basic.arithmetic.sort.arithmeticlist.Insert_DirectInsertSort;
 import org.basic.arithmetic.sort.arithmeticlist.Insert_ShellSort;

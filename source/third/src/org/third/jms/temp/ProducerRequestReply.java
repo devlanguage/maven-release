@@ -1,4 +1,3 @@
-package org.third.jms.temp;
 
 import java.util.concurrent.TimeUnit;
 

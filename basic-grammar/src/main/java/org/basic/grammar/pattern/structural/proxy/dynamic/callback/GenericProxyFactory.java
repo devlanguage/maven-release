@@ -1,8 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.proxy.dynamic.callback.GenericProxyFactory.java is created on 2007-9-17
- * 下午03:31:44
- */
 package org.basic.grammar.pattern.structural.proxy.dynamic.callback;
 
 import java.lang.reflect.InvocationHandler;

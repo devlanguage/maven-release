@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.mst;
 /* ComPanel.java */
 
 import java.awt.*;

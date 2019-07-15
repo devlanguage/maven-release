@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.memoryleak;
 
 import java.lang.reflect.Method;
 

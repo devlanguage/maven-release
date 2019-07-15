@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.hibernate3.common.util.ReusableSession.java is created on 2008-4-7
- */
 package org.third.orm.hibernate3.common.util;
 
 import java.io.IOException;

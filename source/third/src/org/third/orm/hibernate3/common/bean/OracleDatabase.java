@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.bean.OracleDatabase.java is created on Sep 24, 2007 10:33:12 AM
- */
 package org.third.orm.hibernate3.common.bean;
 
 import static org.third.orm.hibernate3.common.bean.CommonConstants.DB_ORACLE_CONFIG_FILE;

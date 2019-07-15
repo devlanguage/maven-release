@@ -1,4 +1,3 @@
-package org.third.db.proxool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

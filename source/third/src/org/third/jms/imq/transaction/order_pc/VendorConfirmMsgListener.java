@@ -1,4 +1,3 @@
-package org.third.jms.imq.transaction.order_pc;
 
 import javax.jms.JMSException;
 import javax.jms.MapMessage;

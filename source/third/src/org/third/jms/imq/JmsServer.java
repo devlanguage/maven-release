@@ -1,4 +1,3 @@
-package org.third.jms.imq;
 
 import org.apache.activemq.filter.function.makeListFunction;
 

@@ -1,4 +1,3 @@
-package org.third.cxf.jms.jms_greeter;
 
 import java.net.MalformedURLException;
 import java.net.URL;

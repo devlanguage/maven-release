@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.huffman;
 /* TextFrame class */
 
 import java.util.StringTokenizer;

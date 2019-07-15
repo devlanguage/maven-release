@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.hibernate;
 
 import org.third.testdata.user.domain.UserDM;
 

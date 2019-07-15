@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.dao.ibatis.hibernate_style;
 
 import org.third.orm.ibatis.account.dao.UserInfoDao;
 import org.third.orm.ibatis.account.dao.ibatis.BaseHibernateStyle;

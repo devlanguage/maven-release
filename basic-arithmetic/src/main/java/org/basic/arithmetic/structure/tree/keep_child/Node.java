@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.tree.keep_child;
 
 /**
  * 实际应用的Node对象

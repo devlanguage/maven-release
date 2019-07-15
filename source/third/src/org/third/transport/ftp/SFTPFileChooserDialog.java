@@ -1,13 +1,3 @@
-/*
- * FTPFileChooserDialog.java
- *
- * Created on August 2, 2005, 4:46 PM
- *
- * To change this template, choose Tools | Options and locate the template under
- * the Source Creation and Management node. Right-click the template and choose
- * Open. You can then make changes to the template in the Source Editor.
- */
-
 package org.third.transport.ftp;
 
 // java specific

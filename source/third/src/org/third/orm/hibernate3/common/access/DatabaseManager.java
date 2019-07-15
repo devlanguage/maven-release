@@ -1,4 +1,3 @@
-package org.third.orm.hibernate3.common.access;
 
 import org.third.orm.hibernate3.common.bean.Database;
 import org.third.orm.hibernate3.common.bean.DatabaseType;

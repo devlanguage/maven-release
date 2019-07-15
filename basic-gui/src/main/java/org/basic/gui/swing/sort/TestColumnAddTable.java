@@ -30,14 +30,14 @@ public class TestColumnAddTable extends JPanel {
  {
         setLayout(new BorderLayout());
         table = new JTable();
-        Object[][] obj=new Object[][]{{"´ï°²","12321","3as3","eqw22"},{"°²´ï","asd","qweqw","as23"},{"ÐÅ","r32re","ewfse","werew3"}};
+        Object[][] obj=new Object[][]{{"ï¿½ï°²","12321","3as3","eqw22"},{"ï¿½ï¿½ï¿½ï¿½","asd","qweqw","as23"},{"ï¿½ï¿½","r32re","ewfse","werew3"}};
         DefaultTableModel model=new DefaultTableModel(obj,new Object[]{"a","b","c","d"});
         table.setModel(model);
         new SortManager(table, 0);
      colRowCellOperator=new ColumnRowCellOperator(table);
         JScrollPane scrPane = new JScrollPane(table);
-        JButton addColFirst = new JButton("µÚÒ»ÁÐÇ°ÐÂÔöÁÐ");
-        JButton addColLast = new JButton("×îºóÁÐºóÐÂÔöÁÐ");
+        JButton addColFirst = new JButton("ï¿½ï¿½Ò»ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+        JButton addColLast = new JButton("ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
         addColLast.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {

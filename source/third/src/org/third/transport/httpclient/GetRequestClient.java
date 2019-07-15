@@ -1,4 +1,3 @@
-package org.third.transport.httpclient;
 
 import java.net.Socket;
 import java.net.URL;

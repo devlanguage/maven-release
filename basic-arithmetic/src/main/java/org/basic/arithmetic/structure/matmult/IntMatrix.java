@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.matmult;
 /* IntMatrix.java */
 
 import java.awt.Color;

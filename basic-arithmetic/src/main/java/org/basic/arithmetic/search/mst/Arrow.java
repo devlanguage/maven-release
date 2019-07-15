@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.mst;
 import java.awt.*;
 import java.lang.*;
 import java.util.*;

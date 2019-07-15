@@ -1,4 +1,3 @@
-package org.third.transport.ssh.ganymed.sshclient;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

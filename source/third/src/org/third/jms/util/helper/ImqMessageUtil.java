@@ -1,4 +1,3 @@
-package org.third.jms.util.helper;
 
 import java.util.Map;
 import java.util.Vector;

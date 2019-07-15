@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.template;
 /* LFrame.java */
 
 import java.awt.*;

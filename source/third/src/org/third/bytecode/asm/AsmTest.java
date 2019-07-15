@@ -1,4 +1,3 @@
-package org.third.bytecode.asm;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;

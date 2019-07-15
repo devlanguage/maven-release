@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.red_black;
 /* AlgAnimApp.java */
 
 import java.awt.*;

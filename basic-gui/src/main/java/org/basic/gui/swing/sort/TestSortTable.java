@@ -33,7 +33,7 @@ public class TestSortTable extends JPanel
         table.setModel(model);
         new SortManager(table, 0);
         JScrollPane scrPane = new JScrollPane(table);
-        JButton addBtn = new JButton("ÐÂÔöÐÐ");
+        JButton addBtn = new JButton("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         addBtn.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent e)

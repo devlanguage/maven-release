@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.common.util.SecurityUtil.java is created on 2007-10-11 下午04:01:21
- */
 package org.basic.common.util;
 
 /**

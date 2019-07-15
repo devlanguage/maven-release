@@ -1,4 +1,3 @@
-package org.third.testdata.user.domain;
 
 public class AddressDM {
 

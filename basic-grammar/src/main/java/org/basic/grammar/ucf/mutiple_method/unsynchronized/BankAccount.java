@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.threads.basic.bank.BankAccount.java is created on 2008-9-16
- */
 package org.basic.grammar.ucf.mutiple_method.unsynchronized;
 
 import java.util.Collections;

@@ -1,4 +1,3 @@
-package org.third.cxf.jms.jms_greeter;
 
 import javax.jws.Oneway;
 import javax.jws.WebMethod;

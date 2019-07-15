@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.opt_bin;
 
 import java.lang.*;
 import java.awt.*;

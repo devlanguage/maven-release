@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.BD;
 // Node - generic nodes in block diagrams
 //
 

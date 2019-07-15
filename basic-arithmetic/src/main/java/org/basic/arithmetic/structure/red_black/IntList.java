@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.red_black;
 // IntList class
 //    Main purpose of this class is to assemble lists of integers for
 //    testing

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.ant.study.tasks.DownloadTask.java is created on 2007-12-28
- */
 package org.third.build.ant;
 
 import java.io.FileInputStream;

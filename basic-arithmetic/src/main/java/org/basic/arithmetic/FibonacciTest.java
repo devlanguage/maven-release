@@ -1,4 +1,3 @@
-package org.basic.arithmetic;
 
 import java.math.BigDecimal;
 

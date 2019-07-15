@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.mst;
 /*Node class*/
 
 import java.awt.*;

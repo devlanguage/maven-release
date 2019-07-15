@@ -1,4 +1,3 @@
-package org.third.jms.util.bean;
 
 import org.basic.common.bean.CommonLogger;
 import org.basic.common.util.BasicException;

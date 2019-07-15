@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.tree;
 
 interface Tree{}
 public class TreeLinkedList implements Tree {

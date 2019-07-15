@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.db.oracle.OracleSessionReport.java is created on 2008-6-20
- */
 package org.basic.db.oracle;
 
 import java.sql.Connection;

@@ -1,6 +1,3 @@
-/**
- * The file org.basic.annotation.Actor.java was created by yongjie.gong on 2008-12-9
- */
 package org.basic.grammar.annotation;
 
 import java.lang.annotation.Inherited;

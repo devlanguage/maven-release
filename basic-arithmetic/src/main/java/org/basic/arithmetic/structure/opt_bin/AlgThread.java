@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.opt_bin;
 /* AlgThread.java */
 
 import java.awt.*;

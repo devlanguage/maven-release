@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.opt_bin;
 /* TextPanel class */
 
 import java.util.StringTokenizer;

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.common.util.MessageUtil.java is created on Sep 26, 2007 11:25:26 AM
- */
 package org.basic.common.util;
 
 import java.io.IOException;
@@ -92,13 +88,13 @@ public class MessageUtil {
 		try {
 			switch (relativePath) {
 			case CLASS_PATH: {
-				ins = StreamUtil.getInputStreamFromClassPath(messageFile);
+				ins = StreamUtils.getInputStreamFromClassPath(messageFile);
 				break;
 			}
 
 			case OPERATE_SYSTEM_ABSOLUTE_PATH: {
-				ins = StreamUtil.getInputStreamFromAbosulateClassPath(messageFile);
-				messageEntries.load(StreamUtil.getInputStreamFromAbosulateClassPath(messageFile));
+				ins = StreamUtils.getInputStreamFromAbosulateClassPath(messageFile);
+				messageEntries.load(StreamUtils.getInputStreamFromAbosulateClassPath(messageFile));
 				MESSAGE_LIST.putAll(messageEntries);
 				break;
 			}
@@ -120,7 +116,7 @@ public class MessageUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			StreamUtil.close(ins);
+			StreamUtils.close(ins);
 		}
 		MESSAGE_LIST.putAll(messageEntries);
 	}

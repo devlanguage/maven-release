@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.basic.db.oracle;
 
 import java.sql.Connection;

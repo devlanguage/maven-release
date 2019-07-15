@@ -1,4 +1,3 @@
-package org.third.jms.activemq.queue;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;

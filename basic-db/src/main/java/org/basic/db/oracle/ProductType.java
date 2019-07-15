@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
-import org.apache.derby.iapi.types.SQLTime;
-
 public class ProductType implements SQLData {
 
     public String getSQLTypeName() throws SQLException {

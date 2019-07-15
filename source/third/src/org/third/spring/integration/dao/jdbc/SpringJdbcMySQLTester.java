@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

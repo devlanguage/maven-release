@@ -1,4 +1,3 @@
-package org.third.jms.util.helper;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;

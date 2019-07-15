@@ -1,4 +1,3 @@
-package org.third.spring.config;
 
 import java.util.List;
 import java.util.Map;

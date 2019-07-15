@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.tree.keep_parent;
 
 public class TreeParent<E> {
 

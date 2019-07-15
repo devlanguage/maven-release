@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.dao;
 
 import java.util.List;
 

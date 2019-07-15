@@ -1,6 +1,7 @@
 package org.basic.common.bean;
 
 public class CommonConstants {
+	
 
     public static final String DB_ORACLE_DRIVER_CLASS = "db.oracle.driver";
     public static final String DB_ORACLE_URL = "db.oracle.url";

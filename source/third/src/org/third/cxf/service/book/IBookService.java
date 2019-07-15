@@ -1,4 +1,3 @@
-package org.third.cxf.service.book;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

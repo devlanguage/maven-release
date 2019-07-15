@@ -1,6 +1,3 @@
-/**
- * The file org.basic.db.jdbc.concurrent.CreateUserThread.java was created by yongjie.gong on 2008-11-10
- */
 package org.basic.db.jdbc.concurrent;
 
 

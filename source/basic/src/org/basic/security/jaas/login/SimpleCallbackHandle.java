@@ -1,4 +1,3 @@
-package org.basic.security.jaas.login;
 
 import java.io.BufferedReader;
 import java.io.IOException;

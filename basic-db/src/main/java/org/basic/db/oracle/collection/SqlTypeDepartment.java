@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.db.oracle.SqlTypeDepartment.java is created on 2008-10-14
- */
 package org.basic.db.oracle.collection;
 
 import java.sql.SQLData;

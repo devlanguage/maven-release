@@ -34,13 +34,13 @@ public abstract class AbstractCustomTableModel extends AbstractTableModel
      * @param columnData
      *            the data of the column to add <br>
      *            Chinese Description: <br>
-     *            °ÑÉè¶¨ÁËÁÐÃûºÍÁÐÊý¾ÝµÄÒ»ÁÐ¼Óµ½Ö¸¶¨Î»ÖÃ
+     *            ï¿½ï¿½ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½Ò»ï¿½Ð¼Óµï¿½Ö¸ï¿½ï¿½Î»ï¿½ï¿½
      * @param i
-     *            Ìí¼ÓºóÁÐÔÚ±íÖÐµÄÎ»ÖÃ
+     *            ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½Ðµï¿½Î»ï¿½ï¿½
      * @param columnName
-     *            ÒªÌí¼ÓµÄÁÐµÄÁÐÃû.
+     *            Òªï¿½ï¿½Óµï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½.
      * @param columnData
-     *            ÒªÌí¼ÓµÄÁÐµÄÁÐÃû£¬ÒÔÒ»Î¬Êý×éÖÐ´æ´¢
+     *            Òªï¿½ï¿½Óµï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Î¬ï¿½ï¿½ï¿½ï¿½ï¿½Ð´æ´¢
      */
     public abstract void insertColumn(int i, Object columnName,
             Object[] columnData);
@@ -53,11 +53,11 @@ public abstract class AbstractCustomTableModel extends AbstractTableModel
      *            location to add the row
      * @param aRow
      *            the data <br>
-     *            Chinese Description: °ÑÉè¶¨ÁËÊý¾ÝµÄÒ»ÐÐ¼Óµ½Ö¸¶¨Î»ÖÃ
+     *            Chinese Description: ï¿½ï¿½ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½Ò»ï¿½Ð¼Óµï¿½Ö¸ï¿½ï¿½Î»ï¿½ï¿½
      * @param i
-     *            Ìí¼ÓºóÐÐÔÚ±íÖÐµÄÎ»ÖÃ
+     *            ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½Ðµï¿½Î»ï¿½ï¿½
      * @param aRow
-     *            ÐÐÊý¾Ý
+     *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public abstract void insertRow(int i, Object aRow);
 }

@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.tree.keep_parent;
 
 public class Node<E> { // 节点结构
   E data; // 真正的数据域

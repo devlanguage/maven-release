@@ -21,11 +21,17 @@
       <artifactId>basic-common</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>jgraph</groupId>
+      <artifactId>jgraph</artifactId>
+      <version>5.13.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse</groupId>
+      <artifactId>draw2d</artifactId>
+      <version>3.2.100-v20070529</version>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/com.jidesoft/jide-charts -->
-<!--     <dependency>
-      <groupId>com.jidesoft</groupId>
-      <artifactId>jide-common</artifactId>
-      <version>3.5.15</version>
-    </dependency> -->
+    <!-- <dependency> <groupId>com.jidesoft</groupId> <artifactId>jide-common</artifactId> <version>3.5.15</version> </dependency> -->
   </dependencies>
 </project>

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.mq.imq.conn.listener.ImqMessageListener.java is created on 2008-1-14
- */
 package org.third.jms.util;
 
 import javax.jms.JMSException;

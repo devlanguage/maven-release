@@ -1,4 +1,3 @@
-package org.third.spring.event;
 
 import org.springframework.context.ApplicationEvent;
 

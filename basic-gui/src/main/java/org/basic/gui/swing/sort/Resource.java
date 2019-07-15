@@ -35,7 +35,7 @@ public class Resource
      * Returns a mnemonic from the resource bundle. Typically used as keyboard
      * shortcuts in menu items. <br>
      * Chinese Descriptions: <br>
-     * ´Ó×ÊÔ´°üÖÐ»ñµÃ¿ì½Ý¼ü.
+     * ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½Ð»ï¿½Ã¿ï¿½Ý¼ï¿½.
      * 
      * @param key
      *            String
@@ -67,7 +67,7 @@ public class Resource
     /**
      * This method returns a string from the resource bundle. <br>
      * Chinese Descriptions : <br>
-     * ´Ó×ÊÔ´°üÖÐ»ñµÃÏàÓ¦µÄ±¾µØ×Ö·û´®.
+     * ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½Ð»ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ä±ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½.
      * 
      * <p>
      * 
@@ -98,7 +98,7 @@ public class Resource
      * Returns the resource bundle associated with this project. Used to get
      * accessable and internationalized strings. <br>
      * Chinese Descriptins: <br>
-     * »ñµÃÓëÏîÄ¿Ïà¹ØµÄ×ÊÔ´°ü.
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Øµï¿½ï¿½ï¿½Ô´ï¿½ï¿½.
      * 
      * <p>
      * 

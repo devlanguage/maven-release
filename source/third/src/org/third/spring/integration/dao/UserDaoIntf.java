@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao;
 
 import java.util.List;
 

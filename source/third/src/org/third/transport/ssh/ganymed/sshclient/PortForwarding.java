@@ -1,4 +1,3 @@
-package org.third.transport.ssh.ganymed.sshclient;
 
 import java.io.File;
 import java.io.IOException;

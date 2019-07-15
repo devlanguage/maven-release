@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.ibatis.account.service.AccountService.java is created on 2008-6-18
- */
 package org.third.orm.ibatis.account.domain.logic;
 
 import java.util.Date;

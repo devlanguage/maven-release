@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.mq.imq.conn.bean.BooleanLock.java is created on 2008-1-14
- */
 package org.basic.common.bean;
 
 /**

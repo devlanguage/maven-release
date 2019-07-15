@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.BulkBean;
 
 import java.math.BigInteger;
 

@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.dao;
 
 public abstract class DaoLoader {
 

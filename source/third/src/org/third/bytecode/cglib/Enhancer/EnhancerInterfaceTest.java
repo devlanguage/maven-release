@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.Enhancer;
 
 import net.sf.cglib.proxy.Enhancer;
 

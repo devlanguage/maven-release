@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file com.tellabs.tmfnbi.platform.server.util.DateUtil.java
- * is created on 2007-9-12 17:29:34
- */
 package org.basic.common.util;
 
 import static org.basic.common.bean.CommonConstants.DB_TIMESTAMP_FORMAT;

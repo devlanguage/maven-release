@@ -1,4 +1,3 @@
-package org.third.jms.util.bean;
 
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;

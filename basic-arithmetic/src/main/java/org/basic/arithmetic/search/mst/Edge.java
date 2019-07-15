@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.mst;
 /*Edge class*/
 
 import java.awt.*;

@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.mst;
 /* Graph class */
 
 import java.awt.*;

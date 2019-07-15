@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.hello;
 
 import com.sun.org.apache.bcel.internal.generic.GOTO;
 

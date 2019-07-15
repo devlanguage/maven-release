@@ -1,8 +1,3 @@
-/*
- * This software is released under a licence similar to the Apache Software Licence. See
- * org.logicalcobwebs.proxool.package.html for details. The latest version is available at
- * http://proxool.sourceforge.net
- */
 package org.basic.db.proxool.dbscript;
 
 import org.apache.commons.logging.Log;

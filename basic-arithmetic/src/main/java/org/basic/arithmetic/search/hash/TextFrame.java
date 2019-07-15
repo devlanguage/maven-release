@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 /* TextFrame.java */
 
 import java.awt.*;

@@ -1,4 +1,3 @@
-package org.basic.arithmetic.sort;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

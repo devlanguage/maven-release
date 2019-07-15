@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.third.jms.activemq.queue;
 
 import java.util.concurrent.atomic.AtomicInteger;

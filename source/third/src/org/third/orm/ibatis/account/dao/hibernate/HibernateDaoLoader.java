@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.dao.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

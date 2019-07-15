@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.ibatis.account.access.UserInfoDao.java is created on 2008-6-18
- */
 package org.third.orm.ibatis.account.dao;
 
 import org.third.orm.ibatis.account.domain.persistence.UserInfo;

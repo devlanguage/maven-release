@@ -1,4 +1,3 @@
-package org.third.testdata.db.bean;
 
 public class DbObject {
 

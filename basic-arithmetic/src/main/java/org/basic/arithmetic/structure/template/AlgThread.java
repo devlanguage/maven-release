@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.template;
 /* AlgThread.java */
 
 import java.awt.*;

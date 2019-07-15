@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.template;
 /* ComBox.java */
 
 import java.awt.*;

@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 /* AlgThread.java */
 
 import java.awt.*;

@@ -1,4 +1,3 @@
-package org.third.jms.util;
 
 import static org.third.jms.util.helper.ConfigurationConstant.CONFIG_FILE_NAME;
 import static org.third.jms.util.helper.ConfigurationConstant.MESSAGE_IMQHOME;

@@ -1,4 +1,3 @@
-package org.third.jms.util.bean;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

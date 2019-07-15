@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.mst;
 /* TextFrame class */
 
 import java.util.StringTokenizer;

@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.red_black;
 
 /** Node class **/
 import java.awt.*;

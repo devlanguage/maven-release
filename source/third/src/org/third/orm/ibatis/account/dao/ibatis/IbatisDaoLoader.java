@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.dao.ibatis;
 
 import java.io.Reader;
 

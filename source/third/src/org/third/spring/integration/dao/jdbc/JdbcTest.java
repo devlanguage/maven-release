@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.jdbc;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;

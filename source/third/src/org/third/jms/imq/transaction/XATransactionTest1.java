@@ -1,4 +1,3 @@
-package org.third.jms.imq.transaction;
 
 import javax.jms.JMSException;
 import javax.jms.XAConnection;

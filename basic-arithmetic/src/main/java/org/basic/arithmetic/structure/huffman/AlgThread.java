@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.huffman;
 /* AlgThread.java */
 
 import java.awt.*;

@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.ibatis;
 
 import java.sql.SQLException;
 import java.util.List;

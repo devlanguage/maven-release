@@ -1,4 +1,3 @@
-package org.third.jms.util.bean;
 
 import java.io.Serializable;
 import java.util.Enumeration;

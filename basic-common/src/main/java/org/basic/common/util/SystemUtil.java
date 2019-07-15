@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file org.basic.util.SystemUtil.java is created on Sep 22,
- * 2007 11:27:17 AM
- */
 package org.basic.common.util;
 
 import java.io.IOException;

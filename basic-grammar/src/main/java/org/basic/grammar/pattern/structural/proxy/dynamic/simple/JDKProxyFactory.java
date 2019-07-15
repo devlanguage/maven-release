@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.proxy.dynamic.simple.SetProxyFactory.java is created on 2007-9-17 下午03:17:59
- */
 package org.basic.grammar.pattern.structural.proxy.dynamic.simple;
 
 import java.lang.reflect.Method;

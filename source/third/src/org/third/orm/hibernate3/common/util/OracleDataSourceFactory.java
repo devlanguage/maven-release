@@ -1,4 +1,3 @@
-package org.third.orm.hibernate3.common.util;
 
 import java.sql.SQLException;
 import java.util.Hashtable;

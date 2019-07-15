@@ -1,4 +1,3 @@
-package org.third.cache.ehcache;
 
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Ehcache;

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.hibernate3.core.hello.test.EventManager.java is created on 2008-3-26
- */
 package org.third.orm.hibernate3.core.hello.test;
 
 import java.util.ArrayList;

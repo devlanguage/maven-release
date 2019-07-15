@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.Memento.src.TextMemento.java is created on 2008-6-12
- */
 package org.basic.grammar.pattern.behavioral.Memento.test1;
 
 import java.util.LinkedList;

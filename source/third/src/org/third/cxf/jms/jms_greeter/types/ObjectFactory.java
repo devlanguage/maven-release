@@ -1,4 +1,3 @@
-
 package org.third.cxf.jms.jms_greeter.types;
 
 import javax.xml.bind.annotation.XmlRegistry;

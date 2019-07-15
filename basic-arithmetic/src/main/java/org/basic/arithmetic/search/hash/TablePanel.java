@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 /* TablePanel.java */
 
 import java.awt.*;

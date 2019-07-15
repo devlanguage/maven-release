@@ -1,4 +1,3 @@
-package org.third.jms.util.helper;
 
 import java.util.HashMap;
 import java.util.Map;

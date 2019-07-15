@@ -1,4 +1,3 @@
-package org.third.spring.loading_msg_prop;
 
 import java.util.Locale;
 

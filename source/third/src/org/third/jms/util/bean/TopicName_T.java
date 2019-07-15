@@ -1,4 +1,3 @@
-package org.third.jms.util.bean;
 
 
 public enum TopicName_T {

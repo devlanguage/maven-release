@@ -1,9 +1,3 @@
-
-/**
- * Please modify this class to meet your needs
- * This class is not complete
- */
-
 package org.third.cxf.service.impl;
 
 import java.util.logging.Logger;

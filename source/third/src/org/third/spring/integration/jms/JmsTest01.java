@@ -1,4 +1,3 @@
-package org.third.spring.integration.jms;
 
 import javax.jms.JMSException;
 import javax.jms.MessageListener;

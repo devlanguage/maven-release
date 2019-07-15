@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.insidejvm.hello.HelloworldClassLoader1.java is created on 2008-2-25
- */
 package org.basic.grammar.jvm;
 
 import java.io.ByteArrayOutputStream;

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file org.ibatis.util.IbatisClient.java
- * is created on 2008-6-18
- */
 package org.third.orm.ibatis.util;
 
 import java.io.IOException;

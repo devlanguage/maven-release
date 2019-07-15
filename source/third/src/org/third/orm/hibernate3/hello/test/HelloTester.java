@@ -1,4 +1,3 @@
-package org.third.orm.hibernate3.hello.test;
 
 import org.third.orm.hibernate3.connection.OpenJpaUtil;
 

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file org.basic.db.oracle.LobSample.java is created on
- * 2008-3-20
- */
 package org.basic.db.oracle;
 
 import java.io.FileInputStream;
@@ -15,10 +11,10 @@ import java.sql.ResultSet;
 
 import org.basic.common.bean.DatabaseType;
 import org.basic.common.bean.PoolType;
-import org.basic.common.dao.DbDao;
-import org.basic.common.dao.DbDaoFactory;
 import org.basic.common.util.BasicException;
 import org.basic.common.util.DbUtil;
+import org.basic.db2.proxool.DbDao;
+import org.basic.db2.proxool.DbDaoFactory;
 
 /**
  * 

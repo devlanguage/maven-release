@@ -1,20 +1,3 @@
-/*
-===============================================================================
-This material is the property of, and confidential to, Tellabs.  Unauthorized
-use,  reproduction, or distribution is strictly prohibited.
-Copyright 2007, Tellabs.
-
-Project: OTS JClient
-
-Notes:
-
-History:
-Date         Name            Modification
------------  --------------- -------------------------------
-
-===============================================================================
- */
-
 package org.basic.gui.swing.common;
 
 import java.awt.Container;

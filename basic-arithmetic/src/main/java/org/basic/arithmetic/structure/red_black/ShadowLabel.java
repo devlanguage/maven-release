@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.red_black;
 
 import java.awt.Color;
 import java.awt.Font;

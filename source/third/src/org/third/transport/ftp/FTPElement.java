@@ -1,4 +1,3 @@
-package org.third.transport.ftp;
 
 import java.util.Date;
 

@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 
 /**
  * This class holds the information regarding a node from the heap/complete

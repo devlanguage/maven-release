@@ -1,4 +1,3 @@
-package org.third.transport;
 
 public final class RemoteServerInfo implements java.io.Serializable {
     public enum ProtocolType {

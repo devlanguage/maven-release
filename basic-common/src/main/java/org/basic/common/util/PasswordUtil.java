@@ -1,7 +1,3 @@
-/**
- * Tellabs Inc. ShangHai R&D Center, 2008 Copyright PasswordChecker.java Desc: Created by: ggong
- * Created Time: 4:24:17 PM Updated by: Updated Time:
- */
 package org.basic.common.util;
 
 

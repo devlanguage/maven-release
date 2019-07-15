@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.mst;
 /* AlgAnimFrame.java */
 
 import java.awt.*;

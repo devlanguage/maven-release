@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.tree.binary_tree;
 
 /**
  * 二叉节点

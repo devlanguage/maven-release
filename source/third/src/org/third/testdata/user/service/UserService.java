@@ -1,4 +1,3 @@
-package org.third.testdata.user.service;
 
 import org.third.testdata.user.domain.UserDM;
 

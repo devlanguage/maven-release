@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 /* LFrame.java */
 
 import java.awt.*;

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.hibernate3.core.hello.persistence.Event.java is created on 2008-3-26
- */
 package org.third.testdata.user.domain;
 
 import java.util.Date;

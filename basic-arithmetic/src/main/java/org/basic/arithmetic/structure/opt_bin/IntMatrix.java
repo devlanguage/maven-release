@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.opt_bin;
 /* IntMatrix.java */
 
 import java.io.*;

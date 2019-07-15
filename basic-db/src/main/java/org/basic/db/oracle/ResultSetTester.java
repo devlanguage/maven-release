@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file org.basic.db.rs.ResultSetTester.java is created on
- * 2008-3-14
- */
 package org.basic.db.oracle;
 
 import java.sql.Connection;
@@ -14,12 +10,12 @@ import java.util.Map;
 
 import org.basic.common.bean.DatabaseType;
 import org.basic.common.bean.PoolType;
-import org.basic.common.dao.DbDao;
-import org.basic.common.dao.DbDaoFactory;
 import org.basic.common.util.BasicException;
 import org.basic.common.util.DbUtil;
 import org.basic.db.PropertiesTest;
 import org.basic.db.oracle.collection.SqlTypeAddress;
+import org.basic.db2.proxool.DbDao;
+import org.basic.db2.proxool.DbDaoFactory;
 
 /**
  * 

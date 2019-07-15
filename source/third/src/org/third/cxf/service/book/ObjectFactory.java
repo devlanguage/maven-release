@@ -1,4 +1,3 @@
-
 package org.third.cxf.service.book;
 
 import javax.xml.bind.annotation.XmlRegistry;

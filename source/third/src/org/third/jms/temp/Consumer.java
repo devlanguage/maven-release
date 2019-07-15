@@ -1,4 +1,3 @@
-package org.third.jms.temp;
 
 import javax.jms.Destination;
 import javax.jms.Message;

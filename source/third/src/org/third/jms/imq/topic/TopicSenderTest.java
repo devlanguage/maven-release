@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.third.jms.imq.topic;
 
 import javax.jms.DeliveryMode;

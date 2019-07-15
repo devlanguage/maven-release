@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 
 import java.awt.*;
 import java.applet.*;

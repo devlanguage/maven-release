@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.tree.binary_tree;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

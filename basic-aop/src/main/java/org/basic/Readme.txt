@@ -1,3 +1,7 @@
+c/main/java/org/third/message/activemq/MessageUtil.java
+/c/workspace/program/Java> for i in `find . -name "*.java" |xargs`; do line=$(awk '/^package / {print NR}' $i) ; echo $i, $line; line=$((line-1)); [[ $line -gt 0 ]] && echo $i ; sed -i "1,$line d" $i; done;
+
+
 其实AOP的意思就是面向切面编程.
   OO注重的是我们解决问题的方法(封装成Method),而AOP注重的是许多解决解决问题的方法中的共同点,是对OO思想的一种补充!
   

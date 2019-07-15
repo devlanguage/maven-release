@@ -1,4 +1,3 @@
-package org.third.testdata.user.dao;
 
 import java.io.Serializable;
 import java.sql.Connection;

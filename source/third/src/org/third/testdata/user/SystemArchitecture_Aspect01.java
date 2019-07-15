@@ -1,4 +1,3 @@
-package org.third.testdata.user;
 
 import org.aspectj.lang.annotation.AdviceName;
 import org.aspectj.lang.annotation.Aspect;

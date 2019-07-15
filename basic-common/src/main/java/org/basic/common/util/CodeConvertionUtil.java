@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.common.util.CodeConvertionUtil.java is created on 2007-10-11 下午04:40:08
- */
 package org.basic.common.util;
 
 import java.io.ByteArrayOutputStream;

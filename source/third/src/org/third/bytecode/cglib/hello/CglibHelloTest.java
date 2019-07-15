@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.hello;
 
 import java.lang.reflect.Method;
 

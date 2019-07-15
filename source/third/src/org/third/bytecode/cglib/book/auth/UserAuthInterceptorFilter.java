@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.book.auth;
 
 import java.lang.reflect.Method;
 

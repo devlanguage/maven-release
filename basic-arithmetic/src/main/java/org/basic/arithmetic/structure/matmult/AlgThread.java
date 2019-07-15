@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.matmult;
 /* AlgThread.java */
 
 import java.awt.Color;

@@ -1,4 +1,3 @@
-package org.third.concurrent.disruptor;
 
 import com.lmax.disruptor.EventFactory;
 

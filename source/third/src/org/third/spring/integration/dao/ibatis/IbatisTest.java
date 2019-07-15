@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.ibatis;
 
 import java.util.List;
 

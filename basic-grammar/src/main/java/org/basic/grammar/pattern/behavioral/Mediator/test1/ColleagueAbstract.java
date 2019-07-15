@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.ActionType.Mediator.test1.ColleagueAbstract.java is created on 2008-9-16
- */
 package org.basic.grammar.pattern.behavioral.Mediator.test1;
 
 /**

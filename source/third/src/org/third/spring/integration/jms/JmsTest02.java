@@ -1,4 +1,3 @@
-package org.third.spring.integration.jms;
 
 import org.third.spring.SpringTest;
 

@@ -1,4 +1,3 @@
-package org.third.spring.config.bean_wire;
 
 import org.third.spring.SpringTest;
 

@@ -1,13 +1,3 @@
-/****************************************************************************
- *                 TELLABS PROPRIETARY AND CONFIDENTIAL
- *              UNPUBLISHED WORK COPYRIGHT 2009 TELLABS
- *                          ALL RIGHTS RESERVED
- *      NO PART OF THIS DOCUMENT MAY BE USED OR REPRODUCED WITHOUT
- *                   THE WRITTEN PERMISSION OF TELLABS.
- *  Last modifed on 10:55:15 AM Jan 30, 2014
- *
- *****************************************************************************
- */
 package org.basic.db.paging.oracle;
 
 import java.sql.Connection;

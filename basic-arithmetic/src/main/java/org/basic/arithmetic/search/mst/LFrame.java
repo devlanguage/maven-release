@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.mst;
 /* LFrame.java */
 
 import java.awt.*;

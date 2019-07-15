@@ -1,4 +1,3 @@
-package org.third.jms.imq.example.jms;
 
 import java.util.Hashtable;
 import java.util.Random;

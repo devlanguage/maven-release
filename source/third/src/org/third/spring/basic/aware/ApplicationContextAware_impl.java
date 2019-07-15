@@ -1,4 +1,3 @@
-package org.third.spring.basic.aware;
 
 import java.util.List;
 

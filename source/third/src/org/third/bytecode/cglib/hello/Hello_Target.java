@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.hello;
 
 public class Hello_Target {
 

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file org.hibernate3.core.connection.OracleConnection.java
- * is created on 2008-3-28
- */
 package org.third.orm.hibernate3.connection;
 
 import java.sql.Connection;

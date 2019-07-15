@@ -1,7 +1,3 @@
-/**
-[jo cbuj jg * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.common.bean.FileType.java is created on 2008-1-30
- */
 package org.basic.common.bean;
 
 /**

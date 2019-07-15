@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 /* TablePanel.java */
 
 import java.awt.*;

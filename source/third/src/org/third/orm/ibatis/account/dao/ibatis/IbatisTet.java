@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.dao.ibatis;
 
 import org.third.orm.ibatis.account.dao.AccountDao;
 import org.third.orm.ibatis.account.dao.AccountDaoLocator;

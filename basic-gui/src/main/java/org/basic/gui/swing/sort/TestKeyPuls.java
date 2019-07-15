@@ -32,7 +32,7 @@ public class TestKeyPuls extends JPanel
         table.setModel(model);
         new KeyPlugin(table);
         JScrollPane scrPane = new JScrollPane(table);
-        JButton addBtn = new JButton("ÐÂÔöÐÐ");
+        JButton addBtn = new JButton("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         table.setCellSelectionEnabled(true);
         addBtn.addActionListener(new ActionListener()
         {

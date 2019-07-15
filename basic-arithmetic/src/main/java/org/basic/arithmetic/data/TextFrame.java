@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 /* TextFrame.java */
 
 import java.awt.*;

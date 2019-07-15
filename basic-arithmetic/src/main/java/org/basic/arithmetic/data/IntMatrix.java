@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 /* IntMatrix.java */
 
 import java.io.*;

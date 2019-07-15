@@ -1,4 +1,3 @@
-package org.third.cache.ehcache.cluster;
 
 import java.io.Serializable;
 

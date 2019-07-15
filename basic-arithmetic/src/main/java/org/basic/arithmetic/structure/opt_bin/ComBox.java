@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.opt_bin;
 /* ComBox.java */
 
 import java.awt.*;

@@ -1,4 +1,3 @@
-package org.third.jgraph;
 
 import java.awt.Color;
 import java.awt.Dimension;

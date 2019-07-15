@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.transaction.declarative;
 
 import org.third.spring.SpringTest;
 import org.third.testdata.user.service.UserService;

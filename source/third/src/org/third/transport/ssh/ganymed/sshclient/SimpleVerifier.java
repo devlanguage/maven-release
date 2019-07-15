@@ -1,4 +1,3 @@
-package org.third.transport.ssh.ganymed.sshclient;
 import ch.ethz.ssh2.KnownHosts;
 import ch.ethz.ssh2.ServerHostKeyVerifier;
 

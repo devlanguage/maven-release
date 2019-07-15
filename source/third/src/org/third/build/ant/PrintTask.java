@@ -1,4 +1,3 @@
-package org.third.build.ant;
 
 import org.apache.tools.ant.BuildException;
 

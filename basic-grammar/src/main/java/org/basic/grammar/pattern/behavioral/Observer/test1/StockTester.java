@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.Observer.test1.StockTester.java is created on 2008-6-12
- */
 package org.basic.grammar.pattern.behavioral.Observer.test1;
 
 /**

@@ -1,4 +1,3 @@
-package org.third.cxf.service.book;
 
 import java.net.MalformedURLException;
 import java.net.URL;

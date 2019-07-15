@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.huffman;
 /* ComPanel.java */
 
 import java.awt.*;

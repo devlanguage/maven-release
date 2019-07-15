@@ -37,10 +37,10 @@ import javax.swing.table.TableModel;
  * @author <a href="mailto:me_gtm@hotmail.com>G.T.M.</a>
  * @version 0.1
  * Chinese Descriptions:<br>
- * ÕâÊÇÒ»¸öºÜ·½±ãµÄÀà£¬Ê¹ÓÃÕß²»ĞèÒªÎªÁËÊµÏÖÅÅĞò¹¦ÄÜ¶øÌØ±ğÖÆ¶¨Ò»¸öTableMoel¡£Ö»ĞèÒªÏñÊ¹ÓÃ²åÈëÊ½¹¤¾ßÄÇÑù
- * ²åÈëÕâ¸öÀà£¬¾Í¿ÉÒÔ·½±ãµØÊµÏÖÅÅĞò¹¦ÄÜ¡£
- * <strong>¾¯¸æ:</strong>
- * ÓÉÓÚ¸ÃÀàµÄÊµÏÖ¹ı³ÌÉè¼ÆTableHeaderµÄ´¦Àí£¬Èç¹ûÓÃ»§µÄJTableÊµÀıÉè¼ÆTableHeaderµÄ´¦Àí£¬¿ÉÄÜ»á³öÏÖÒâÍâ¡£
+ * ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ï¿½ï¿½à£¬Ê¹ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½ÒªÎªï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¶ï¿½ï¿½Ø±ï¿½ï¿½Æ¶ï¿½Ò»ï¿½ï¿½TableMoelï¿½ï¿½Ö»ï¿½ï¿½Òªï¿½ï¿½Ê¹ï¿½Ã²ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à£¬ï¿½Í¿ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½
+ * <strong>ï¿½ï¿½ï¿½ï¿½:</strong>
+ * ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½Êµï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½TableHeaderï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½JTableÊµï¿½ï¿½ï¿½ï¿½ï¿½TableHeaderï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¡£
  */
 
 
@@ -73,7 +73,7 @@ public class SortManager implements TableModelListener {
      * <br>
      * Chinese Descriptions:
      * <br>
-     * µ±Ç°ÅÅĞòµÄÁĞ.
+     * ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
      *
      * <p>
      */
@@ -88,14 +88,14 @@ public class SortManager implements TableModelListener {
      * <br>
      * Chinese Descriptions:
      * <br>
-     * ÅÅĞòµÄË³Ğò¡£
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½
      */
     private boolean ascending;
     /**
      * sortableColumns
      * <br> It's used to point out which columns are sortable.
      * <br> Chinese Descriptions:
-     * <br> ÓÃÀ´Ö¸³öÄÄ¼¸ÁĞÊÇĞèÒªÅÅĞò¹¦ÄÜµÄ.
+     * <br> ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Üµï¿½.
      *
      * <p>
      */
@@ -110,7 +110,7 @@ public class SortManager implements TableModelListener {
      * <br>
      * Chinese Descriptions:
      * <br>
-     * ¸ÃÀà»ù±¾ÓÃ·¨£¬Ä¬ÈÏÄÜ¸øËùÓĞµÄÁĞÅÅĞò¡£
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½Ü¸ï¿½ï¿½ï¿½ï¿½Ğµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      *
      * <p>
      *
@@ -136,7 +136,7 @@ public class SortManager implements TableModelListener {
      * <br> The base way to use this class.It will sort the specified column
      * when user click it.
      * <br> Chinese Descriptions:
-     * <br> ¸ÃÀà»ù±¾ÓÃ·¨£¬Ä¬ÈÏÄÜ¸øÖ¸¶¨µÄÁĞÅÅĞò¡£
+     * <br> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½Ü¸ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      *
      * <p>
      *
@@ -158,7 +158,7 @@ public class SortManager implements TableModelListener {
      * <br> The base way to use this class.It will sort the specified columns
      * when user click it.
      * <br> Chinese Descriptions:
-     * <br> ¸ÃÀà»ù±¾ÓÃ·¨£¬Ä¬ÈÏÄÜ¸øÖ¸¶¨µÄÒ»×éÁĞÅÅĞò¡£
+     * <br> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½Ü¸ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      *
      * <p>
      *
@@ -177,7 +177,7 @@ public class SortManager implements TableModelListener {
      * <br>
      * Chinese Descriptions:
      * <br>
-     * ³õÊ¼»¯JTableÊµÀı£¬²¢ÇÒÌí¼ÓÏàÓ¦µÄÕìÌı¡£
+     * ï¿½ï¿½Ê¼ï¿½ï¿½JTableÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public void initialize() {
         dataModel = table.getModel();
@@ -198,7 +198,7 @@ public class SortManager implements TableModelListener {
      * <br>
      * Chinese Description:
      * <br>
-     * Îªtable´´½¨ÄÜ¹»ÏàÓ¦Êó±êÊ±¼äÅÅĞòµÄTableHeaderRender¡£
+     * Îªtableï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½TableHeaderRenderï¿½ï¿½
      *
      * <p>
      *
@@ -233,7 +233,7 @@ public class SortManager implements TableModelListener {
      * <br>
      * Chinese Descriptions:
      * <br>
-     * ÅĞ¶ÏÖ¸¶¨µÄÁĞÊÇ·ñ¿ÉÅÅĞò£¬¸Ã·½·¨µÄÔËĞĞÂß¼­ÓÉÕû¸öÀàµÄ¹¹Ôìº¯Êı¹¹ÔìÊ±¾ö¶¨¡£
+     * ï¿½Ğ¶ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ò£¬¸Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      *
      * <p>
      *
@@ -267,7 +267,7 @@ public class SortManager implements TableModelListener {
      * want can share and be managed in whole class field.
      * <br> Chinese Description:
      * <br>
-     * Õâ¸ö²ÅÊÇÕæÕıµÄ´¦ÀíÅÅĞòµÄ·½·¨Ö®Ò»£¬Ëü¶ÔJTableÌí¼ÓÊó±êÊ±¼äÕìÌı¡£»ñµÃÓÃ»§ÏëÅÅĞòµÄÄ³ĞĞ£¬ÓÉÓÚSortHeaderRenderÊÇÄÚ²¿Àà£¬ËùÒÔ¿ÉÒÔ¹²ÏíÆäÊı¾İ²¢´¦Àí¡£
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½Ö®Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½JTableï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½SortHeaderRenderï¿½ï¿½ï¿½Ú²ï¿½ï¿½à£¬ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ²ï¿½ï¿½ï¿½ï¿½ï¿½
      *
      * @param table JTable
      */
@@ -275,7 +275,7 @@ public class SortManager implements TableModelListener {
         table.getTableHeader().addMouseListener(new MouseAdapter() {
             boolean popupTrigger = false;
             public void mousePressed(java.awt.event.MouseEvent e) {
-                //ÓÃÓÚ¿ØÖÆÊÇ·ñµã»÷ÁËÓÒ¼ü
+                //ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½
                 popupTrigger = false;
 
                 if (e.getButton() == 3) {
@@ -292,7 +292,7 @@ public class SortManager implements TableModelListener {
                     if (table.getTableHeader().getResizingColumn() != null) {
                         return;
                     }
-                    //×ª»»³öÓÃ»§ÏëÅÅĞòµÄÁĞºÍµ×²ãÊı¾İµÄÁĞ£¬È»ºóÅĞ¶Ï
+                    //×ªï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ĞºÍµ×²ï¿½ï¿½ï¿½ï¿½İµï¿½ï¿½Ğ£ï¿½È»ï¿½ï¿½ï¿½Ğ¶ï¿½
                     if (!columnIsSortable(j)) {
                         return;
                     }
@@ -316,7 +316,7 @@ public class SortManager implements TableModelListener {
      * <br> The main method to sort the rows depends on the specify column to
      * sort.
      * <br> Chinese Descriptions:
-     * <br> Ö÷Òªµ÷ÓÃÅÅĞòµÄ·½·¨¡£
+     * <br> ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½
      * Fix bug:table.UpdateUI();--->
      *             table.recalidate();
      *             table.repaint();
@@ -350,7 +350,7 @@ public class SortManager implements TableModelListener {
      * <br>
      * Chinese Descriptions:
      * <br>
-     * ÅÅĞòµÄ×îºóÒ»²½£¬°ÑÅÅºÃĞòµÄÊı¾İÖØĞÂ·µ»ØtableÀïÃæ¡£
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½tableï¿½ï¿½ï¿½æ¡£
      *
      * @see #sort()
      */
@@ -437,7 +437,7 @@ public class SortManager implements TableModelListener {
             Row row = (Row) obj;
             //bug found and fixed by chenxing 05.1.24.Support Local String sorting,such as Chinese.
             //Chinese Descriptions:
-            //Ö§³Ö±¾µØ×Ö·ûµÄ±È½ÏÅÅĞò£¬ÀıÈç£ºÖĞÎÄÅÅĞò¡£
+            //Ö§ï¿½Ö±ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½Ä±È½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç£ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             java.text.Collator cnCollator = java.text.Collator.getInstance(
                     Locale.getDefault());
             //////////////////////////////////////////

@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 /* ComBox.java */
 
 import java.awt.*;

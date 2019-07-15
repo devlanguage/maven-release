@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 /* AlgAnimApp.java */
 
 import java.awt.*;

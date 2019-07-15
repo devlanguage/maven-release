@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.StructureType.proxy.image.ImageProxy.java is created on 2008-9-16
- */
 package org.basic.grammar.pattern.structural.proxy.image;
 
 import java.awt.Color;

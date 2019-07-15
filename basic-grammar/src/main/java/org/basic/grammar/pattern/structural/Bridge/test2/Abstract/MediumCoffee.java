@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.Bridge.test2.MediumCoffee.java is created on 2008-8-21
- */
 package org.basic.grammar.pattern.structural.Bridge.test2.Abstract;
 
 import org.basic.grammar.pattern.structural.Bridge.test2.Coffee;

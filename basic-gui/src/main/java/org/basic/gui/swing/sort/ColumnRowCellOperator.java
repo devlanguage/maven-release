@@ -31,9 +31,9 @@ import javax.swing.table.TableModel;
  *  @author <a href="mailto:webgis_www@163.com>webgis4cn</a>
  *  @version 0.1
  *  <br>Chinese Description
- *  <br>ÕâÊÇÒ»¸öÌí¼ÓÌØ¶¨µÄÐÐ»òÁÐµ½±í¸ñµÄ¹¤¾ßÀà£¬Äã¿ÉÒÔ·½±ãµØÌí¼ÓÈÎºÎÐÎÊ½µÄÊý¾Ý£¬
- * ÉõÖÁÄãÖ»ÒªÖ¸¶¨Ò»¸öË÷Òý¾Í¿ÉÒÔÁË£¬Ëü»á×Ô¶¯µØ¸ù¾ÝË÷ÒýºÅÉú³ÉExcel±íµ¥ÐÍµÄÁÐÃûºÍ
- * ¿ÕÖµÎªÊý¾ÝµÄÁÐ¡£
+ *  <br>ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ÒªÖ¸ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Excelï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ÖµÎªï¿½ï¿½ï¿½Ýµï¿½ï¿½Ð¡ï¿½
  */
 public class ColumnRowCellOperator {
     /**
@@ -43,7 +43,7 @@ public class ColumnRowCellOperator {
      * <br>
      * Chinese Description
      * <br>
-     * ´«ÈëµÄ±í¸ñµÄÄ£ÐÍ
+     * ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
      */
     private TableModel dataModel;
     /**
@@ -53,7 +53,7 @@ public class ColumnRowCellOperator {
      * <br>
      * Chinese Description
      * <br>
-     *½«Òª±»´¦ÀíµÄ±í¸ñ
+     *ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½
      */
     private JTable table;
     /**
@@ -63,7 +63,7 @@ public class ColumnRowCellOperator {
      * <br>
      * Chinese Description
      * <br>
-     * ±í¸ñ´«½øÀ´Ê±µÄÔ­Ê¼ÁÐÃû
+     * ï¿½ï¿½ñ´«½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ô­Ê¼ï¿½ï¿½ï¿½ï¿½
      */
     private Vector originColumnNames;
     static boolean isFirst = true;
@@ -74,7 +74,7 @@ public class ColumnRowCellOperator {
      * <br>
      *  Chinese Descriptions:
      * <br>
-     *  ÔÚ±íÍ·µ¯³öµÄÓÒ¼üÉÏÏÂÎÄ²Ëµ¥.
+     *  ï¿½Ú±ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²Ëµï¿½.
      *
      * <p>
      */
@@ -86,7 +86,7 @@ public class ColumnRowCellOperator {
      * <br>
      *  Chinese Descriptions:
      * <br>
-     * ÔÚ±í×îºó²åÈëÒ»ÐÐ.
+     * ï¿½Ú±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½.
      *
      * <p>
      */
@@ -98,7 +98,7 @@ public class ColumnRowCellOperator {
      * <br>
      * Chinese Descriptions:
      * <br>
-     *  ÔÚ±íµÚÒ»ÁÐÇ°²åÈëÒ»ÁÐ.
+     *  ï¿½Ú±ï¿½ï¿½Ò»ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½.
      *
      * <p>
      */
@@ -110,7 +110,7 @@ public class ColumnRowCellOperator {
      * <br>
      *  Chinese Descriptions:
      * <br>
-     *  ÔÚ±í×îºóÒ»ÁÐºó²åÈëÒ»ÁÐ.
+     *  ï¿½Ú±ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ðºï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½.
      *
      * <p>
      */
@@ -122,7 +122,7 @@ public class ColumnRowCellOperator {
      * <br>
      *  Chinese Descriptions:
      * <br>
-     *  ÔÚµ±Ç°ÁÐÇ°²åÈëÒ»ÁÐ.
+     *  ï¿½Úµï¿½Ç°ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½.
      *
      * <p>
      */
@@ -135,8 +135,8 @@ public class ColumnRowCellOperator {
      * the position is the point.
      * <br>
      * Chinese Description:
-     * Í¨¹ýÕâ¸ö±äÁ¿£¬¿ÉÒÔ»ñµÃÔÚÆä¶¥²¿µã»÷ÓÒ¼üµÄÁÐ¡£ÒòÎªÔÚ°´ÏÂÓÒ¼üÊ±£¬µã»÷µãµÄ
-     * ÐÅÏ¢¾Í±£´æÔÚÕâ¸ö±äÁ¿ÖÐÁË¡£
+     * Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ä¶¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Îªï¿½Ú°ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * ï¿½ï¿½Ï¢ï¿½Í±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¡ï¿½
      */
     private Point point;
     /**
@@ -146,7 +146,7 @@ public class ColumnRowCellOperator {
      *<br>
      *Chinese Description:
      *<br>
-     *ÎªÖ¸¶¨±í¸ñÉè¶¨Ìí¼ÓÐÐÁÐµÄ¹¦ÄÜ
+     *ÎªÖ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ¹ï¿½ï¿½ï¿½
      */
     public ColumnRowCellOperator(JTable table) {
         this.dataModel = table.getModel();
@@ -217,10 +217,10 @@ public class ColumnRowCellOperator {
      * <br>
      * Chinese Description
      * <br>
-     * °´Excel¹¤×÷±íµÄÁÐÃû¹æÔò·µ»ØÒ»¸ö»ñÈÏµÄÁÐÃû¡£
-     * Èç»ñÖÁ±¦A£¬B,C,.....Z,AA,AB,µÈµÈ¡£Èç¹ûÕÒ²»µ½ÁÐ£¬·µ»Ø¿Õ×Ö·û´®¡£
-     * @param column  Ö¸¶¨µÄÁÐµÄË÷Òý
-     * @return a string ÁÐµÄÃû×Ö
+     * ï¿½ï¿½Excelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò·µ»ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½B,C,.....Z,AA,AB,ï¿½ÈµÈ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½Ø¿ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param column  Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½
+     * @return a string ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½
      */
     protected String getColumnName(int column) {
         String result = "";
@@ -240,11 +240,11 @@ public class ColumnRowCellOperator {
      * @param Model Model to add the column in,DefaultTableModel here.
      *<br>
      *Chinese Description:
-     *ÄÚ²¿´¦ÀíÔÚDefaultTableModel²åÈëÁÐµÄ·½·¨,Ö¸¶¨±í¸ñÄ£ÐÍºÍË÷ÒýÒÔ¼°ÁÐÃûºÍÊý¾Ý
-     *@param index Ìí¼ÓºóÁÐÔÚ±íÖÐµÄÎ»ÖÃ
-     * @param columnName ÒªÌí¼ÓµÄÁÐµÄÁÐÃû.
-     * @param columnData ÒªÌí¼ÓµÄÁÐµÄÁÐÃû£¬ÒÔÒ»Î¬Êý×éÖÐ´æ´¢
-     * @param Model Ðè²åÈëÒ»ÁÐµÄ±í¸ñÄ£ÐÍ£¬ÕâÀïÌØÖ¸DefaultTableModel
+     *ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½DefaultTableModelï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ·ï¿½ï¿½ï¿½,Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½Íºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     *@param index ï¿½ï¿½Óºï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½Ðµï¿½Î»ï¿½ï¿½
+     * @param columnName Òªï¿½ï¿½Óµï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½.
+     * @param columnData Òªï¿½ï¿½Óµï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»Î¬ï¿½ï¿½ï¿½ï¿½ï¿½Ð´æ´¢
+     * @param Model ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ÐµÄ±ï¿½ï¿½Ä£ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸DefaultTableModel
      * <br>
      * @see #org.swing2cn.table.AbstractCustomTableModel
      */
@@ -386,7 +386,7 @@ public class ColumnRowCellOperator {
      * <br>
      * <br> Chinese Description:
      * <br>
-     * ¸ºÔðÎª±í¸ñ±íÍ·Ìí¼ÓÕìÌý,´¦ÀíÓÒ¼üÊÂ¼þ¡£
+     * ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½Â¼ï¿½ï¿½ï¿½
      *
      * @param table JTable
      */
@@ -395,14 +395,14 @@ public class ColumnRowCellOperator {
             boolean popupTrigger = false;
             public void mousePressed(java.awt.event.MouseEvent e) {
                 popupTrigger = false;
-                //¼ÇÂ¼ÓÒ¼ü°´ÏÂ
+                //ï¿½ï¿½Â¼ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (e.getButton() == 3) {
                     popupTrigger = true;
                 }
             }
 
             public void mouseClicked(MouseEvent mouseevent) {
-                //Ö»ÓÐÓÒ¼ü°´ÏÂÊ±ÏìÓ¦
+                //Ö»ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ó¦
                 if (popupTrigger) {
                     if (getMnuPopHeader() != null) {
                         point = mouseevent.getPoint();

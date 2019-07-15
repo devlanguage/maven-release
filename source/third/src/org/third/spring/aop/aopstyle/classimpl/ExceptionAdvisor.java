@@ -1,4 +1,3 @@
-package org.third.spring.aop.aopstyle.classimpl;
 
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;

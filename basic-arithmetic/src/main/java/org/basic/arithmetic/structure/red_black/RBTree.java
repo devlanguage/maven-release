@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.red_black;
 /** RBTree class
 	Original: Linda Luo
 	Mods:  	Mervyn Ng

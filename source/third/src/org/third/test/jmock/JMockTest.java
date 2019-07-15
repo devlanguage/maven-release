@@ -1,4 +1,3 @@
-package org.third.test.jmock;
 
 interface MessageProvider {
     // 获取数据信息

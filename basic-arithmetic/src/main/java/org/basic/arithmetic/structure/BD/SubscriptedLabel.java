@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.BD;
 // SubscriptedLabel.java
 //    SubscriptedLabel for block diagram animation
 //

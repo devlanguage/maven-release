@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 /* ComPanel.java */
 
 import java.awt.*;

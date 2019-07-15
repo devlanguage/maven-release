@@ -1,4 +1,3 @@
-package org.third.jms.activemq.queue;
 
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.

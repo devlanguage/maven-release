@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.mybatis;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

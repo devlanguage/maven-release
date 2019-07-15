@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.hibernate3.common.util.MessageUtil.java is created on Sep 26, 2007 11:25:26 AM
- */
 package org.third.orm.hibernate3.common.util;
 
 import java.io.IOException;

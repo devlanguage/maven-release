@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.mq.imq.example.client.TopicTest_1.java is created on 2008-1-16
- */
 package org.third.jms.imq.topic;
 
 import javax.jms.Connection;

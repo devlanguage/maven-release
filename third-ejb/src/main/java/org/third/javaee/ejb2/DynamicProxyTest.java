@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.proxy.DynamicProxy.java is created on 2007-9-17 下午03:05:11
- */
 package org.third.javaee.ejb2;
 
 import java.lang.reflect.InvocationHandler;

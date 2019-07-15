@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 /* TextPanel class */
 
 import java.util.StringTokenizer;

@@ -1,4 +1,3 @@
-package org.third.testdata.user.service.impl;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

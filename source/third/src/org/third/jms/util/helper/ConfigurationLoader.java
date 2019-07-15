@@ -1,4 +1,3 @@
-package org.third.jms.util.helper;
 
 import java.io.IOException;
 import java.io.InputStream;

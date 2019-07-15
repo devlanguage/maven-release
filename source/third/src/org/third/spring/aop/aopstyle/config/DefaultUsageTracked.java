@@ -1,4 +1,3 @@
-package org.third.spring.aop.aopstyle.config;
 
 public class DefaultUsageTracked implements UsageTracked {
 

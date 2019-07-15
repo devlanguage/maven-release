@@ -1,4 +1,3 @@
-package org.third.transport.ssh.ganymed;
 
 import java.io.BufferedReader;
 import java.io.IOException;

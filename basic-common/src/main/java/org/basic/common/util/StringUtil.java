@@ -1,42 +1,63 @@
 package org.basic.common.util;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 public class StringUtil {
+	private StringUtil() {
+	}
 
-    public static String streamToStringBuffer(InputStream ins) throws IOException {
+	/**
+	 * Finds out if the given character sequence starts with a whitespace character.
+	 *
+	 * @return {@code true} if the given character sequence is not empty and starts
+	 *         with a whitespace character; {@code false} otherwise
+	 * @exception NullPointerException if the given character sequence is
+	 *                                 {@code null}
+	 */
+	public static boolean startsWithWhitespace(final CharSequence charSeq) {
+		if (charSeq.length() == 0) {
+			return false;
+		}
+		return Character.isWhitespace(charSeq.charAt(0));
+	}
 
-        int BUFFER_SIZE = 512;
-        int read = -1;
-        byte[] cache = new byte[BUFFER_SIZE];
-        StringBuilder sb = new StringBuilder();
-        while ((read = ins.read(cache)) != -1) {
-            sb.append(new String(cache, 0, read));
-        }
+	/**
+	 * Finds out if the given character sequence ends with a whitespace character.
+	 *
+	 * @return {@code true} if the given character sequence is not empty and ends
+	 *         with a whitespace character; {@code false} otherwise
+	 * @exception NullPointerException if the given character sequence is
+	 *                                 {@code null}
+	 */
+	public static boolean endsWithWhitespace(final CharSequence charSeq) {
+		if (charSeq.length() == 0) {
+			return false;
+		}
+		return Character.isWhitespace(charSeq.charAt(charSeq.length() - 1));
+	}
 
-        return sb.toString();
-    }
+	public static String decapitalize(String name) {
+		if ((name == null) || (name.length() == 0)) {
+			return name;
+		}
+		if ((name.length() > 1) && (Character.isUpperCase(name.charAt(1))) && (Character.isUpperCase(name.charAt(0)))) {
+			return name;
+		}
+		char[] chars = name.toCharArray();
+		chars[0] = Character.toLowerCase(chars[0]);
+		return new String(chars);
+	}
 
-    public static String streamToStringBuffer(InputStream ins, String charset) throws IOException {
+	public static String capitalize(String name) {
+		if ((name == null) || (name.length() == 0)) {
+			return name;
+		}
+		char[] chars = name.toCharArray();
+		chars[0] = Character.toUpperCase(chars[0]);
+		return new String(chars);
+	}
 
-        int BUFFER_SIZE = 512;
-        int read = -1;
-        byte[] cache = new byte[BUFFER_SIZE];
-        StringBuilder sb = new StringBuilder();
-        while ((read = ins.read(cache)) != -1) {
-            sb.append(new String(cache, 0, read, charset));
-        }
 
-        return sb.toString();
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        InputStream fins = StringUtil.class.getResourceAsStream("readme.txt");
-        String s = streamToStringBuffer(fins);
-        System.out.println(s);
-    }
+	public static String toString(byte[] uncompress) {
+		return new String(uncompress, CommonUtils.UTF8_CHARSET);
+	}
 
 }

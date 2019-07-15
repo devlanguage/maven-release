@@ -1,9 +1,4 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file org.basic.db.oracle.Address.java
- * is created on 2008-3-20
- */
 package org.basic.db.oracle;
-
 import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.SQLInput;

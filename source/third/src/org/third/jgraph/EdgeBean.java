@@ -1,4 +1,3 @@
-package org.third.jgraph;
 
 public class EdgeBean {
 

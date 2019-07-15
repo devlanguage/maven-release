@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.pattern.proxy.dynamic.test.SellerProxy.java is created on 2007-9-17 下午03:37:19
- */
 package org.basic.grammar.pattern.structural.proxy.dynamic.sale;
 
 import java.lang.reflect.InvocationHandler;

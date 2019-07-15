@@ -1,6 +1,3 @@
-/**
- * The file org.java.arithmetic.data.SortBase.java was created by yongjie.gong on 2008-6-2
- */
 package org.basic.arithmetic.data;
 
 /**

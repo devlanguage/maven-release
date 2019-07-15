@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.map;
 
 import java.util.ArrayList;
 import java.util.Comparator;

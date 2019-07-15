@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 /* TextPanel class */
 
 import java.util.StringTokenizer;

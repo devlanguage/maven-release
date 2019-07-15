@@ -1,4 +1,3 @@
-package org.third.spring.config.bean_wire;
 
 import java.util.List;
 import java.util.Map;

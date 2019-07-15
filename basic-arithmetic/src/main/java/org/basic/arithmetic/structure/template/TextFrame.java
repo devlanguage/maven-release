@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.template;
 /* TextFrame.java */
 
 import java.awt.*;

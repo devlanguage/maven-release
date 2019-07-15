@@ -1,4 +1,3 @@
-package org.basic.security.jaas.login;
 
 import javax.security.auth.Subject;
 import javax.security.auth.login.LoginContext;

@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.KeyFactory;
 
 public interface MapKeyFactory {
 

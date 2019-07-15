@@ -1,4 +1,3 @@
-package org.third.orm.hibernate3.common.bean;
 
 public class CommonConstants {
 

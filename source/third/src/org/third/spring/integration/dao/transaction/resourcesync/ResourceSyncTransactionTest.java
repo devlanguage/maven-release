@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.transaction.resourcesync;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

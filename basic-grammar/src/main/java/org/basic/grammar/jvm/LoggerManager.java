@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.basic.grammar.jvm;
 
 import java.util.Hashtable;

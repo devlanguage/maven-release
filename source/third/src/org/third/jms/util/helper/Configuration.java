@@ -1,4 +1,3 @@
-package org.third.jms.util.helper;
 
 import java.io.BufferedReader;
 import java.io.IOException;

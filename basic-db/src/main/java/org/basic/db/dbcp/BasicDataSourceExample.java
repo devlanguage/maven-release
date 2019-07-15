@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.basic.apache.dbcp.examples.BasicDataSource.java is created on Sep 26, 2007 11:05:37 AM
- */
 package org.basic.db.dbcp;
 
 import java.sql.Connection;

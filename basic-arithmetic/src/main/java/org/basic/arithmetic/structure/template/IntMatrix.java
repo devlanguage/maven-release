@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.template;
 /* IntMatrix.java */
 
 import java.io.*;

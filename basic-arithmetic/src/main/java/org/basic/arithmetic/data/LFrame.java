@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 /* LFrame.java */
 
 import java.awt.*;

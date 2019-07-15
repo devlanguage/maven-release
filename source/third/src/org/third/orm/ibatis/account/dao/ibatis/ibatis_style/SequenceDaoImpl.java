@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.dao.ibatis.ibatis_style;
 
 import org.third.orm.ibatis.account.dao.SequenceDao;
 import org.third.orm.ibatis.account.dao.ibatis.BaseSqlMapStyle;

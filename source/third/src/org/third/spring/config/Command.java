@@ -1,4 +1,3 @@
-package org.third.spring.config;
 
 import java.util.Map;
 

@@ -1,4 +1,3 @@
-package org.third.orm.mybatis;
 
 import java.io.Reader;
 import java.util.ArrayList;

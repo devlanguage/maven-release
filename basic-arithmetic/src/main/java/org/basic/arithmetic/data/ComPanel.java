@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 /* ComPanel.java */
 
 import java.awt.*;

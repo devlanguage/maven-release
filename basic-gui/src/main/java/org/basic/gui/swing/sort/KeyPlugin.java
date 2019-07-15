@@ -42,8 +42,8 @@ import javax.swing.table.DefaultTableModel;
  *          needn't User to code so many but one line "new new
  *          KeyPlugin(table);". <br>
  *          Chinese Descriptions:<br>
- *          ÕâÊÇÒ»¸ö·Ç³£·½±ãµÄÀàÎªJTableÌí¼Óµ¥Ôª¸ñµÄ¸´ÖÆ,¼ôÇÐ,Õ³Ìù,ºÍÐÐµÄÌí¼Ó,²åÈë¹¦ÄÜ.Ëü´ó´ó
- *          ¼õÉÙÁË¿ª·¢ÈËÔ±µÄ´úÂëÁ¿,Ö»ÐèÒªÒ»¾ä"new new KeyPlugin(table);".
+ *          ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ç³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªJTableï¿½ï¿½Óµï¿½Ôªï¿½ï¿½Ä¸ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½,Õ³ï¿½ï¿½,ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ë¹¦ï¿½ï¿½.ï¿½ï¿½ï¿½ï¿½ï¿½
+ *          ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½,Ö»ï¿½ï¿½ÒªÒ»ï¿½ï¿½"new new KeyPlugin(table);".
  */
 public class KeyPlugin implements MouseListener
 {
@@ -52,14 +52,14 @@ public class KeyPlugin implements MouseListener
      * table <br>
      * The table will be set up. <br>
      * Chinese Descriptions: <br>
-     * ±»´¦ÀíµÄJTable.
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½JTable.
      */
     JTable table;
     /**
      * copy <br>
      * The Key register the Action "copy". <br>
      * Chinese Descriptions: <br>
-     * ×¢²á"¸´ÖÆ"ÊÂ¼þµÄ¼üÅÌÊÂ¼þ.
+     * ×¢ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"ï¿½Â¼ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½.
      * 
      * <p>
      */
@@ -69,7 +69,7 @@ public class KeyPlugin implements MouseListener
      * paste <br>
      * The Key register the Action "paste". <br>
      * Chinese Descriptions: <br>
-     * ×¢²á"Õ³Ìù"ÊÂ¼þµÄ¼üÅÌÊÂ¼þ.
+     * ×¢ï¿½ï¿½"Õ³ï¿½ï¿½"ï¿½Â¼ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½.
      * 
      * <p>
      */
@@ -79,7 +79,7 @@ public class KeyPlugin implements MouseListener
      * paste <br>
      * The Key register the Action "cut". <br>
      * Chinese Descriptions: <br>
-     * ×¢²á"¼ôÇÐ"ÊÂ¼þµÄ¼üÅÌÊÂ¼þ.
+     * ×¢ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"ï¿½Â¼ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½.
      * 
      * <p>
      */
@@ -93,7 +93,7 @@ public class KeyPlugin implements MouseListener
      * DefaultTableModel,the other is our AbstractCustomTableModel subclass.
      * This variable used to estimate the Model <br>
      * Chinese Descriptions: <br>
-     * ÎÒÃÇÖ§³ÖDefaultTableModelºÍAbstractCustomTableModelÕâÁ½ÖÖÀàµÄ¡°Õ³Ìù¡±¶¯×÷¡£Õâ¸öÈ«¾Ö±äÁ¿ÓÃÀ´ÅÐ¶ÏÊÇÄÇÖÖÄ£Ê½¡£
+     * ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½DefaultTableModelï¿½ï¿½AbstractCustomTableModelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½
      * 
      * @see #javax.swing.table.DefaultTableColumnModel
      * @see AbstractCustomTableModel
@@ -116,7 +116,7 @@ public class KeyPlugin implements MouseListener
      * menu <br>
      * The Menu to pop for inserting row. <br>
      * Chineses Descriptions: <br>
-     * µ¯³öµÄ²Ëµ¥Ö§³Ö²åÈëÒ»ÐÐ¡£
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ä²Ëµï¿½Ö§ï¿½Ö²ï¿½ï¿½ï¿½Ò»ï¿½Ð¡ï¿½
      * 
      * @see javax.swing.JPopupMenu
      *      <p>
@@ -127,7 +127,7 @@ public class KeyPlugin implements MouseListener
      * KeyPlugin <br>
      * The Constructor to build with a parame with the Class JTable. <br>
      * Chinese Descriptions: <br>
-     * KetPluginµÄ¹¹Ôìº¯Êý¡£
+     * KetPluginï¿½Ä¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½
      * 
      * @param in
      *            JTable
@@ -182,7 +182,7 @@ public class KeyPlugin implements MouseListener
         Resource.createMenuItem(menu, "ColumnRowCellOperator.mtmAppendRow",
                 "OperatorMenu.appendRow_mnemonic",
                 "OperatorMenu.appendRow_accessdesp", new AbstractAction(
-                        "²åÈëÒ»ÐÐ")
+                        "ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½")
                 {
                     public void actionPerformed(ActionEvent evt)
                     {
@@ -193,7 +193,7 @@ public class KeyPlugin implements MouseListener
         Resource.createMenuItem(menu, "ColumnRowCellOperator.mtmInsertRow",
                 "OperatorMenu.addRow_mnemonic",
                 "OperatorMenu.addRow_accessdesp",
-                new AbstractAction("Ìí¼ÓÒ»ÐÐ")
+                new AbstractAction("ï¿½ï¿½ï¿½Ò»ï¿½ï¿½")
                 {
                     public void actionPerformed(ActionEvent evt)
                     {
@@ -210,8 +210,8 @@ public class KeyPlugin implements MouseListener
      * the Object in Table cell is not a String type.So we use the common way to
      * get the String type of the value: <br>
      * Chinese Descriptions: <br>
-     * ÕæÕýÊµÏÖ¸´ÖÆºÍ¸´ÖÆ±í¸ñÀïÃæÖµµÄ·½·¨,¿¼ÂÇµ½±íÀïÃæµÄÖµ²»Ò»¶¨¶¼ÊÇString,ËùÒÔÓÃÍ¨ÓÃµÄ·½·¨»ñµÃString·ç¸ñµÄÖµ.
-     * ²Ù×÷µÄ¶¯×÷È¡¾öÓÚModel±äÁ¿¡£
+     * ï¿½ï¿½ï¿½ï¿½Êµï¿½Ö¸ï¿½ï¿½ÆºÍ¸ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ä·ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½String,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ÃµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Stringï¿½ï¿½ï¿½ï¿½Öµ.
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Modelï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * 
      * <p>
      * 
@@ -232,8 +232,8 @@ public class KeyPlugin implements MouseListener
          * I consider support the data exchanging each other.So I use the format
          * of "\t" on each cell.<br>
          * Chinese Descriptions:<br>
-         * ÎÒ¿´¹ýÒ»±éÎÄÕÂ¹ØÓÚExcelÊý¾ÝµÄ¸ñÊ½,ÎªÁËÓÃ»§µÄ±ãÀû,¾ö¶¨Ö§³ÖÁ½ÕßÖ®¼ä¶¯Ì¬½»»¥Êý¾Ý,
-         * ËùÒÔ²ÉÈ¡ÏàÍ¬µÄ¸ñÊ½.
+         * ï¿½Ò¿ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½Excelï¿½ï¿½ï¿½ÝµÄ¸ï¿½Ê½,Îªï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ä±ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ä¶¯Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,
+         * ï¿½ï¿½ï¿½Ô²ï¿½È¡ï¿½ï¿½Í¬ï¿½Ä¸ï¿½Ê½.
          * <p>
          */
         for (; i < rows.length; i++)
@@ -260,7 +260,7 @@ public class KeyPlugin implements MouseListener
      * paste <br>
      * The method to patse the data in to Table. <br>
      * Chinese Descriptions: <br>
-     * °ÑÊý¾ÝÕ³Ìùµ½TableµÄ·½·¨.
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½Tableï¿½Ä·ï¿½ï¿½ï¿½.
      * 
      * @see javax.swing.table.DefaultTableColumnModel
      * @see AbstractCustomTableModel
@@ -320,7 +320,7 @@ public class KeyPlugin implements MouseListener
      * AbstractCustomTableModel.The param Front is to hint that the user wang to
      * insert or append a row. <br>
      * Chinese Descriptions: <br>
-     * Õâ¸ö·½·¨ÓÃÀ´Ìí¼ÓÒ»ÐÐ,ÎÒÃÇÖ§³ÖDefaultTableModelºÍAbstractCustomTableModelÁ½ÖÖModel.²ÎÊýFrontÀ´ÅÐ¶ÏÓÃ»§ÊÇ²åÈë»¹ÊÇÌí¼ÓÒ»ÐÐÊý¾Ý.
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½DefaultTableModelï¿½ï¿½AbstractCustomTableModelï¿½ï¿½ï¿½ï¿½Model.ï¿½ï¿½ï¿½ï¿½Frontï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ã»ï¿½ï¿½Ç²ï¿½ï¿½ë»¹ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
      * 
      * @param Front
      *            boolean
@@ -358,8 +358,8 @@ public class KeyPlugin implements MouseListener
      * mousePressed(MouseEvent e) and mouseReleased(MouseEvent e) are used to
      * popup the menu and show Items to be selected. <br>
      * Chinese Descriptions: <br>
-     * Õâ¼¸¸ö·½·¨ÊÇÓÉMouseListener¼Ì³ÐÏÂÀ´,mousePressed(MouseEvent e)
-     * ºÍmouseReleased(MouseEvent e) ÎªÁËµ¯³ö²Ëµ¥.
+     * ï¿½â¼¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MouseListenerï¿½Ì³ï¿½ï¿½ï¿½ï¿½ï¿½,mousePressed(MouseEvent e)
+     * ï¿½ï¿½mouseReleased(MouseEvent e) Îªï¿½Ëµï¿½ï¿½ï¿½ï¿½Ëµï¿½.
      * 
      * @see MouseListener
      * @param e

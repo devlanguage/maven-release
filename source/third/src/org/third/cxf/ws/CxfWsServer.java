@@ -1,13 +1,3 @@
-/****************************************************************************
- *                 TELLABS PROPRIETARY AND CONFIDENTIAL
- *              UNPUBLISHED WORK COPYRIGHT 2009 TELLABS
- *                          ALL RIGHTS RESERVED
- *      NO PART OF THIS DOCUMENT MAY BE USED OR REPRODUCED WITHOUT
- *                   THE WRITTEN PERMISSION OF TELLABS.
- *  Last modifed on 2:52:29 PM Mar 6, 2014
- *
- *****************************************************************************
- */
 package org.third.cxf.ws;
 
 import javax.xml.ws.Endpoint;

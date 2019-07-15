@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.BD;
 // SummingPoint.java
 //    Function block for block diagram animation
 //

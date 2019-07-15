@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.opt_bin;
 /* AlgAnimApp.java */
 
 import java.awt.*;

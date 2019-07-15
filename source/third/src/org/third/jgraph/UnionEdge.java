@@ -1,4 +1,3 @@
-package org.third.jgraph;
 
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;

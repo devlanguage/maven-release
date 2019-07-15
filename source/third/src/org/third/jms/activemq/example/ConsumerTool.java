@@ -1,4 +1,3 @@
-package org.third.jms.activemq.example;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one or more

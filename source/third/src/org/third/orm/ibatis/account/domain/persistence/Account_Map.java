@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.ibatis.account.persistence.Account_Map.java is created on 2008-6-25
- */
 package org.third.orm.ibatis.account.domain.persistence;
 
 /**

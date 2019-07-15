@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.stack_link;
 
 public class LinkedList<T> {
   class LinkNode<T> {

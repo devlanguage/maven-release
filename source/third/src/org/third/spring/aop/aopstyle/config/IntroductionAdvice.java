@@ -1,4 +1,3 @@
-package org.third.spring.aop.aopstyle.config;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

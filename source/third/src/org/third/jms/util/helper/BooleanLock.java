@@ -1,4 +1,3 @@
-package org.third.jms.util.helper;
 
 public class BooleanLock extends Object {
 	private boolean value;

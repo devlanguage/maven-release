@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file org.basic.pattern.proxy.statck.StatckTwo.java is
- * created on 2007-10-12 上午09:38:31
- */
 package org.basic.grammar.pattern.structural.proxy.statck;
 
 import java.util.ArrayList;

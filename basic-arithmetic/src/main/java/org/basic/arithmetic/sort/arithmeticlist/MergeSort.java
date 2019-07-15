@@ -1,4 +1,3 @@
-package org.basic.arithmetic.sort.arithmeticlist;
 
 import org.basic.arithmetic.sort.SortIntf;
 

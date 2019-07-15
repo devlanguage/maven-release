@@ -1,4 +1,3 @@
-package org.third.bytecode.cglib.book.auth;
 
 import net.sf.cglib.proxy.Callback;
 import net.sf.cglib.proxy.Enhancer;

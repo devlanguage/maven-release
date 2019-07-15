@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.template;
 /* ComPanel.java */
 
 import java.awt.*;

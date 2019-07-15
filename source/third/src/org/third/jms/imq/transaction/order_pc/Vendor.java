@@ -1,4 +1,3 @@
-package org.third.jms.imq.transaction.order_pc;
 
 import static org.third.jms.imq.transaction.order_pc.TransactionOrderTest.A1_retailerOrderQueueName;
 import static org.third.jms.imq.transaction.order_pc.TransactionOrderTest.B1_monitorOrderQueueName;

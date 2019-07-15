@@ -1,4 +1,3 @@
-package org.basic.arithmetic;
 
 public class UserBean {
 

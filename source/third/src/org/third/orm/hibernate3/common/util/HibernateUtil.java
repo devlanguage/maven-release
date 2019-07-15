@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.hibernate3.core.connection.HibernateUtil.java is created on 2008-3-26
- */
 package org.third.orm.hibernate3.common.util;
 
 import org.hibernate.HibernateException;

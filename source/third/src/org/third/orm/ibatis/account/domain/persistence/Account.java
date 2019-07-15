@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.domain.persistence;
 
 public class Account implements IPersistenceBase {
 

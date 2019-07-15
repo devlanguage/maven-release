@@ -1,4 +1,3 @@
-package org.third.orm.ibatis.account.client;
 
 import java.sql.Connection;
 import java.sql.SQLException;

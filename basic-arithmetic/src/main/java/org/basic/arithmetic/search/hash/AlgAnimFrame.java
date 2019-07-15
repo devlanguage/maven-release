@@ -1,4 +1,3 @@
-package org.basic.arithmetic.search.hash;
 /* AlgAnimFrame.java */
 
 import java.awt.*;

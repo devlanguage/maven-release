@@ -1,4 +1,3 @@
-package org.third.spring.integration.dao.hibernate;
 
 import java.util.List;
 

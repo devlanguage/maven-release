@@ -1,4 +1,3 @@
-package org.basic.arithmetic.structure.p_queue;
 /* AlgThread.java */
 
 import java.awt.*;

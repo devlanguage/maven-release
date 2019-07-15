@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.insidejvm.hello.Organization.java is created on 2008-2-26
- */
 package org.insidejvm.hello;
 
 /**

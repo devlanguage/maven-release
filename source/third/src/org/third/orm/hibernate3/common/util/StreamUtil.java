@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file
- * org.hibernate3.common.util.StreamUtil.java is created on 2008-1-30
- */
 package org.third.orm.hibernate3.common.util;
 
 import java.io.FileInputStream;

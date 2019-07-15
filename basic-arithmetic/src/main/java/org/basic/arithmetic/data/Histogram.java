@@ -1,4 +1,3 @@
-package org.basic.arithmetic.data;
 
 import java.awt.*;
 import java.applet.*;

@@ -1,7 +1,3 @@
-/**
- * Copyright reserved by Tellabs Communication Corp. LTD. The file org.basic.threads.ReadThread.java
- * is created on 2008-3-12
- */
 package org.basic.grammar.ucf.apple;
 
 import java.util.ArrayList;
