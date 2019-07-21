@@ -1,0 +1,1 @@
+https://github.com/kubernetes-client/java/blob/master/examples/src/test/java/io/kubernetes/client/examples/ExampleTest.java

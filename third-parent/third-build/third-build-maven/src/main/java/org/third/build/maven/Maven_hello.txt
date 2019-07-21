@@ -1,0 +1,31 @@
+1) Create projects:
+ mvn archetype:create -DgroupId=com.mycompany.app -DartifactId=my-app
+   my-app
+     |-pom.xml
+     |-src
+        |-main
+        |  |-java/com/mycompany/app
+        |-test
+            |-java/com/mycompany/app
+2) Test
+  java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
+3) Run with phase (each phase is related with goals)
+  validate：验证工程是否正确，所有需要的资源是否可用。
+  compile：编译项目的源代码。
+  test：使用合适的单元测试框架来测试已编译的源代码。这些测试不需要已打包和布署。
+  package：把已编译的代码打包成可发布的格式，比如jar。 
+  integration-test：如有需要，将包处理和发布到一个能够进行集成测试的环境。 
+  verify：运行所有检查，验证包是否有效且达到质量标准。 
+  install：把包安装在本地的repository中，可以被其他工程作为依赖来使用。 
+  Deploy：在集成或者发布环境下执行，将最终版本的包拷贝到远程的repository，使得其他的开发者或者工程可以共享。 
+  clean：清除先前构建的artifacts（在maven中，把由项目生成的包都叫作artifact）。 
+  site：为项目生成文档站点。 
+      
+      
+  如果项目的类型是jar,package阶段将默认执行jar:jar的goals,如果项目类型是war,那么package阶段执行的goals将是war:war。 
+有件有趣的事情需要注意，那就是phases和goals需要按一定的顺序来执行。 
+mvn clean dependency:copy-dependencies package 
+这个命令将先清除项目，然后拷贝依赖，最后把项目打包，当然，在打包之前，会先执行此阶段之前的阶段.如compile,test等. 
+生成站点 
+mvn site 
+这个阶段生成基于pom.xml配置的项目信息。你可以在target/site目录下看到生成的文档。

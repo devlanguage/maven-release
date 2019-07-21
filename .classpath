@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="source/basic/jvm/resources1"/>
-	<classpathentry kind="src" path="source/basic/jvm/resources2"/>
-	<classpathentry excluding="org/basic/" kind="src" path="source/basic/src"/>
-	<classpathentry excluding="org/third/" kind="src" path="source/third/src"/>
 	<classpathentry kind="lib" path="ant/ant_contrib/test.jar"/>
 	<classpathentry kind="lib" path="ant/lib/ant-antlr.jar"/>
 	<classpathentry kind="lib" path="ant/lib/ant.jar"/>

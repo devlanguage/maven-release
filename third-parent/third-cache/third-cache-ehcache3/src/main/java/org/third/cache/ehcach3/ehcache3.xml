@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.ehcache.org/v3'
+  xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd">
+  <!--缓存配置方式1：直接配置一个cache节点 -->
+  <!--完整配置一个缓存 -->
+  <cache alias="myCache1">
+    <!--储存条目索引和储存值类型配置 -->
+
+    <key-type>java.lang.Long</key-type>
+    <!--缓存条目索引 -->
+
+    <value-type>java.lang.String</value-type>
+    <!--缓存条目类型 -->
+    <!--储存层配置 -->
+
+    <resources>
+      <heap unit="entries">2000</heap>
+      <!--配置堆储存 -->
+
+      <offheap unit="MB">20</offheap>
+      <!--配置堆外储存 -->
+    </resources>
+
+  </cache>
+
+  <!--缓存配置方式2：通过缓存模板配置cache节点 -->
+  <!--配置一个缓存模板 -->
+
+  <cache-template name="myDefault">
+    <key-type>java.lang.Long</key-type>
+    <value-type>java.lang.String</value-type>
+    <heap unit="entries">200</heap>
+  </cache-template>
+
+  <!--使用缓存模板配置缓存 -->
+  <cache alias="myCache2" uses-template="myDefault" />
+  <cache alias="myCache3" uses-template="myDefault">
+    <value-type>java.lang.Number</value-type>
+  </cache>
+</config>
