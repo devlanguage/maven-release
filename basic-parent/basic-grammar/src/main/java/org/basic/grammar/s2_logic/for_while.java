@@ -1,6 +1,6 @@
 package org.basic.grammar.s2_logic;
 
-import static org.basic.common.util.SystemUtil.*;
+import static org.basic.common.util.SystemUtils.*;
 
 class Y {
     Y(String a) {

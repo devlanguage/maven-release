@@ -15,7 +15,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
- 
+
   <modules>
     <module>basic-common</module>
     <module>basic-aop</module>

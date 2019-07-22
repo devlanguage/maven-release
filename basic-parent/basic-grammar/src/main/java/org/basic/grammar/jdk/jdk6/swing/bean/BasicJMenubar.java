@@ -12,7 +12,7 @@ import javax.swing.MenuElement;
 
 import org.basic.common.bean.CommonConstants;
 import org.basic.common.util.BasicException;
-import org.basic.common.util.XmlUtil;
+import org.basic.common.util.XmlUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -40,9 +40,9 @@ public class BasicJMenubar extends JMenuBar {
         this.add(PersonTable.getRightKeyMenu());
         try {
 
-            Element jMenuBar = XmlUtil.getRootNode(menuDataStream);
+            Element jMenuBar = XmlUtils.getRootNode(menuDataStream);
             int currentLevel = 1;
-            NodeList jMenuLevelNodes = XmlUtil.getNodeList(XmlUtil.getNode(
+            NodeList jMenuLevelNodes = XmlUtils.getNodeList(XmlUtils.getNode(
                     jMenuBar, ELEMENT_HIERARCHY), ELEMENT_PREFIX_LEVEL
                     + currentLevel);
 
@@ -72,7 +72,7 @@ public class BasicJMenubar extends JMenuBar {
         if (!parentMenuLevel.isMenuLevel()) {
             return;
         }
-        NodeList jMenuNodes = XmlUtil.getNodeList(parentMenuLevelElement,
+        NodeList jMenuNodes = XmlUtils.getNodeList(parentMenuLevelElement,
                 ELEMENT_PREFIX_LEVEL + (++parentCurrentLevel));
         for (int i = 0; i < jMenuNodes.getLength(); i++) {
 

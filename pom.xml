@@ -38,6 +38,10 @@
     <postgresql.version>42.2.6</postgresql.version>
     <mysql.version>8.0.16</mysql.version>
     <mssql.version>7.2.2.jre8</mssql.version>
+    <ojdbc7.version>12.1.0.2</ojdbc7.version>
+    <ojdbc8.version>18.3</ojdbc8.version>
+    <ojdbc10.version>19.3</ojdbc10.version>
+    <jdmk.version>1.2.8</jdmk.version>
     <flyway.version>5.1.4</flyway.version>
 
     <custom-pmd.version>0.0.1</custom-pmd.version>
@@ -124,6 +128,23 @@
   </properties>
   <dependencyManagement>
     <dependencies>
+      <!-- Self-Managed Libraries -->
+      <dependency>
+        <groupId>com.sun.jdmk</groupId>
+        <artifactId>jmxri</artifactId>
+        <version>${jdmk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.jdmk</groupId>
+        <artifactId>jmxtools</artifactId>
+        <version>${jdmk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.oracle</groupId>
+        <artifactId>ojdbc8</artifactId>
+        <version>${ojdbc8.version}</version>
+      </dependency>
+
       <!-- -->
       <dependency>
         <groupId>cglib</groupId>
@@ -357,6 +378,7 @@
         <artifactId>mssql-jdbc</artifactId>
         <version>${mssql.version}</version>
       </dependency>
+
       <dependency>
         <groupId>com.fasterxml.jackson.datatype</groupId>
         <artifactId>jackson-datatype-hibernate4</artifactId>

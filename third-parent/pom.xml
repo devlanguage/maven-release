@@ -18,8 +18,17 @@
     </dependencies>
   </dependencyManagement>
   <modules>
-    <module>third-ejb</module>
-    <module>third-k8s</module>
-    <module>third-message-activemq</module>
+<module>third-build     </module>
+<module>third-cache     </module>
+<module>third-common    </module>
+<module>third-concurrent</module>
+<module>third-cxf       </module>
+<module>third-ejb       </module>
+<module>third-k8s       </module>
+<module>third-message   </module>
+<module>third-net       </module>
+<module>third-orm       </module>
+<module>third-validator </module>
+
   </modules>
 </project>

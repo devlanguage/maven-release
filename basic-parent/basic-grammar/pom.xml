@@ -24,7 +24,7 @@
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils-core</artifactId>
     </dependency>
-    <dependency> 
+    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>

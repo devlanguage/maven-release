@@ -1587,5 +1587,11 @@ public class OracleConnectionWrapper implements oracle.jdbc.OracleConnection {
 		
 	}
 
+	@Override
+	public boolean isValid(ConnectionValidation arg0, int arg1) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
     // m4_initialize("oracle.jdbc.OracleConnectionWrapper");
 }

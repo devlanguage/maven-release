@@ -16,6 +16,7 @@
 
   <modules>
     <module>third-concurrent-jgroups</module>
-    <module>third-concurrent-disruptor</module>
+    <module>third-concurrent-conversant_disruptor</module>
+    <module>third-concurrent-lmax_disruptor</module>
   </modules>
 </project>

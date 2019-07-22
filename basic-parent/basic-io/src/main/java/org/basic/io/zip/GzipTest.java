@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import org.basic.common.util.StringUtil;
+import org.basic.common.util.StringUtils;
 
 
 public class GzipTest {
@@ -115,7 +115,7 @@ public class GzipTest {
 		String str = "%5B%7B%22lastUpdateTime%22%3A%222011-10-28+9%3A39%3A41%22%2C%22smsList%22%3A%5B%7B%22liveState%22%3A%221";
 		System.out.println("原长度：" + str.length());
 		System.out.println("压缩后字符串：" + GzipTest.compress(str).toString().length());
-		System.out.println("解压缩后字符串：" + StringUtil.toString(GzipTest.uncompress(GzipTest.compress(str))));
+		System.out.println("解压缩后字符串：" + StringUtils.toString(GzipTest.uncompress(GzipTest.compress(str))));
 		System.out.println("解压缩后字符串：" + GzipTest.uncompressToString(GzipTest.compress(str)));
 	}
 

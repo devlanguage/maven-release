@@ -16,5 +16,6 @@
 
   <modules>
     <module>third-message-activemq</module>
+    <module>third-message-imq</module>
   </modules>
 </project>

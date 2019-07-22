@@ -4,10 +4,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.basic</groupId>
-    <artifactId>basic-parent</artifactId>
+    <artifactId>third-build</artifactId>
     <version>0.0.1</version>
   </parent>
-  <artifactId>basic-net</artifactId>
+  <artifactId>third-build-gradle</artifactId>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -18,20 +18,9 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.oracle</groupId>
-      <artifactId>ojdbc8</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jdmk</groupId>
-      <artifactId>jmxri</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jdmk</groupId>
-      <artifactId>jmxtools</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.mail</groupId>
-      <artifactId>javax.mail-api</artifactId>
+      <groupId>org.basic</groupId>
+      <artifactId>third-common</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

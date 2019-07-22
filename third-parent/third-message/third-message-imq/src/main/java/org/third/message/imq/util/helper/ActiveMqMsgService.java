@@ -1,4 +1,4 @@
-
+package org.third.message.imq.util.helper;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,19 +18,20 @@ import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.basic.common.bean.CommonLogger;
-import org.third.jms.util.bean.BaseQueue;
-import org.third.jms.util.bean.BaseTopic;
-import org.third.jms.util.bean.DestinationType_T;
-import org.third.jms.util.bean.JMSMetricListener;
-import org.third.jms.util.bean.LocalQueue;
-import org.third.jms.util.bean.LocalTopic;
-import org.third.jms.util.bean.QueueName_T;
-import org.third.jms.util.bean.RemoteQueue;
-import org.third.jms.util.bean.RemoteTopic;
-import org.third.jms.util.bean.ServiceName_T;
-import org.third.jms.util.bean.TopicName_T;
+import org.third.message.imq.util.bean.BaseQueue;
+import org.third.message.imq.util.bean.BaseTopic;
+import org.third.message.imq.util.bean.DestinationType_T;
+import org.third.message.imq.util.bean.JMSMetricListener;
+import org.third.message.imq.util.bean.LocalQueue;
+import org.third.message.imq.util.bean.LocalTopic;
+import org.third.message.imq.util.bean.QueueName_T;
+import org.third.message.imq.util.bean.RemoteQueue;
+import org.third.message.imq.util.bean.RemoteTopic;
+import org.third.message.imq.util.bean.ServiceName_T;
+import org.third.message.imq.util.bean.TopicName_T;
+
+import com.sun.messaging.ConnectionConfiguration;
 
 /**
  * This class a singleton messaging manager instance. It maintains Queues/Topics
@@ -191,18 +192,17 @@ public class ActiveMqMsgService {
 	}
 	
 	void connectJmsServer() throws JMSException{
-	    ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory();
-//        com.sun.messaging.QueueConnectionFactory queueFactory = new com.sun.messaging.QueueConnectionFactory();
-//        com.sun.messaging.TopicConnectionFactory topicFactory = new com.sun.messaging.TopicConnectionFactory();
-//        queueFactory.setProperty(ConnectionConfiguration.imqAddressList,host);
-//        topicFactory.setProperty(ConnectionConfiguration.imqAddressList,host);
-//        queueFactory.setProperty("imqBrokerHostName", host);
-//        queueFactory.setProperty("imqBrokerHostPort", port);
-//        topicFactory.setProperty("imqBrokerHostName", host);
-//        topicFactory.setProperty("imqBrokerHostPort", port);
+        com.sun.messaging.QueueConnectionFactory queueFactory = new com.sun.messaging.QueueConnectionFactory();
+        com.sun.messaging.TopicConnectionFactory topicFactory = new com.sun.messaging.TopicConnectionFactory();
+        queueFactory.setProperty(ConnectionConfiguration.imqAddressList,host);
+        topicFactory.setProperty(ConnectionConfiguration.imqAddressList,host);
+        queueFactory.setProperty("imqBrokerHostName", host);
+        queueFactory.setProperty("imqBrokerHostPort", port);
+        topicFactory.setProperty("imqBrokerHostName", host);
+        topicFactory.setProperty("imqBrokerHostPort", port);
 
-        queueConnection = cf.createQueueConnection();
-        topicConnection = cf.createTopicConnection();
+        queueConnection = queueFactory.createQueueConnection();
+        topicConnection = topicFactory.createTopicConnection();
         queueConnection.setExceptionListener(listener);
         topicConnection.setExceptionListener(listener);
 	}

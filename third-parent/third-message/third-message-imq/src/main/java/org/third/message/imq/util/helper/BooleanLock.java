@@ -1,4 +1,4 @@
-
+package org.third.message.imq.util.helper;
 public class BooleanLock extends Object {
 	private boolean value;
 

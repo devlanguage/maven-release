@@ -15,7 +15,8 @@
   </properties>
 
   <modules>
-    <module>third-orm-hibernate4</module>
+    <module>third-orm-hibernate</module>
+    <module>third-orm-hibernate2</module>
     <module>third-orm-ibatis</module>
     <module>third-orm-mybatis</module>
   </modules>
