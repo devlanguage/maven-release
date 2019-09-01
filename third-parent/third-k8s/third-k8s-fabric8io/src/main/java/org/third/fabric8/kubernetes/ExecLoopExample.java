@@ -8,8 +8,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import io.fabric8.kubernetes.client.Callback;
-import io.fabric8.kubernetes.client.Config;
-import io.fabric8.kubernetes.client.ConfigBuilder;
 import io.fabric8.kubernetes.client.dsl.ExecListener;
 import io.fabric8.kubernetes.client.dsl.ExecWatch;
 import io.fabric8.kubernetes.client.utils.InputStreamPumper;
@@ -23,23 +21,14 @@ import okhttp3.Response;
 public class ExecLoopExample {
 
   public static void main(String[] args) throws InterruptedException, IOException {
-    String master = "https://h9.test1.com:8443/";
     String podName = null;
 
-    if (args.length >= 2) {
-      master = args[0];
-      podName = args[1];
-    }
     if (args.length == 1) {
       podName = args[0];
     }
 
-      Config config = new ConfigBuilder()
-        .withMasterUrl(master)
-        .build();
-
       ScheduledExecutorService executorService = Executors.newScheduledThreadPool(20);
-      try (OpenShiftClient client = new DefaultOpenShiftClient(config)) {
+      try (OpenShiftClient client = new DefaultOpenShiftClient(K8sUtil.getK8sConfig())) {
         for (int i = 0; i < 10; System.out.println("i=" + i), i++) {
           ExecWatch watch = null;
           InputStreamPumper pump = null;

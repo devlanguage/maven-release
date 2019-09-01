@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import io.fabric8.kubernetes.api.model.HorizontalPodAutoscaler;
 import io.fabric8.kubernetes.api.model.HorizontalPodAutoscalerBuilder;
-import io.fabric8.kubernetes.client.Config;
-import io.fabric8.kubernetes.client.ConfigBuilder;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientException;
@@ -15,13 +13,7 @@ public class HorizontalPodAutoscalerExample {
   private static final Logger logger = LoggerFactory.getLogger(HorizontalPodAutoscalerExample.class);
 
   public static void main(String[] args) {
-    String master = "https://192.168.42.193:8443/";
-    if (args.length == 1) {
-      master = args[0];
-    }
-
-    Config config = new ConfigBuilder().withMasterUrl(master).build();
-    try (final KubernetesClient client = new DefaultKubernetesClient(config)) {
+    try (final KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig())) {
       HorizontalPodAutoscaler horizontalPodAutoscaler = new HorizontalPodAutoscalerBuilder()
         .withNewMetadata().withName("the-hpa").withNamespace("default").endMetadata()
         .withNewSpec()

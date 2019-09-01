@@ -32,8 +32,7 @@ public class PodLogExample {
     System.out.println("Log of pod " + podName + " in " + namespace + " is:");
     System.out.println("----------------------------------------------------------------");
 
-    Config config = new ConfigBuilder().withMasterUrl(master).build();
-    try (KubernetesClient client = new DefaultKubernetesClient(config);
+    try (KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig());
          LogWatch watch = client.pods().inNamespace(namespace).withName(podName).tailingLines(10).watchLog(System.out)) {
       Thread.sleep(5 * 1000);
     } catch (Exception e) {

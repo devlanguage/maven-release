@@ -23,7 +23,7 @@ public class PodSecurityPolicyExample {
         String sample = System.getProperty("user.dir") + "/kubernetes-examples/src/main/resources/PodSecurityPolicy.yml";
 
         try {
-            final KubernetesClient client = new DefaultKubernetesClient();
+            final KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig());
 
             //Creating PodSecurityPolicy from Yaml file
 
