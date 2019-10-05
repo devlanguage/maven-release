@@ -18,5 +18,6 @@
     <module>third-net-ftp</module>
     <module>third-net-httpclient</module>
     <module>third-net-ssh</module>
+    <module>third-net-grpc</module>
   </modules>
 </project>

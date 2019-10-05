@@ -451,6 +451,5 @@
   <modules>
     <module>basic-parent</module>
     <module>third-parent</module>
-
   </modules>
 </project>
