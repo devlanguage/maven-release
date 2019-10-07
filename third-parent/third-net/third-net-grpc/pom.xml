@@ -97,7 +97,7 @@
           <protocPluginDirectory>${project.build.directory}/protoc-plugins</protocPluginDirectory>
         </configuration>
         <executions>
-          <execution> 
+          <execution>
             <goals>
               <goal>compile</goal>
               <goal>compile-custom</goal>

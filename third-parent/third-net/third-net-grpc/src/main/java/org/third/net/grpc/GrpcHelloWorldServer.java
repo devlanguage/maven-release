@@ -4,13 +4,11 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.third.net.grpc.stub.helloworld.GreeterGrpc;
-import org.third.net.grpc.stub.helloworld.HelloReply;
-import org.third.net.grpc.stub.helloworld.HelloRequest;
+import org.third.net.grpc.impl.HelloWorldServiceImpl;
+import org.third.net.grpc.impl.UserServiceImpl;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.stub.StreamObserver;
 
 public class GrpcHelloWorldServer {
 	private static final Logger logger = LoggerFactory.getLogger(GrpcHelloWorldServer.class.getName());
@@ -19,7 +17,10 @@ public class GrpcHelloWorldServer {
 	private Server server;
 
 	private void start() throws IOException {
-		server = ServerBuilder.forPort(port).addService(new GreeterImpl()).build().start();
+		server = ServerBuilder.forPort(port)//
+				.addService(new HelloWorldServiceImpl())//
+				.addService(new UserServiceImpl())//
+				.build().start();
 		logger.info("Server started, listening on " + port);
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -52,19 +53,6 @@ public class GrpcHelloWorldServer {
 		final GrpcHelloWorldServer server = new GrpcHelloWorldServer();
 		server.start();
 		server.blockUntilShutdown();
-	}
-
-	// 实现 定义一个实现服务接口的类
-	private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
-
-		@Override
-		public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
-			logger.info("Receiving the calling:{}", req.getName());
-			
-			HelloReply reply = HelloReply.newBuilder().setMessage(("Hello " + req.getName())).build();
-			responseObserver.onNext(reply);
-			responseObserver.onCompleted();
-		}
 	}
 
 }

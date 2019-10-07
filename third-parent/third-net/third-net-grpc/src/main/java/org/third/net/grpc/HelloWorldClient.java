@@ -4,9 +4,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.third.net.grpc.stub.helloworld.GreeterGrpc;
-import org.third.net.grpc.stub.helloworld.HelloReply;
 import org.third.net.grpc.stub.helloworld.HelloRequest;
+import org.third.net.grpc.stub.helloworld.HelloResponse;
+import org.third.net.grpc.stub.helloworld.HelloServiceGrpc;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -15,13 +15,13 @@ import io.grpc.StatusRuntimeException;
 public class HelloWorldClient {
 
 	private final ManagedChannel channel;
-	private final GreeterGrpc.GreeterBlockingStub blockingStub;
+	private final HelloServiceGrpc.HelloServiceBlockingStub blockingStub;
 	private static final Logger logger = LoggerFactory.getLogger(HelloWorldClient.class.getName());
 
 	public HelloWorldClient(String host, int port) {
 		channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext(true).build();
 
-		blockingStub = GreeterGrpc.newBlockingStub(channel);
+		blockingStub = HelloServiceGrpc.newBlockingStub(channel);
 	}
 
 	public void shutdown() throws InterruptedException {
@@ -30,7 +30,7 @@ public class HelloWorldClient {
 
 	public void greet(String name) {
 		HelloRequest request = HelloRequest.newBuilder().setName(name).build();
-		HelloReply response;
+		HelloResponse response;
 		try {
 			response = blockingStub.sayHello(request);
 		} catch (StatusRuntimeException e) {
@@ -48,6 +48,7 @@ public class HelloWorldClient {
 				user = args[0];
 			}
 			client.greet(user);
+			
 		} finally {
 			client.shutdown();
 		}

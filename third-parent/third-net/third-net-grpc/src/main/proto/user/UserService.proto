@@ -13,38 +13,33 @@ service UserService {
   rpc CreateUser(User) returns (User);
   
   //
-    rpc GetUser(User) returns(User);
+  rpc GetUser(User) returns(User);
+  
+  rpc GetUsers(GetUsersRequest) returns(UserList);
+    
 }
-message FooRequest {
-     string text = 1;
-     int32 times = 2;
+message GetUsersRequest {
+  repeated string userName = 1;
 }
 
-message FooResponse {
-     string text = 1;
-     bool result = 2;
-}
 
 // The request message containing the user's name. 
 message User { 
   string name = 1;
-    int32 id = 2;
-    string email = 3;
+  int32 id = 2;
+  string email = 3;
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
 
-    enum PhoneType
-    {
-        MOBILE = 0;
-        HOME = 1;
-        WORK = 2;
-    }
+  message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2; 
+  }
 
-    message PhoneNumber
-    {
-        string number = 1;
-        PhoneType type = 2; 
-    }
-
-    repeated PhoneNumber phone = 4;
+  repeated PhoneNumber phone = 4;
 }
 
 // The response message containing the greetings 
