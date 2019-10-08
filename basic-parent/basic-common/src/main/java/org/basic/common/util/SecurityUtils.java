@@ -11,7 +11,6 @@ public class SecurityUtils {
 	private SecurityUtils() {
 
 	}
-
 	/**
 	 * algorithm: MD5, SHA
 	 * 

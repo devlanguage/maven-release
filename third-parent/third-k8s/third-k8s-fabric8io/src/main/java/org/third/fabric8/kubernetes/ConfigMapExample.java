@@ -19,6 +19,9 @@ public class ConfigMapExample {
 
   public static void main(String[] args) throws InterruptedException {
     Config config = new ConfigBuilder().build();
+//    config.setCaCertFile(caCertFile);
+//    config.setClientKeyFile(caCertFile);
+//    config.setClientCertData(caCertFile);
     KubernetesClient client = new DefaultKubernetesClient(config);
 
     String namespace = null;

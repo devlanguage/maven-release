@@ -1,6 +1,8 @@
 package org.basic.db;
 
 import java.lang.reflect.Field;
+import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -8,9 +10,9 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import javax.net.ssl.TrustManagerFactory;
 import javax.sql.RowSet;
 
-import org.basic.common.bean.DatabaseType;
 import org.basic.common.bean.PoolType;
 import org.basic.common.util.BasicException;
 import org.basic.db.util.DbDao;
@@ -94,26 +96,37 @@ public class PropertiesTest {
     }
 
     public static void main(String[] args) {
+    	TrustManagerFactory trustManagerFactory;
+		try {
+			trustManagerFactory = TrustManagerFactory.getInstance(
+			        TrustManagerFactory.getDefaultAlgorithm());
+    	    trustManagerFactory.init((KeyStore) null);
 
-        Connection conn = null;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-        try {
-            conn = dbDao.getConnection(DatabaseType.ORACLE);
 
-            // testQuery1(conn);
-            // testProcedure1(conn);
-            testProcedure1(conn);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+//        Connection conn = null;
+//
+//        try {
+//            conn = dbDao.getConnection(DatabaseType.ORACLE);
+//
+//            // testQuery1(conn);
+//            // testProcedure1(conn);
+//            testProcedure1(conn);
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (conn != null)
+//                    conn.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
     }
 
