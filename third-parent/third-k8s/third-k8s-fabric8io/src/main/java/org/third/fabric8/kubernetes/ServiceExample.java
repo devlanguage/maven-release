@@ -15,7 +15,7 @@ public class ServiceExample {
   private static final Logger logger = LoggerFactory.getLogger(ServiceExample.class);
 
   public static void main(String args[]) {
-    try (final KubernetesClient client = new DefaultKubernetesClient()) {
+    try (final KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig())) {
       Service service = new ServiceBuilder()
         .withNewMetadata()
         .withName("my-service")

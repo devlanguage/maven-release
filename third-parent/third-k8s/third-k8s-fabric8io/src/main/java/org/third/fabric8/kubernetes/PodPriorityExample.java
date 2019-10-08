@@ -19,14 +19,8 @@ public class PodPriorityExample {
   private static final Logger logger = LoggerFactory.getLogger(PodDisruptionBudgetExample.class);
 
   public static void main(String args[]) throws InterruptedException {
-    String master = "https://192.168.99.100:8443/";
-    if (args.length == 1) {
-      master = args[0];
-    }
 
-    log("Using master with url ", master);
-    Config config = new ConfigBuilder().withMasterUrl(master).build();
-    try (final KubernetesClient client = new DefaultKubernetesClient(config)) {
+    try (final KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig())) {
       PriorityClass priorityClass = new PriorityClassBuilder()
         .withNewMetadata().withName("high-priority").endMetadata()
         .withValue(new Integer(100000))

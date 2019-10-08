@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option java_multiple_files = true; 
+option java_package = "org.third.net.grpc.stub.user"; 
+option java_outer_classname = "UserServiceProto"; 
+option objc_class_prefix = "HLW";
+
+package user;
+
+// The greeting service definition. 
+service UserService { 
+  // Sends a greeting 
+  rpc CreateUser(User) returns (User);
+  
+  //
+  rpc GetUser(User) returns(User);
+  
+  rpc GetUsers(GetUsersRequest) returns(UserList);
+    
+}
+message GetUsersRequest {
+  repeated string userName = 1;
+}
+
+
+// The request message containing the user's name. 
+message User { 
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+  message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2; 
+  }
+
+  repeated PhoneNumber phone = 4;
+}
+
+// The response message containing the greetings 
+message UserList { 
+  repeated User users = 1;
+} 

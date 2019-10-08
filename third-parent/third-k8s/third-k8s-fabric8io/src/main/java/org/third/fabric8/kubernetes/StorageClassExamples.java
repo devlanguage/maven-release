@@ -21,15 +21,7 @@ public class StorageClassExamples {
 
   public static void main(String[] args) {
 
-    String master = "http://h9.test1.com:8080/";
-
-    if (args.length == 1) {
-      master = args[0];
-    }
-
-    io.fabric8.kubernetes.client.Config config = new io.fabric8.kubernetes.client.ConfigBuilder().withMasterUrl(master).build();
-
-    try (final KubernetesClient client = new DefaultKubernetesClient(config)) {
+    try (final KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig())) {
 
       //list all storage classes
       StorageClassList storageClassList = client.storage().storageClasses().list();

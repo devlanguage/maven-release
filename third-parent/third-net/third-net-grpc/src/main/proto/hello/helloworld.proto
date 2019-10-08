@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option java_multiple_files = true; 
+option java_package = "org.third.net.grpc.stub.helloworld"; 
+option java_outer_classname = "HelloWorldProto"; 
+option objc_class_prefix = "HLW";
+//import "google/protobuf/source_context.proto";
+//import "google/protobuf/type.proto";
+package helloworld;
+
+// The greeting service definition. 
+service HelloService { 
+  // Sends a greeting 
+  rpc SayHello (HelloRequest) returns (HelloResponse) {} 
+  //
+     
+}
+
+// The request message containing the user's name. 
+message HelloRequest { 
+  string name = 1; 
+}
+
+// The response message containing the greetings 
+message HelloResponse { 
+  string message = 1; 
+  int32 age = 2;
+  sint64 postcode = 3;
+  bool successful = 4;
+  
+} 
+
+service Storagev1{
+ // Get the underlying ACL object.
+      rpc GetAcl1(GetAclRequest) returns (Acl) {
+       // option (google.api.http).get = "/v1/{resource=**}:getAcl";
+      }
+}
+service Storagev2{
+ //v2
+       rpc GetAcl2(GetAclRequest) returns (Acl);
+
+      // Get a data record.
+      rpc GetData(GetDataRequest) returns (Data) {
+       // option (google.api.http).get = "/v2/{resource=**}";
+      }
+}
+message GetAclRequest{
+}
+message Acl {
+  string message = 1;
+}
+message Data {
+  string message = 1;
+}
+message GetDataRequest{
+}

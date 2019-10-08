@@ -16,13 +16,8 @@ public class ReplaceExamples {
   private static final Logger logger = LoggerFactory.getLogger(ReplaceExamples.class);
 
   public static void main(String[] args) {
-    String master = "https://h9.test1.com:8443/";
-    if (args.length == 1) {
-      master = args[0];
-    }
 
-    Config config = new ConfigBuilder().withMasterUrl(master).build();
-    try (KubernetesClient client = new DefaultKubernetesClient(config)) {
+    try (KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig())) {
       try {
         log("Create namespace:", client.namespaces().create(new NamespaceBuilder().withNewMetadata().withName("thisisatest").endMetadata().build()));
 

@@ -21,8 +21,7 @@ public class WatchExample {
 
   public static void main(String[] args) throws InterruptedException {
     final CountDownLatch closeLatch = new CountDownLatch(1);
-    Config config = new ConfigBuilder().build();
-    try (final KubernetesClient client = new DefaultKubernetesClient(config)) {
+    try (final KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig())) {
       try (Watch watch = client.replicationControllers().inNamespace("default").withName("test").watch(new Watcher<ReplicationController>() {
         @Override
         public void eventReceived(Action action, ReplicationController resource) {

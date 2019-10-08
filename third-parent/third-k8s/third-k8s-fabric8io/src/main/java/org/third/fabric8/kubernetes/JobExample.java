@@ -25,13 +25,8 @@ public class JobExample {
     private static final Logger logger = LoggerFactory.getLogger(JobExample.class);
 
     public static void main(String[] args) {
-        String master = "https://h9.test1.com:8443/";
-        if (args.length == 1) {
-            master = args[0];
-        }
 
-        final Config config = new ConfigBuilder().withMasterUrl(master).build();
-        try (final KubernetesClient client = new DefaultKubernetesClient(config)) {
+        try (final KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig())) {
             final String namespace = "default";
             final Job job = new JobBuilder()
                     .withApiVersion("batch/v1")

@@ -25,14 +25,8 @@ public class CronJobExample {
   private static final Logger logger = LoggerFactory.getLogger(CronJobExample.class);
 
   public static void main(String args[]) throws InterruptedException {
-    String master = "https://h9.test1.com:8443/";
-    if (args.length == 1) {
-      master = args[0];
-    }
 
-    log("Using master with url ", master);
-    Config config = new ConfigBuilder().withMasterUrl(master).build();
-    try(final KubernetesClient client = new DefaultKubernetesClient(config)) {
+    try(final KubernetesClient client = new DefaultKubernetesClient(K8sUtil.getK8sConfig())) {
       final String namespace = client.getNamespace();
 
       CronJob cronJob1 = new CronJobBuilder()

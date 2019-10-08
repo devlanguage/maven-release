@@ -1,0 +1,26 @@
+syntax = "proto3";
+package org.third.net.grpc.common;
+
+option java_multiple_files = true;
+option java_outer_classname = "CommonProto";
+option java_package = "org.third.net.grpc.stub.common";
+option objc_class_prefix = "GAPI";
+
+// The kind of measurement. It describes how the data is reported.
+enum MetricKind {
+  // Do not use this default value.
+  METRIC_KIND_UNSPECIFIED = 0;
+
+  // An instantaneous measurement of a value.
+  GAUGE = 1;
+
+  // The change in a value during a time interval.
+  DELTA = 2;
+
+  // A value accumulated over a time interval.  Cumulative
+  // measurements in a time series should have the same start time
+  // and increasing end times, until an event resets the cumulative
+  // value to zero and sets a new start time for the following
+  // points.
+  CUMULATIVE = 3;
+}
