@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.third.net.grpc.impl.HelloWorldServiceImpl;
 import org.third.net.grpc.impl.UserServiceImpl;
 
+import com.google.common.reflect.Reflection;
+
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
@@ -17,6 +19,7 @@ public class GrpcHelloWorldServer {
 	private Server server;
 
 	private void start() throws IOException {
+		
 		server = ServerBuilder.forPort(port)//
 				.addService(new HelloWorldServiceImpl())//
 				.addService(new UserServiceImpl())//
