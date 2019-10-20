@@ -10,13 +10,8 @@
   <artifactId>basic-net</artifactId>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  </properties> 
   <dependencies>
-  <dependency>
-        <groupId>com.hp.cloud.identity</groupId>
-        <artifactId>idm-util</artifactId>
-        <version>1.26.0-20190816.021006-2</version>
-</dependency>
     <dependency>
       <groupId>org.basic</groupId>
       <artifactId>basic-common</artifactId>
@@ -26,7 +21,7 @@
       <groupId>com.oracle</groupId>
       <artifactId>ojdbc8</artifactId>
     </dependency>
-   
+
     <dependency>
       <groupId>com.sun.jdmk</groupId>
       <artifactId>jmxri</artifactId>

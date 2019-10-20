@@ -1,0 +1,52 @@
+syntax = "proto3";
+package hello;
+
+//import "google/protobuf/source_context.proto";
+//import "google/protobuf/type.proto";
+import "common/common.proto";
+
+option java_multiple_files = true; 
+option java_package = "org.third.net.grpc.stub.hello"; 
+option java_outer_classname = "HelloServiceProto"; 
+option objc_class_prefix = "HLW";
+
+// The greeting service definition. 
+service HelloService { 
+  // Client send one and response one
+  rpc SayHi (HelloRequest) returns (HelloResponse) {} 
+  //Client send one and response multiple
+  rpc SayHiServerStream (HelloRequest) returns (stream HelloResponse) {} 
+  //Client send multiple and response one
+  rpc SayHiClientStream (stream HelloRequest) returns ( HelloResponse) {} 
+  //Client send multiple and response multiple
+  rpc SayHiBiStream (stream HelloRequest) returns (stream HelloResponse) {} 
+  //
+  rpc GetMetadata(GetMetadataRequest) returns (GetMetadataResponse) {}
+}
+message GetMetadataResponse {
+    message Result {
+        string url = 1;
+        int32 status = 2;
+        repeated string snippets = 3;
+    }
+  repeated common.MapEntry entry = 1;
+  repeated Result results = 2;
+  
+}
+message GetMetadataRequest {
+    repeated string id = 1;
+}
+
+
+// The request message containing the user's name. 
+message HelloRequest { 
+  string name = 1; 
+}
+
+// The response message containing the greetings 
+message HelloResponse { 
+  string message = 1; 
+  int32 age = 2;
+  sint64 postcode = 3;
+  bool successful = 4;
+} 

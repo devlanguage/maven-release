@@ -1,5 +1,5 @@
 syntax = "proto3";
-package org.third.net.grpc.common;
+package common;
 
 option java_multiple_files = true;
 option java_outer_classname = "CommonProto";
@@ -23,4 +23,9 @@ enum MetricKind {
   // value to zero and sets a new start time for the following
   // points.
   CUMULATIVE = 3;
+}
+
+message MapEntry {
+   string key = 1;
+   string value = 2;
 }
