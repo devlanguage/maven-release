@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.basic</groupId>
+    <artifactId>third-net</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>third-net-ftp</artifactId>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <netty.version>4.1.38.Final</netty.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.basic</groupId>
+      <artifactId>basic-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.basic</groupId>
+      <artifactId>third-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>${netty.version}</version>
+    </dependency>
+<!--     <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-example</artifactId>
+      <version>${netty.version}</version>
+    </dependency> -->
+    <dependency>
+      <groupId>com.barchart.udt</groupId>
+      <version>2.3.0</version>
+      <artifactId>barchart-udt-bundle</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk15on</artifactId>
+      <version>1.61</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <version>3.4.0</version>
+      <artifactId>protobuf-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+  </dependencies>
+</project>
