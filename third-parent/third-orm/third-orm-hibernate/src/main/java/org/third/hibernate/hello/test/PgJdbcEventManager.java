@@ -7,34 +7,38 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.Statistics;
 import org.third.common.user.domain.ErrorEventDM;
 import org.third.common.user.domain.EventDM;
+import org.third.common.user.domain.HiEvent;
 import org.third.common.user.domain.PersonDM;
 import org.third.hibernate.common.util.HibernateUtil;
 
-public class EventManager {
+public class PgJdbcEventManager {
 
 	static Session session = null;
 
 	public static void main(String[] args) {
-
-		EventManager mgr = new EventManager();
-		session = HibernateUtil.currentSession();
+		org.hibernate.cfg.Configuration hibernateCfg = new Configuration();
+		hibernateCfg.configure(PgJdbcEventManager.class.getClassLoader().getResource("hibernate.jdbc.xml"));
+		org.hibernate.SessionFactory sessionFactory = hibernateCfg.buildSessionFactory();
+		PgJdbcEventManager mgr = new PgJdbcEventManager();
+		session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		// mgr.testInsert();
+		 mgr.testInsert();
 
 		// mgr.testUpdate();
 //        mgr.testQuery();
-		mgr.testNativeSQLQuery();
+//		mgr.testNativeSQLQuery();
 		//
 		// mgr.testStatistics();
 
 		session.getTransaction().commit();
 		// session.close();
-		HibernateUtil.closeSession();
+		session.close();
 	}
 
 	private void testQuery() {
@@ -47,7 +51,7 @@ public class EventManager {
 		// person = (Person) session.get(Person.class, Long.valueOf("100"));
 		// System.out.println(person);
 
-		query = session.createQuery("from Person p");
+		query = session.createQuery("from HiPerson p");
 		for (Iterator iterator = query.iterate(); iterator.hasNext();) {
 			PersonDM p = (PersonDM) iterator.next();
 			System.err.println(p.getEmailAddresses());
@@ -140,11 +144,9 @@ public class EventManager {
 	private void testInsert() {
 
 		// Query insert = session.createQuery("insert into Event ");
-		EventDM event = new EventDM();
+		HiEvent event = new HiEvent();
 
-		event.setId(10001L);
 		event.setTitle("create_zhangsan");
-		event.setDate(new java.util.Date());
 		// Assign the identifier and persist it
 		// If generator == assiged, using the current identifier and persist it
 		session.save(event);

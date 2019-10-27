@@ -1,6 +1,5 @@
 package org.third.common.user.service;
 
-
-public class DefaultFooService {
+public interface DefaultFooService {
 
 }
