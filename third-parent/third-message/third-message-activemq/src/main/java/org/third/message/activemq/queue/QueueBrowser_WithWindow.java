@@ -88,7 +88,7 @@ import javax.swing.JTextArea;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 
-import org.third.message.activemq.JmsUtil;
+import org.third.message.activemq.MessageUtil;
 import org.third.message.activemq.MessageUtil.JmsServerType;
 
 /**
@@ -213,7 +213,7 @@ public class QueueBrowser_WithWindow extends JPanel implements javax.jms.Message
      * Initialize JMS by creating Connection and Session.
      */
     private void initJMS() throws JMSException {
-        session = JmsUtil.getInstance().getSession(JmsServerType.ACTIVE_MQ, false, Session.AUTO_ACKNOWLEDGE);
+        session = MessageUtil.getInstance().getSession(JmsServerType.ACTIVE_MQ, false, Session.AUTO_ACKNOWLEDGE);
     }
 
     /**

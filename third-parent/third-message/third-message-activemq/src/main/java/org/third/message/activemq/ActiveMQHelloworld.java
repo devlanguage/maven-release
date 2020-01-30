@@ -17,7 +17,7 @@ public class ActiveMQHelloworld {
     public static void main(String[] args) {
         try {
             // 创建一个连接工厂
-            String url = "tcp://vesna:61616";
+            String url = "tcp://localhost:61616";
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
             // 设置用户名和密码，这个用户名和密码在conf目录下的credentials.properties文件中，也可以在activemq.xml中配置
 //            connectionFactory.setUserName("system");

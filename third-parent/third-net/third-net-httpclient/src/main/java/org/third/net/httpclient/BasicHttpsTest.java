@@ -21,6 +21,7 @@ import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -151,17 +152,18 @@ public class BasicHttpsTest {
 
 			// 指定报文头Content-type、User-Agent
 			httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
-
 			httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
 
+			StringEntity entity = new StringEntity("");
+			httpPost.setEntity(entity);
 			// 执行请求操作，并拿到结果（同步阻塞）
 			CloseableHttpResponse response = client.execute(httpPost);
 
 			// 获取结果实体
-			HttpEntity entity = response.getEntity();
+			HttpEntity entityResp = response.getEntity();
 			if (entity != null) {
 				// 按指定编码转换结果实体为String类型
-				body = EntityUtils.toString(entity, "UTF-8");
+				body = EntityUtils.toString(entityResp, "UTF-8");
 			}
 
 			EntityUtils.consume(entity);

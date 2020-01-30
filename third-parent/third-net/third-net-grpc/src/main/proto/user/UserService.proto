@@ -7,7 +7,7 @@ option java_outer_classname = "UserServiceProto";
 option objc_class_prefix = "HLW";
 
 // The greeting service definition. 
-service UserService { 
+service UserService {
   // Sends a greeting 
   rpc CreateUser(User) returns (User);
   
@@ -20,7 +20,6 @@ service UserService {
 message GetUsersRequest {
   repeated string userName = 1;
 }
-
 
 // The request message containing the user's name. 
 message User { 

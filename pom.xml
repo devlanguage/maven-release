@@ -100,7 +100,7 @@
 
     <hibernate.version>5.4.3.Final</hibernate.version>
 
-    <spring-boot.version>1.5.20.RELEASE</spring-boot.version>
+    <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
     <spring.kafka.version>2.1.7.RELEASE</spring.kafka.version>
     <spring.ldap.version>2.3.1.RELEASE</spring.ldap.version>
     <spring.security.kerberos.version>1.0.1.RELEASE</spring.security.kerberos.version>
