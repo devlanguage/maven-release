@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-sources>
+	<data-source id="hsqldb_server-17001477270-4754e02143f0f4c5" provider="generic" driver="hsqldb_server" name="HSQLDB - test1" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="localhost" port="28080" server="" database="test1" url="jdbc:hsqldb:hsql://localhost:28080/test1" user="SA" type="dev"/>
+	</data-source>
+	<filters/>
+</data-sources>

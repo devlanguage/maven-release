@@ -43,7 +43,8 @@
     <hsqldb.version>2.5.0</hsqldb.version>
     <ojdbc10.version>19.3</ojdbc10.version>
     <jdmk.version>1.2.8</jdmk.version>
-    <flyway.version>5.1.4</flyway.version>
+    <flyway.version>6.2.1</flyway.version>
+    <druid.version>1.1.20</druid.version>
 
     <custom-pmd.version>0.0.1</custom-pmd.version>
     <dataprotection.version>1.0.1</dataprotection.version>
@@ -68,7 +69,7 @@
     <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
     <javax.servlet.jsp-api.version>2.3.1</javax.servlet.jsp-api.version>
     <javax.mail-api.version>1.6.2</javax.mail-api.version>
-
+    <xerces.version>2.9.0</xerces.version>
     <!-- SSH -->
     <jsch.version>0.1.55</jsch.version>
     <sshd-cli.vesion>2.2.0</sshd-cli.vesion>
@@ -381,10 +382,19 @@
       </dependency>
       <dependency>
         <groupId>com.microsoft.sqlserver</groupId>
-        <artifactId>mssql-jdbc</artifactId> 
+        <artifactId>mssql-jdbc</artifactId>
         <version>${mssql.version}</version>
       </dependency>
-
+      <dependency>
+        <groupId>org.flywaydb</groupId>
+        <version>${flyway.version}</version>
+        <artifactId>flyway-core</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson.datatype</groupId>
         <artifactId>jackson-datatype-hibernate4</artifactId>
@@ -393,7 +403,7 @@
       <dependency>
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>
-        <version>2.9.0</version>
+        <version>${xerces.version}</version>
       </dependency>
       <!-- Test -->
       <dependency>

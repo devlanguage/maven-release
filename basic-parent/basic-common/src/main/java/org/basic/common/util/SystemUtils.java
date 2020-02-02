@@ -19,8 +19,6 @@ public class SystemUtils {
 
 	private static CommonLogger logger = CommonLogger.getLogger(SystemUtils.class);
 
-	private static int randomIndex = 5;
-
 	private final static ThreadLocal<Long> localID = new ThreadLocal<Long>() {
 
 		AtomicLong id = new AtomicLong(0);
@@ -54,7 +52,7 @@ public class SystemUtils {
 		// return currentTime + getRandom(k);
 	}
 
-	private static String getRandom(int i) {
+	public static String getRandom(int i) {
 
 		Random random = new Random();
 		if (i == 0)
@@ -82,42 +80,6 @@ public class SystemUtils {
 
 	public static final <T> void printMessage(T t) {
 		System.out.println(t);
-	}
-
-	public static void main(String[] args) {
-
-		System.out.println("getNo:" + nextId());
-
-		// Thread a1 = new Thread(new Runnable() {
-		//
-		// public void run() {
-		// while (true)
-		// try {
-		// Thread.sleep(100);
-		// System.out.println(getNotificationId());
-		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		//
-		// }
-		// });
-		// Thread a2 = new Thread(new Runnable() {
-		//
-		// public void run() {
-		// while (true)
-		// try {
-		// Thread.sleep(100);
-		// System.out.println(getNotificationId());
-		// } catch (InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		//
-		// }
-		// });
-		// a1.start();
-		// a2.start();
 	}
 
 	public final static boolean isNullOrBlank(Object obj) {
@@ -168,57 +130,12 @@ public class SystemUtils {
 				|| "Y".equalsIgnoreCase(bool) || "1".equals(bool);
 	}
 
-	public final static void closeQuitely(java.sql.Connection... dbConnections) {
+	public final static void closeQuitely(java.lang.AutoCloseable... closables) {
 
-		for (java.sql.Connection dbConnection : dbConnections) {
-			if (dbConnection != null) {
-				try {
-					dbConnection.close();
-				} catch (Exception e) {
-					logger.log(CommonLogger.ERROR, "closeQuitely", "object close exception", e);
-				}
-			} else {
-				logger.log(CommonLogger.INFO, "closeQuitely", "object to be closed is NULL");
-			}
-		}
-	}
-
-	public final static void closeQuitely(java.io.Closeable... closables) {
-
-		for (java.io.Closeable closable : closables) {
+		for (java.lang.AutoCloseable closable : closables) {
 			if (closable != null) {
 				try {
 					closable.close();
-				} catch (Exception e) {
-					logger.log(CommonLogger.ERROR, "closeQuitely", "object close exception", e);
-				}
-			} else {
-				logger.log(CommonLogger.INFO, "closeQuitely", "object to be closed is NULL");
-			}
-		}
-	}
-
-	public final static void closeQuitely(java.sql.Statement... stmts) {
-
-		for (java.sql.Statement dbConnection : stmts) {
-			if (dbConnection != null) {
-				try {
-					dbConnection.close();
-				} catch (Exception e) {
-					logger.log(CommonLogger.ERROR, "closeQuitely", "object close exception", e);
-				}
-			} else {
-				logger.log(CommonLogger.INFO, "closeQuitely", "object to be closed is NULL");
-			}
-		}
-	}
-
-	public final static void closeQuitely(java.sql.ResultSet... adapters) {
-
-		for (java.sql.ResultSet adapter : adapters) {
-			if (adapter != null) {
-				try {
-					adapter.close();
 				} catch (Exception e) {
 					logger.log(CommonLogger.ERROR, "closeQuitely", "object close exception", e);
 				}
@@ -234,51 +151,6 @@ public class SystemUtils {
 			if (inputStream != null) {
 				try {
 					inputStream.close();
-				} catch (Exception e) {
-					logger.log(CommonLogger.ERROR, "closeQuitely", "object close exception", e);
-				}
-			} else {
-				logger.log(CommonLogger.INFO, "closeQuitely", "object to be closed is NULL");
-			}
-		}
-	}
-
-	public final static void closeQuitely(java.io.OutputStream... outputStreams) {
-
-		for (java.io.OutputStream outputStream : outputStreams) {
-			if (outputStream != null) {
-				try {
-					outputStream.close();
-				} catch (Exception e) {
-					logger.log(CommonLogger.ERROR, "closeQuitely", "object close exception", e);
-				}
-			} else {
-				logger.log(CommonLogger.INFO, "closeQuitely", "object to be closed is NULL");
-			}
-		}
-	}
-
-	public final static void closeQuitely(java.io.Reader... readers) {
-
-		for (java.io.Reader reader : readers) {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (Exception e) {
-					logger.log(CommonLogger.ERROR, "closeQuitely", "object close exception", e);
-				}
-			} else {
-				logger.log(CommonLogger.INFO, "closeQuitely", "object to be closed is NULL");
-			}
-		}
-	}
-
-	public final static void closeQuitely(java.io.Writer... writers) {
-
-		for (java.io.Writer writer : writers) {
-			if (writer != null) {
-				try {
-					writer.close();
 				} catch (Exception e) {
 					logger.log(CommonLogger.ERROR, "closeQuitely", "object close exception", e);
 				}
