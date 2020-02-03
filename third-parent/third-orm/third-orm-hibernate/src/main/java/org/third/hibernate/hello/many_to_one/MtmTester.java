@@ -1,38 +1,40 @@
 package org.third.hibernate.hello.many_to_one;
 
-public class MtmTester {
+import org.basic.db.domain.AccountDM;
+import org.basic.db.domain.UserDM;
 
+public class MtmTester {
     public static void main(String[] args) {
 
-        org.hibernate.cfg.Configuration config = new org.hibernate.cfg.Configuration().configure();
+        org.hibernate.cfg.Configuration config = new org.hibernate.cfg.Configuration().configure(Thread.class.getResource("/hibernate.jdbc.xml"));
+        config.addAnnotatedClass(AccountDM.class);
+        config.addAnnotatedClass(UserDM.class);
+        
         org.hibernate.SessionFactory sessionFactory = config.buildSessionFactory();
         org.hibernate.Session session = sessionFactory.openSession();
-        Account account1 = new Account();
-        account1.accountName = "NTU-M8-419";
-        Account account2 = new Account();
-        account2.accountName = "NTU-G3-302";
+        AccountDM account1 = new AccountDM();
+        account1.setId(3);
+        account1.setName("NTU-M8-419");
 
-        User u1 = new User();
-        u1.userName = ("shenbin");
-        u1.account = account1;
+        UserDM u1 = new UserDM();
+        u1.setName("shenbin");
+        u1.setAccount(account1);
 
-        User u2 = new User();
-        u2.userName = ("chenyan");
-        u2.account = account1;
-
-        User u3 = new User();
-        u3.userName = ("zhangsna");
-        u3.account = account1;
+        UserDM u2 = new UserDM();
+        u2.setAccount(account1);
+        u2.setName("chenyan");
 
         org.hibernate.Transaction tx = session.beginTransaction();
+        session.saveOrUpdate(account1);
         session.save(u1);
         session.save(u2);
-        session.save(u3);
         tx.commit();
+        
+        
 
-        User user = (User) session.load(User.class, new Integer(1));
-        System.out.println(user.userName);
-        System.out.println(user.account.accountName);
+//        UserDM user = (User) session.load(UserDM.class, new Integer(1));
+//        System.out.println(user.userName);
+//        System.out.println(user.account.accountName);
         session.close();
         sessionFactory.close();
 

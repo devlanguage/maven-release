@@ -11,12 +11,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.io.StringWriter;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.SchemaOutputResolver;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElementDecl;
+import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -30,19 +37,129 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-/**
- * 
- */
-public class XmlUtils {
+class JaxbSchemaOutputResolver extends SchemaOutputResolver {
 
+	private File f;
+
+	public JaxbSchemaOutputResolver(String fileName) {
+		f = new File(fileName);
+	}
+
+	public JaxbSchemaOutputResolver(String dir, String fileName) {
+		f = new File(dir, fileName);
+	}
+
+	@Override
+	public Result createOutput(String namespaceUri, String suggestedFileName) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
+
+class ClientCertificateValidatorConfig {
+
+	public final static String CERTIFICATE_PARSER_CLASS_ATT_NAME = "class";
+	public final static String USER_NAME_ATTRIBUTE_NAME_ATT_NAME = "attributeName";
+	public final static String USER_NAME_HEADER_NAME_ATT_NAME = "headerName";
+
+	public final static String USER_NAME_ATTRIBUTE_NAME_DEF_VAL = "cn";
+
+	/**
+	 * denotes a fully qualified class name that implements the interface
+	 * {@link com.hp.ccue.identity.hpssoImpl.validators.clientCertificate.UserIdentifierRetriever}
+	 * if null, the default one is used
+	 */
+	private String certificateParserClass;
+	/**
+	 * Denotes the name of the attribute that holds the user name. The attribute is
+	 * part ofthe certificate to be parsed by {@link #certificateParserClass}
+	 */
+	private String userNameAttributeName;
+	/**
+	 * Denotes the header name that holds the client certificate
+	 */
+	private String userNameHeaderName;
+
+	public ClientCertificateValidatorConfig() {
+	}
+
+	@Override
+	public ClientCertificateValidatorConfig clone() throws CloneNotSupportedException {
+
+		return (ClientCertificateValidatorConfig) super.clone();
+
+	}
+
+	@XmlAttribute(name = "class")
+	public String getCertificateParserClass() {
+
+		return certificateParserClass;
+	}
+
+	public void setCertificateParserClass(String certificateParserClass) {
+
+		this.certificateParserClass = certificateParserClass;
+	}
+
+	@XmlAttribute(name = "attributeName")
+	public String getUserNameAttributeName() {
+
+		return userNameAttributeName;
+	}
+
+	public void setUserNameAttributeName(String userNameAttributeName) {
+
+		this.userNameAttributeName = userNameAttributeName;
+	}
+
+	@XmlAttribute(name = "headerName")
+	public String getUserNameHeaderName() {
+
+		return userNameHeaderName;
+	}
+
+	public void setUserNameHeaderName(String userNameHeaderName) {
+
+		this.userNameHeaderName = userNameHeaderName;
+	}
+}
+
+@XmlRegistry
+class JaxbObjectFactory {
+
+	@XmlElementDecl(name = "ClientCertificate")
+	public JAXBElement<ClientCertificateValidatorConfig> createClientCertificate(ClientCertificateValidatorConfig cac) {
+
+		return new JAXBElement<ClientCertificateValidatorConfig>(new QName("ClientCertificate"),
+				ClientCertificateValidatorConfig.class, cac);
+	}
+
+}
+
+public class XmlUtils {
+	private static javax.xml.parsers.DocumentBuilderFactory documentBuilderFactory;
 	static DocumentBuilder builder = null;
 	private final static Logger logger = Logger.getLogger(XmlUtils.class.getName());
 
 	static {
+		documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		try {
-			builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			documentBuilderFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			documentBuilderFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+			documentBuilderFactory.setExpandEntityReferences(false);
+			documentBuilderFactory.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		} catch (ParserConfigurationException e) {
-			logger.log(Level.SEVERE, "Failed to initialize the XML DOM tree", e);
+			e.printStackTrace();
+		}
+
+		javax.xml.parsers.SAXParserFactory spf = SAXParserFactory.newInstance();
+		try {
+			spf.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			javax.xml.parsers.SAXParser sp = spf.newSAXParser();
+			org.xml.sax.XMLReader xmlReader = sp.getXMLReader();
+		} catch (ParserConfigurationException | SAXException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -160,6 +277,18 @@ public class XmlUtils {
 	public static Element getRootNode(String xmlFileContent) throws BasicException {
 
 		return getRootNode(createDocumentByString(xmlFileContent));
+	}
+
+	public static final String toString(org.w3c.dom.Element element) throws IOException {
+		com.sun.org.apache.xml.internal.serialize.OutputFormat format = new com.sun.org.apache.xml.internal.serialize.OutputFormat(
+				element.getOwnerDocument());
+		format.setEncoding("UTF-8");
+		java.io.StringWriter stringOut = new java.io.StringWriter();
+		com.sun.org.apache.xml.internal.serialize.XMLSerializer serial = new com.sun.org.apache.xml.internal.serialize.XMLSerializer(
+				stringOut, format);
+		serial.asDOMSerializer();
+		serial.serialize(element);
+		return stringOut.toString();
 	}
 
 	public static boolean isValid(String filename) {

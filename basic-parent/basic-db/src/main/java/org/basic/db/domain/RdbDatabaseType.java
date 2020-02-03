@@ -1,6 +1,6 @@
-package org.basic.db;
+package org.basic.db.domain;
 
-public enum RdbDatabase {
+public enum RdbDatabaseType {
 	hsqldb("hsqldb", "org.hsqldb.jdbc.JDBCDriver", "jdbc:hsqldb:hsql://"), //
 	hsqldb_http("hsqldb", "org.hsqldb.jdbc.JDBCDriver", "jdbc:hsqldb:http://"), //
 	hsqldb_mem("hsqldb", "org.hsqldb.jdbc.JDBCDriver", "jdbc:hsqldb:mem:"), //
@@ -45,7 +45,7 @@ public enum RdbDatabase {
 	private String driver;
 	private String urlPrefix;
 
-	private RdbDatabase(String type, String driver, String urlPrefix) {
+	private RdbDatabaseType(String type, String driver, String urlPrefix) {
 		this.type = type;
 		this.driver = driver;
 		this.urlPrefix = urlPrefix;

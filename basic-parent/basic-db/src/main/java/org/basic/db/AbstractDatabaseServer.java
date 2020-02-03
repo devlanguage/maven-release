@@ -8,6 +8,7 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 
 import org.basic.common.util.SystemUtils;
+import org.basic.db.domain.RdbDatabaseType;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.internal.jdbc.DriverDataSource;
 
@@ -16,12 +17,12 @@ public abstract class AbstractDatabaseServer {
 	protected String dbUrl = "";
 	protected String dbUser;
 	protected String dbPwd;
-	protected RdbDatabase rdbDatabase;
+	protected RdbDatabaseType rdbDatabaseType;
 	protected Flyway flyway;
 	protected DataSource dataSource;
 
-	public AbstractDatabaseServer(RdbDatabase type, String dbUrl, String dbUser, String dbPwd) {
-		this.rdbDatabase = type;
+	public AbstractDatabaseServer(RdbDatabaseType type, String dbUrl, String dbUser, String dbPwd) {
+		this.rdbDatabaseType = type;
 		this.dbUrl = dbUrl;
 		this.dbUser = dbUser;
 		this.dbPwd = dbPwd;
@@ -29,14 +30,14 @@ public abstract class AbstractDatabaseServer {
 	}
 
 	private void initDatabase() {
-		dataSource = new DriverDataSource(Thread.currentThread().getContextClassLoader(), rdbDatabase.getDriver(), dbUrl, dbUser,
+		dataSource = new DriverDataSource(Thread.currentThread().getContextClassLoader(), rdbDatabaseType.getDriver(), dbUrl, dbUser,
 				dbPwd);
 		flyway = Flyway.configure().dataSource(dataSource)
-				.locations(AbstractDatabaseServer.class.getPackage().getName() + ".migration." + rdbDatabase.getType()).load();
+				.locations(AbstractDatabaseServer.class.getPackage().getName() + ".migration." + rdbDatabaseType.getType()).load();
 		flyway.migrate();
 	}
 
-	protected void queryAll() {
+	public void queryAll() {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;

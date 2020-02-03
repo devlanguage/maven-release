@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- 
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+ -->
+
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.hibernate.org/xsd/orm/cfg  http://hibernate.org/xsd/hibernate-configuration/hibernate-configuration-4.0.xsd">
+    <session-factory>
+        <property name="hibernate.connection.provider_class">com.alibaba.druid.support.hibernate.DruidConnectionProvider</property>
+        <property name="driverClassName">org.hsqldb.jdbc.JDBCDriver</property>
+        <property name="url">jdbc:hsqldb:hsql://localhost:28080/test1</property>
+        <property name="username">SA</property>
+        <property name="password"></property>
+        <property name="filters">stat</property>
+        <property name="initialSize">1</property>
+        <property name="maxActive">20</property>
+        <property name="minIdle">1</property>
+        <property name="maxWait">60000</property>
+        <property name="timeBetweenEvictionRunsMillis">60000</property>
+        <property name="minEvictableIdleTimeMillis">300000</property>
+        <property name="validationQuery">SELECT 1</property>
+        <property name="testWhileIdle">true</property>
+        <property name="testOnBorrow">false</property>
+        <property name="testOnReturn">false</property>
+        <property name="poolPreparedStatements">true</property>
+        <property name="maxOpenPreparedStatements">20</property>
+        <property name="maxPoolPreparedStatementPerConnectionSize">200</property>
+        <property name="asyncInit">true</property>
+        <!-- Set the JDBC transaction isolation level.
+            Check java.sql.Connection for meaningful values but note that most databases do not support all isolation levels. 
+            TRANSACTION_NONE : 0
+            TRANSACTION_READ_COMMITTED : 1
+            TRANSACTION_READ_UNCOMMITTED : 2
+            TRANSACTION_REPEATABLE_READ : 4
+            TRANSACTION_SERIALIZABLE : 8
+        -->
+        <property name="isolation">8</property>
+        <property name="charset">utf-8</property>
+        <!-- 
+            Specify when Hibernate should release JDBC connections. 
+            By default, a JDBC connection is held until the session is explicitly closed or disconnected. 
+            
+            For an application server JTA datasource, you should use after_statement to aggressively release connections 
+            after every JDBC call. 
+            For a non-JTA connection, it often makes sense to release the connection at the end of each transaction, 
+            by using after_transaction. 
+            
+            "auto" will choose after_statement for the JTA and CMT transaction strategies
+            "after_transaction" for the JDBC transaction strategy. 
+            
+            . auto (default) | on_close | after_transaction | after_statement 
+            
+            Note:
+            this setting only affects Sessions returned from SessionFactory.openSession. 
+            For Sessions obtained through SessionFactory.getCurrentSession, the CurrentSessionContext implementation 
+            configured for use controls the connection release mode for those Sessions. 
+            
+        -->
+        <property name="release_mode">auto</property>
+
+
+        <!-- SQL dialect 
+            <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+            <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+            <property name="dialect">org.hibernate.dialect.Oracle9iDialect</property>
+            <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
+            
+        -->
+            <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+    <!-- 
+      Previous hibernate use "hibernate.default_schema" 
+       <property name="hibernate.default_catalog">hibernatetest</property>
+     -->
+
+        <!-- Enable Hibernate's automatic session context management 
+            jta | thread | managed | custom.Class 
+            defines which org.hibernate.context.CurrentSessionContext implementation should be used
+        -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- 
+            Disable the second-level cache  :org.hibernate.cache.NoCacheProvider
+            Cache           Provider_class                              Type                                Cluster_Safe           Query_Cache_Supported 
+            Hashtable       org.hibernate.cache.HashtableCacheProvider  memory                                                      yes 
+            EHCache         org.hibernate.cache.EhCacheProvider         memory, disk                                                yes 
+            OSCache         org.hibernate.cache.OSCacheProvider         memory, disk                                                yes 
+            SwarmCache      org.hibernate.cache.SwarmCacheProvider  clustered(ip multicast)                 yes(clustered_invalidation)   
+            JBossTreeCache  org.hibernate.cache.TreeCacheProvider   clustered(ip multicast),transactional   yes (replication)       yes (clock sync req.)             
+            
+            <cache 
+            usage="transactional|read-write|nonstrict-read-write|read-only"  (1)
+            region="RegionName"                                              (2)
+            include="all|non-lazy"                                           (3)
+            />
+            org.hibernate.cache.internal.NoCacheProvider: Disable 
+            <property name="cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+            
+            
+            cache settings 
+            Usage:  transactional|read-write|nonstrict-read-write|read-only" 
+            include="all|non-lazy"      
+            
+            <class name="eg.Immutable" mutable="false">
+            <cache usage="read-only"/>
+            ....
+            </class>            
+        -->
+        <property name="cache.use_query_cache">false</property>
+        <property name="cache.use_second_level_cache">false</property>
+
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+        <property name="use_sql_comments">false</property>
+        <property name="use_identifier_rollback">true</property>
+        <property name="format_sql">true></property>
+        <!-- If max_fetch_depth is set to 0, it will diable the outer-join.
+            A setting of 1 or higher enables outer join fetching for one-to-one and many-to-one associations which have been mapped with fetch="join". 
+        -->
+        <property name="max_fetch_depth">3</property>
+        <property name="default_batch_fetch_size">8</property>
+        <property name="default_entity_mode">pojo</property><!-- dynamic-map, dom4j,pojo -->
+        <property name="order_inserts">true</property>
+        <property name="order_updates">true</property>
+
+        <!-- 
+            If you enable hibernate.generate_statistics, Hibernate will expose a number of metrics that are useful 
+            when tuning a running system via SessionFactory.getStatistics(). 
+            Hibernate can even be configured to expose these statistics via JMX. Read the Javadoc of the interfaces 
+            in org.hibernate.stats for more information. 
+        -->
+        <property name="generate_statistics">true</property>
+
+        <!-- Drop and re-create the database schema on startup 
+            Automatically validate or export schema DDL to the database when the SessionFactory is created. 
+            With create-drop, the database schema will be dropped when the SessionFactory is closed explicitly. 
+            'create', 'create-drop', 'create-only', 'drop', 'update', 'none' and 'validate'
+        -->
+         <property name="hbm2ddl.auto">none</property>
+        <!-- 
+            Oracle limits the size of byte arrays that may be passed to/from its JDBC driver. 
+            If you wish to use large instances of binary or serializable type, 
+            you should enable hibernate.jdbc.use_streams_for_binary. This is a system-level setting only. 
+            
+            <property name="jdbc.use_streams_for_binary"></property>
+        -->
+      <!-- <mapping resource="hbm/hello.hbm.xml" /> -->
+      <!-- <mapping class="org.third.common.user.domain.HiEvent" /> -->
+<!--       <mapping class="org.third.common.user.domain.HiEvent"/>
+ -->      <!-- <class-cache class="org.hibernate3.core.hello.persistence.Event" usage="read-write" /> -->
+      <!--collection-cache usage="read-only" collection="" /> -->
+    
+    </session-factory>
+
+</hibernate-configuration>

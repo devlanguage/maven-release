@@ -3,7 +3,6 @@ package org.basic.common.util;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,8 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javax.naming.Context;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,13 +30,12 @@ public class StreamUtils {
 	/**
 	 * Represents the end-of-file (or stream).
 	 * 
-	 * @since 2.5 (made public)
 	 */
 	public static final int EOF = -1;
 	/**
 	 * Cache size for received character from stream
 	 */
-	public static final int BUFFER_SIZE = 1024;
+	public static final int BUFFER_SIZE = 8024;
 	/**
 	 * The Unix directory separator character.
 	 */
@@ -137,10 +133,6 @@ public class StreamUtils {
 		return stringBuffer.toString();
 	}
 
-	public static String streamToString(InputStream in) throws IOException {
-		return streamToString(in, StandardCharsets.UTF_8);
-	}
-
 	public static String pkiStreamToString(InputStream in) throws IOException {
 		StringBuilder stringBuffer = new StringBuilder();
 		String line = null;
@@ -174,7 +166,7 @@ public class StreamUtils {
 	 * @param buffer the buffer to use for the copy
 	 * @return the number of bytes copied
 	 */
-	public static long copyToOutputStream(final InputStream input, final OutputStream output) throws IOException {
+	public static long streamToOutputStream(final InputStream input, final OutputStream output) throws IOException {
 		long count = 0;
 		int bytesRead;
 		byte[] buffer = new byte[BUFFER_SIZE];
@@ -200,7 +192,7 @@ public class StreamUtils {
 		byte[] result = null;
 		try {
 			output = new ByteArrayOutputStream(BUFFER_SIZE);
-			copyToOutputStream(input, output);
+			streamToOutputStream(input, output);
 			result = output.toByteArray();
 		} finally {
 			StreamUtils.closeQuietly(input, output);
@@ -215,32 +207,11 @@ public class StreamUtils {
 	 * 
 	 * @param closableObjects resource object
 	 */
-	public static final void closeQuietly(Closeable... closableObjects) {
+	public static final void closeQuietly(AutoCloseable... closableObjects) {
 		if (null != closableObjects) {
-			for (Closeable closableObject : closableObjects) {
+			for (AutoCloseable closableObject : closableObjects) {
 				if (null != closableObject) {
 					try {
-						closableObject.close();
-					} catch (IOException e) {
-						logger.error("Failed to close the closeble object:" + closableObject, e);
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Release the resource one by one. if some exception happens, exception will
-	 * caught and print into logger
-	 * 
-	 * @param closableObjects resource object
-	 */
-	public static final void closeQuietly(Context... closableObjects) {
-		if (null != closableObjects) {
-			for (Context closableObject : closableObjects) {
-				if (null != closableObject) {
-					try {
-						logger.trace("Closing the {}", closableObject);
 						closableObject.close();
 					} catch (Exception e) {
 						logger.error("Failed to close the closeble object:" + closableObject, e);
@@ -295,11 +266,11 @@ public class StreamUtils {
 		return result;
 	}
 
-	public static String toString(InputStream ins) throws IOException {
-		return toString(ins, CommonUtils.UTF8);
+	public static String streamToString(InputStream ins) throws IOException {
+		return streamToString(ins, CommonUtils.UTF8);
 	}
 
-	public static String toString(InputStream ins, String charset) throws IOException {
+	public static String streamToString(InputStream ins, String charset) throws IOException {
 
 		int read = -1;
 		byte[] cache = new byte[BUFFER_SIZE];
@@ -311,8 +282,8 @@ public class StreamUtils {
 		return sb.toString();
 	}
 
-	public static void writeStringToFile(String content, String filePath) throws IOException {
-		writeByteArrayToFile(new File(filePath), content.getBytes(StandardCharsets.UTF_8));
+	public static void stringToFile(String content, String filePath) throws IOException {
+		byteArrayToFile(new File(filePath), content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	public static InputStream stringToInputStream(String str) {
@@ -324,7 +295,7 @@ public class StreamUtils {
 		return new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8));
 	}
 
-	public static void writeByteArrayToFile(File file, byte[] contentInBytes) throws IOException {
+	public static void byteArrayToFile(File file, byte[] contentInBytes) throws IOException {
 		// if file doesn't exists, then create it
 		if (!file.exists()) {
 			if (!file.createNewFile()) {
@@ -344,7 +315,7 @@ public class StreamUtils {
 		}
 	}
 
-	public static void copyToOutputStream(byte[] source, FileOutputStream output) throws IOException {
+	public static void byteArrayToOutputStream(byte[] source, FileOutputStream output) throws IOException {
 		output.write(source);
 		output.flush();
 	}
@@ -368,8 +339,8 @@ public class StreamUtils {
 	 * @throws IOException          if an I/O error occurs
 	 * @since 2.2
 	 */
-	public static long copyStream(final Reader input, final Writer output, final long inputOffset, final long length,
-			final char[] buffer) throws IOException {
+	public static long readerToWriter(final Reader input, final Writer output, final long inputOffset,
+			final long length, final char[] buffer) throws IOException {
 		if (inputOffset > 0) {
 			skipFully(input, inputOffset);
 		}
@@ -433,7 +404,6 @@ public class StreamUtils {
 	 */
 
 	private static char[] SKIP_CHAR_BUFFER;
-	private static byte[] SKIP_BYTE_BUFFER;
 	/**
 	 * The default buffer size to use for the skip() methods.
 	 */
@@ -488,4 +458,5 @@ public class StreamUtils {
 		}
 		return toSkip - remain;
 	}
+
 }

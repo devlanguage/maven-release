@@ -99,7 +99,7 @@
     <moneta.version>1.1</moneta.version>
     <opensaml2.version>2.6.4</opensaml2.version>
 
-    <hibernate.version>5.4.3.Final</hibernate.version>
+    <hibernate.version>5.4.10.Final</hibernate.version>
 
     <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
     <spring.kafka.version>2.1.7.RELEASE</spring.kafka.version>
@@ -399,6 +399,20 @@
         <groupId>com.fasterxml.jackson.datatype</groupId>
         <artifactId>jackson-datatype-hibernate4</artifactId>
         <version>${jackson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>${hibernate.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>${hibernate.version}</version>
+      </dependency>    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-c3p0</artifactId>
+        <version>${hibernate.version}</version>
       </dependency>
       <dependency>
         <groupId>xerces</groupId>

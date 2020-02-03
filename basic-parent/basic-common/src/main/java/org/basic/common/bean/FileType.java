@@ -1,8 +1,5 @@
 package org.basic.common.bean;
 
-/**
- * 
- */
 public enum FileType {
 	XML("XML"), PROPERTIES("PROPERTIES");
 

@@ -1,7 +1,7 @@
 package org.basic.db.hsqldb;
 
 import org.basic.db.AbstractDatabaseServer;
-import org.basic.db.RdbDatabase;
+import org.basic.db.domain.RdbDatabaseType;
 
 public class HsqlHttpClient extends AbstractDatabaseServer {
 //	jdbc:hsqldb:http://localhost:28081/test1
@@ -11,12 +11,17 @@ public class HsqlHttpClient extends AbstractDatabaseServer {
 	private static String DB_USER = "SA";
 	private static String DB_PWD = "";
 
-	public HsqlHttpClient(RdbDatabase type, String dbUrl, String dbUser, String dbPwd) {
+	public HsqlHttpClient(RdbDatabaseType type, String dbUrl, String dbUser, String dbPwd) {
 		super(type, dbUrl, dbUser, dbPwd);
 	}
 
+	public static AbstractDatabaseServer getDefault() {
+		AbstractDatabaseServer tester = new HsqlHttpClient(RdbDatabaseType.hsqldb_http, DB_URL, DB_USER, DB_PWD);
+		return tester;
+	}
+
 	public static void main(String[] args) throws Exception {
-		HsqlHttpClient tester = new HsqlHttpClient(RdbDatabase.hsqldb_http, DB_URL, DB_USER, DB_PWD);
+		AbstractDatabaseServer tester = HsqlHttpClient.getDefault();
 		tester.queryAll();
 	}
 }
