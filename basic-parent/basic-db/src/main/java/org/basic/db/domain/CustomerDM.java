@@ -3,7 +3,10 @@ package org.basic.db.domain;
 import java.util.List;
 import java.util.Set;
 
-public class CustomerDM extends AbstractPersistObject {
+@javax.persistence.Table(name = "dm_customer")
+@javax.persistence.Entity
+public class CustomerDM extends AbstractNamedObject {
+	private static final long serialVersionUID = 6508013436087902723L;
 	private String firstName;
 	private String lastName;
 	private String sex = "F";
@@ -11,6 +14,58 @@ public class CustomerDM extends AbstractPersistObject {
 	private String profession = "WORKER";
 	private String position = "Manager";
 	private String emblement = "WHEAT";
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getEmblement() {
+		return emblement;
+	}
+
+	public void setEmblement(String emblement) {
+		this.emblement = emblement;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	private List<EmblementDM> emblements;
 

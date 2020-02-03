@@ -20,7 +20,6 @@
   <modules>
     <module>third-build     </module>
     <module>third-cache     </module>
-    <module>third-common    </module>
     <module>third-concurrent</module>
     <module>third-cxf       </module>
     <module>third-ejb       </module>

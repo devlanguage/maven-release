@@ -44,7 +44,7 @@ public abstract class AbstractDatabaseServer {
 		try {
 			conn = dataSource.getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select id, firstname, lastname from customer");
+			rs = stmt.executeQuery("select id, firstname, lastname from dm_customer");
 
 			while (rs.next()) {
 				System.out.println(String.format("id=%s, firstname=%s, lastname=%s", rs.getInt("id"),

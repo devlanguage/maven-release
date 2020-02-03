@@ -1,139 +1,84 @@
 package org.basic.db.domain;
 
-
 /**
- * Example persistent class. Notice that it looks exactly like any other class. JPA makes writing
- * persistent classes completely transparent.
+ * Example persistent class. Notice that it looks exactly like any other class.
+ * JPA makes writing persistent classes completely transparent.
  */
-public class MagazineDM {
+public class MagazineDM extends AbstractNamedObject {
+	private static final long serialVersionUID = 3888556877838502461L;
+	private String isbn;
+	private String title;
+	private float price;
 
-    private long id;
-    private String isbn;
-    private String title;
-    private float price;
-    private int version;
+	private PersonDM person;
 
-    private PersonDM person;
+	/**
+	 * @return get method for the field person
+	 */
+	public PersonDM getPerson() {
 
-    /**
-     * @return get method for the field person
-     */
-    public PersonDM getPerson() {
+		return this.person;
+	}
 
-        return this.person;
-    }
+	/**
+	 * @param person the person to set
+	 */
+	public void setPerson(PersonDM person) {
 
-    /**
-     * @param person
-     *            the person to set
-     */
-    public void setPerson(PersonDM person) {
+		this.person = person;
+	}
 
-        this.person = person;
-    }
+	public MagazineDM(String title, String isbn) {
 
-    /**
-     * @return get method for the field id
-     */
-    public long getId() {
+		this.title = title;
+		this.isbn = isbn;
+	}
 
-        return this.id;
-    }
+	/**
+	 * @return get method for the field isbn
+	 */
+	public String getIsbn() {
 
-    /**
-     * @param id
-     *            the id to set
-     */
-    public void setId(long id) {
+		return this.isbn;
+	}
 
-        this.id = id;
-    }
+	/**
+	 * @param isbn the isbn to set
+	 */
+	public void setIsbn(String isbn) {
 
-    protected MagazineDM() {
+		this.isbn = isbn;
+	}
 
-    }
+	/**
+	 * @return get method for the field price
+	 */
+	public float getPrice() {
 
-    public MagazineDM(String title, String isbn) {
+		return this.price;
+	}
 
-        this.title = title;
-        this.isbn = isbn;
-    }
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(float price) {
 
-    /**
-     * @return get method for the field isbn
-     */
-    public String getIsbn() {
+		this.price = price;
+	}
 
-        return this.isbn;
-    }
+	/**
+	 * @return get method for the field title
+	 */
+	public String getTitle() {
 
-    /**
-     * @param isbn
-     *            the isbn to set
-     */
-    public void setIsbn(String isbn) {
+		return this.title;
+	}
 
-        this.isbn = isbn;
-    }
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
 
-    /**
-     * @return get method for the field price
-     */
-    public float getPrice() {
-
-        return this.price;
-    }
-
-    /**
-     * @param price
-     *            the price to set
-     */
-    public void setPrice(float price) {
-
-        this.price = price;
-    }
-
-    /**
-     * @return get method for the field title
-     */
-    public String getTitle() {
-
-        return this.title;
-    }
-
-    /**
-     * @param title
-     *            the title to set
-     */
-    public void setTitle(String title) {
-
-        this.title = title;
-    }
-
-    /**
-     * @return get method for the field version
-     */
-    public int getVersion() {
-
-        return this.version;
-    }
-
-    /**
-     * @param version
-     *            the version to set
-     */
-    public void setVersion(int version) {
-
-        this.version = version;
-    }
-
-    @Override
-    public String toString() {
-
-        return new StringBuffer(this.getClass().getSimpleName()).append(":[id=").append(this.id)
-                .append(", title=").append(this.title).append(", price=").append(this.price)
-                .append(", person=").append(this.person)
-                .append("]").toString();
-    }
-
+		this.title = title;
+	}
 }

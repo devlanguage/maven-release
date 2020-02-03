@@ -2,109 +2,57 @@ package org.basic.db.domain;
 
 import java.math.BigDecimal;
 
+public class EmblementDM extends AbstractNamedObject {
+	private static final long serialVersionUID = -6043312015525232993L;
+	private BigDecimal output;
+	private String unit;
+	private PersonDM person;
 
-/**
- * 
- */
-public class EmblementDM {
+	/**
+	 * @return get method for the field output
+	 */
+	public BigDecimal getOutput() {
 
-    private long emblementId;
-    private String emblementName;
-    private BigDecimal output;
-    private String unit;
-    private PersonDM person;
+		return this.output;
+	}
 
-    /**
-     * @return get method for the field emblementId
-     */
-    public long getEmblementId() {
+	/**
+	 * @param output the output to set
+	 */
+	public void setOutput(BigDecimal output) {
 
-        return this.emblementId;
-    }
+		this.output = output;
+	}
 
-    /**
-     * @param emblementId
-     *            the emblementId to set
-     */
-    public void setEmblementId(long emblementId) {
+	/**
+	 * @return get method for the field person
+	 */
+	public PersonDM getPerson() {
 
-        this.emblementId = emblementId;
-    }
+		return this.person;
+	}
 
-    /**
-     * @return get method for the field emblementName
-     */
-    public String getEmblementName() {
+	/**
+	 * @param person the person to set
+	 */
+	public void setPerson(PersonDM person) {
 
-        return this.emblementName;
-    }
+		this.person = person;
+	}
 
-    /**
-     * @param emblementName
-     *            the emblementName to set
-     */
-    public void setEmblementName(String emblementName) {
+	/**
+	 * @return get method for the field unit
+	 */
+	public String getUnit() {
 
-        this.emblementName = emblementName;
-    }
+		return this.unit;
+	}
 
-    /**
-     * @return get method for the field output
-     */
-    public BigDecimal getOutput() {
+	/**
+	 * @param unit the unit to set
+	 */
+	public void setUnit(String unit) {
 
-        return this.output;
-    }
-
-    /**
-     * @param output
-     *            the output to set
-     */
-    public void setOutput(BigDecimal output) {
-
-        this.output = output;
-    }
-
-    /**
-     * @return get method for the field person
-     */
-    public PersonDM getPerson() {
-
-        return this.person;
-    }
-
-    /**
-     * @param person
-     *            the person to set
-     */
-    public void setPerson(PersonDM person) {
-
-        this.person = person;
-    }
-
-    /**
-     * @return get method for the field unit
-     */
-    public String getUnit() {
-
-        return this.unit;
-    }
-
-    /**
-     * @param unit
-     *            the unit to set
-     */
-    public void setUnit(String unit) {
-
-        this.unit = unit;
-    }
-
-    @Override
-    public String toString() {
-
-        return new StringBuffer(this.getClass().getSimpleName()).append(":[emblementId=").append(
-                this.emblementId).append(", emblementName=").append(this.emblementName).append(
-                ",output=").append(this.output).append(" ").append(this.unit).toString();
-
-    }
+		this.unit = unit;
+	}
 }

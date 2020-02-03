@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.TemporalType;
 
 public abstract class AbstractPersistObject extends AbstractIdObject {
+	private static final long serialVersionUID = 4924888794307966379L;
 	protected int version;
 	protected Date createdDate;
 	protected Date modifiedDate;

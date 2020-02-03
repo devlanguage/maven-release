@@ -1,0 +1,43 @@
+######### connect by the JCA:
+1. connect to ActiveMQ：
+  1)依赖的包：
+	  activemq-all-5.0.0.jar
+	  activemq-ra-5.0.0.jar
+  2) 配置Spring
+	<bean id="activeMqConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory">
+			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+				<property name="brokerURL" value="tcp://localhost:61616" />
+			</bean>
+		</property>
+	</bean>
+	或者
+	<bean id="activeMqResourceAdapter" class="org.springframework.jca.support.ResourceAdapterFactoryBean">
+		<property name="resourceAdapter">
+			<bean class="org.apache.activemq.ra.ActiveMQResourceAdapter">
+				<property name="serverUrl" value="tcp://localhost:61616" />
+			</bean>
+		</property>
+		<property name="workManager">
+			<bean class="org.springframework.jca.work.SimpleTaskWorkManager" />
+		</property>
+	</bean>  
+  3) 取得连接
+        javax.resource.spi.ResourceAdapter ra = (ActiveMQResourceAdapter) ctx
+                .getBean("activeMqResourceAdapter");
+        ActiveMQResourceAdapter activeMqResourceAdapter = (ActiveMQResourceAdapter) ra;
+        try {
+            ActiveMQConnection amqConnectin = activeMqResourceAdapter.makeConnection();
+            //amqConnectin.createSession(transacted, acknowledgeMode)            
+        } catch (JMSException e) { // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+2. Connect to IMQ
+  1) Dependent Packages
+  	 imqjmsra.rar
+  	 	imqbroker.jar
+  	 	imqjmsra.jar
+  	 	imqjmx.jar
+  2) Config Spring
+  	 

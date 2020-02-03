@@ -1,7 +1,10 @@
 package org.basic.db.domain;
 
-public class AddressDM extends AbstractPersistObject {
+@javax.persistence.Table(name = "dm_address")
+@javax.persistence.Entity
+public class AddressDM extends AbstractNamedObject {
 
+	private static final long serialVersionUID = 214956640933824809L;
 	private String country;
 	private String city;
 

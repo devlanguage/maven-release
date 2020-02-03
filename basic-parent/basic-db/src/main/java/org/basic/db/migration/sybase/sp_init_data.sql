@@ -1,50 +1,3 @@
---------------------------------------
-use java;
-DROP TABLE IF EXISTS td_user;
-DROP TABLE IF EXISTS `td_address`;
-
-CREATE TABLE if not exists `td_address` (  
-  id int  NOT NULL auto_increment,
-  city varchar(45) DEFAULT 'Shanghai' NULL,
-  country varchar(45) DEFAULT 'China' NULL,
-  description varchar(255) DEFAULT 'NO DESCRIPTION',
-  PRIMARY KEY (id)  
-) 
- ENGINE=InnoDB DEFAULT CHARSET=latin1
- auto_increment=1
- COMMENT='Save adress info'
-;
-ALTER TABLE `td_address` auto_increment=1;
-truncate table td_address;
-INSERT INTO td_address(city,country) VALUES('China','Shanghai');
-INSERT INTO td_address(city,country) VALUES('China','LanZhou');
-
-CREATE TABLE if not exists `td_user` (  
-  id int NOT NULL auto_increment,
-  name varchar(45) NOT NULL,
-  password varchar(45) NOT NULL,    
-  birthday timestamp NOT NULL DEFAULT now(),  
-  graduation datetime,  
-  sex tinyint DEFAULT NULL,  
-  weight float DEFAULT 55.4,  
-  height float DEFAULT 169.10,  
-  address_id INT,
-  PRIMARY KEY (id),
-  FOREIGN KEY(address_id) REFERENCES td_address(id)
-)  
- ENGINE=InnoDB DEFAULT CHARSET=latin1
- auto_increment=1
- COMMENT='Save user info'
-;
-INSERT INTO td_user(name,password,birthday, graduation,sex,weight,height,address_id)
-  VALUES('test01', 'password01', '2013-12-11 10:34:55', curdate(),1, 12.44, 13.44, 1);
-INSERT INTO td_user(name,password,birthday,graduation,sex,weight,height,address_id)
-  VALUES('test02', 'password02', curdate(), now(),1, 12.44, 13.44, 1);
-INSERT INTO td_user(name,password,birthday,graduation,sex,weight,height,address_id)
-  VALUES('test03', 'password03', current_time, now(),1, 12.44, 13.44, 2);
-  
----------------------------------------
-/*
 drop index sp_productCat;
 drop index sp_productName;
 drop index sp_itemProd;
@@ -122,10 +75,10 @@ create table sp_bannerdata (
 grant all on sp_bannerdata to public;
 
 create table sp_category (
-  catid varchar(10) not null,
-  name varchar(80) null,
-  descn varchar(255) null,
-  constraint sp_pk_category primary key (catid)
+	catid varchar(10) not null,
+	name varchar(80) null,
+	descn varchar(255) null,
+	constraint sp_pk_category primary key (catid)
 );
 
 grant all on sp_category to public;
@@ -287,4 +240,3 @@ INSERT INTO sp_inventory (itemid, qty ) VALUES ('EST-25',10000);
 INSERT INTO sp_inventory (itemid, qty ) VALUES ('EST-26',10000);
 INSERT INTO sp_inventory (itemid, qty ) VALUES ('EST-27',10000);
 INSERT INTO sp_inventory (itemid, qty ) VALUES ('EST-28',10000);
-*/

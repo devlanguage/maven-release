@@ -2,8 +2,10 @@ package org.basic.db.domain;
 
 import java.util.List;
 import java.util.Set;
-
-public class PersonDM extends AbstractPersistObject {
+@javax.persistence.Table(name = "dm_person")
+@javax.persistence.Entity
+public class PersonDM extends AbstractNamedObject {
+	private static final long serialVersionUID = 4259958816195376293L;
 	private String firstName;
 	private String lastName;
 	private String sex = "F";
@@ -26,6 +28,54 @@ public class PersonDM extends AbstractPersistObject {
 	private Set<EventDM> events;// = new HashSet<Event>();
 	// join ===> set
 	private Set<String> emailAddresses;// = new HashSet<String>();
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getProfession() {
+		return profession;
+	}
+
+	public void setProfession(String profession) {
+		this.profession = profession;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getEmblement() {
+		return emblement;
+	}
+
+	public void setEmblement(String emblement) {
+		this.emblement = emblement;
+	}
 
 	/**
 	 * @return get method for the field emailAddresses

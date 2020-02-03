@@ -1,7 +1,10 @@
 package org.basic.db.domain;
 
+import java.io.Serializable;
+
 @javax.persistence.MappedSuperclass
-public abstract class AbstractIdObject implements Comparable<Integer> {
+public abstract class AbstractIdObject implements Comparable<Integer>,Serializable {
+	private static final long serialVersionUID = -275779834776123944L;
 	protected Integer id;
 
 	public AbstractIdObject() {
@@ -14,10 +17,15 @@ public abstract class AbstractIdObject implements Comparable<Integer> {
 			table = "dm_pk_generator", pkColumnName = "pk_name", valueColumnName = "pk_id", //
 			pkColumnValue = "dm_user_pk", //
 			initialValue=1, allocationSize=100)
-	
 			
 	 &#64;GeneratedValue(strategy = GenerationType.SEQUENCE,generator="dm_user_generator")  
 	 &#64;SequenceGenerator(name="dm_user_generator", sequenceName="dm_user_seq")
+	 
+	 &#64;GeneratedValue(strategy=GenerationType.AUTO, generator="native")
+	 &#64;GenericGenerator(name="native", strategy="native")
+	 
+	 &#64;GeneratedValue(generator = "uuidGenerator")
+	 &#64;GenericGenerator(name = "uuidGenerator", strategy = "uuid") //strategy = "uuid" or "uuid2", Supported by Hibernate instead of JPA
 	 * </pre>
 	 */
 	@javax.persistence.Id

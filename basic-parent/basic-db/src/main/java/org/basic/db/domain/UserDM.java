@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 @javax.persistence.Entity
 public class UserDM extends AbstractPersistObject {
 
+	private static final long serialVersionUID = 4137142224312997667L;
 	private String name;
 	private String password;
 	private AccountDM account;
