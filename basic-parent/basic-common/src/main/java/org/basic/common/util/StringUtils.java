@@ -2035,13 +2035,13 @@ public class StringUtils {
 				}
 				try {
 					final Object fieldValue = field.get(t);
-					if(null==fieldValue||fieldValue.getClass().isPrimitive() 
-							|| fieldValue instanceof CharSequence || fieldValue instanceof Collection
-							|| fieldValue instanceof Throwable|| fieldValue instanceof Number) {
-						sb.append(fieldName).append("=").append(fieldValue);// ,	
-					}else {
+					if (null == fieldValue || fieldValue.getClass().isPrimitive() || fieldValue instanceof CharSequence
+							|| fieldValue instanceof Collection || fieldValue instanceof Throwable
+							|| fieldValue instanceof Number) {
+						sb.append(fieldName).append("=").append(fieldValue);// ,
+					} else {
 						sb.append(fieldName).append(":");
-						appendFieldsIn(fieldValue,sb);// ,	
+						appendFieldsIn(fieldValue, sb);// ,
 					}
 				} catch (final IllegalAccessException ex) {
 					// this can't happen. Would get a Security exception

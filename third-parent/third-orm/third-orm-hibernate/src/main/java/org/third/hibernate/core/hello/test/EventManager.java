@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.basic.db.domain.ErrorEventDM;
+import org.basic.db.domain.EventDM;
+import org.basic.db.domain.PersonDM;
 import org.hibernate.Query;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.Statistics;
-import org.third.common.user.domain.ErrorEventDM;
-import org.third.common.user.domain.EventDM;
-import org.third.common.user.domain.PersonDM;
 import org.third.hibernate.common.util.HibernateUtil;
 
 public class EventManager {
@@ -144,9 +144,9 @@ public class EventManager {
 		// Query insert = session.createQuery("insert into Event ");
 		EventDM event = new EventDM();
 
-		event.setId(10001L);
+		event.setId(10001);
 		event.setTitle("create_zhangsan");
-		event.setDate(new java.util.Date());
+		event.setCreatedDate(new java.util.Date());
 		// Assign the identifier and persist it
 		// If generator == assiged, using the current identifier and persist it
 		session.save(event);

@@ -10,7 +10,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.basic.common.bean.BooleanLock;
-import org.third.message.activemq.JmsUtil;
+import org.third.message.activemq.MessageUtil;
 import org.third.message.activemq.MessageUtil.JmsServerType;
 
 public class QueueTest_1 {
@@ -30,7 +30,7 @@ public class QueueTest_1 {
     public QueueTest_1() {
 
         try {
-            session = JmsUtil.getInstance().getSession(JmsServerType.ACTIVE_MQ, false, Session.AUTO_ACKNOWLEDGE);
+            session = MessageUtil.getInstance().getSession(JmsServerType.ACTIVE_MQ, false, Session.AUTO_ACKNOWLEDGE);
             queue1 = session.createQueue(QueueTest_1.class.getSimpleName());
         } catch (Exception e) {
             e.printStackTrace();

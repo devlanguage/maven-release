@@ -37,7 +37,6 @@ message GetMetadataRequest {
     repeated string id = 1;
 }
 
-
 // The request message containing the user's name. 
 message HelloRequest { 
   string name = 1; 

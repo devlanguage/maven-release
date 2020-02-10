@@ -30,9 +30,9 @@
         -->
 
         <property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
-        <property name="connection.url">jdbc:oracle:thin:@sunshapp10:1521:EMS7100S</property>
-        <property name="connection.username">ygong1</property>
-        <property name="connection.password">tellabs</property>
+        <property name="connection.url">jdbc:hsqldb:http://localhost:28081/test1</property>
+        <property name="connection.username">SA</property>
+        <property name="connection.password"></property>
         <!-- Set the JDBC transaction isolation level.
             Check java.sql.Connection for meaningful values but note that most databases do not support all isolation levels. 
             TRANSACTION_NONE : 0
@@ -42,7 +42,7 @@
             TRANSACTION_SERIALIZABLE : 8
         -->
         <property name="connection.isolation">8</property>
-        <property name="connection.charset">ISO-8859-1</property>
+        <property name="connection.charset">UTF-8</property>
         <!-- 
             Specify when Hibernate should release JDBC connections. 
             By default, a JDBC connection is held until the session is explicitly closed or disconnected. 
@@ -75,7 +75,7 @@
             <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
             <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         -->
-        <property name="dialect">org.hibernate.dialect.Oracle9iDialect</property>
+        <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
 
 
         <!-- Enable Hibernate's automatic session context management 

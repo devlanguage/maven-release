@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-sources>
+	<data-source id="hsqldb_server-17001477270-4754e02143f0f4c5" provider="generic" driver="hsqldb_server" name="jdbc:hsqldb:hsql://localhost:28080/test1" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="localhost" port="28080" server="" database="test1" url="jdbc:hsqldb:hsql://localhost:28080/test1" user="SA" type="dev"/>
+	</data-source>
+	<data-source id="hsqldb_server-17005d73975-50cf4014bd97e9db" provider="generic" driver="hsqldb_server" name="jdbc:hsqldb:http://localhost:28081/test1" save-password="true" show-system-objects="true" read-only="false">
+		<connection host="localhost" port="28080" server="" database="test1" url="jdbc:hsqldb:http://localhost:28081/test1" user="SA" type="dev">
+			<network-handler type="TUNNEL" id="ssh_tunnel" enabled="false" save-password="true">
+				<property name="sshConnectTimeout" value="10000"/>
+				<property name="port" value="22"/>
+				<property name="implementation" value="jsch"/>
+				<property name="authType" value="PASSWORD"/>
+			</network-handler>
+			<network-handler type="PROXY" id="socks_proxy" enabled="false" save-password="true">
+				<property name="socks-port" value="1080"/>
+			</network-handler>
+		</connection>
+	</data-source>
+	<filters/>
+</data-sources>

@@ -10,6 +10,8 @@
   <artifactId>third-cxf</artifactId>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <cxf.version>3.3.5</cxf.version>
+    <activemq.version>5.15.10</activemq.version>
   </properties>
   <dependencies>
     <dependency>
@@ -25,6 +27,54 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <artifactId>cxf-rt-rs-security-sso-oidc</artifactId>
+      <groupId>org.apache.cxf</groupId>
+      <version>3.3.5</version>
+    </dependency>
+    <dependency>
+      <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+      <groupId>org.apache.cxf</groupId>
+      <version>3.3.5</version>
+    </dependency>
+    <dependency>
+      <artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
+      <groupId>org.apache.cxf</groupId>
+      <version>3.3.5</version>
+    </dependency>
+    <dependency>
+      <artifactId>cxf-rt-transports-jms</artifactId>
+      <groupId>org.apache.cxf</groupId>
+      <version>3.3.5</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>cglib-sample</artifactId>
+      <groupId>cglib</groupId>
+      <version>3.3.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>cxf-rt-rs-security-oauth2-jwt</artifactId>
+      <groupId>org.apache.cxf</groupId>
+      <version>3.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-spring</artifactId>
+      <version>${activemq.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.geronimo.specs</groupId>
+          <artifactId>geronimo-jta_1.0.1B_spec</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-kahadb-store</artifactId>
+      <version>${activemq.version}</version>
     </dependency>
   </dependencies>
 </project>

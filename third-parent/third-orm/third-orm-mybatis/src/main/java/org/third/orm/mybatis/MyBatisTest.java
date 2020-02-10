@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import org.third.common.user.domain.AddressDM;
-import org.third.common.user.domain.UserDM;
+import org.basic.db.AbstractDatabaseServer;
+import org.basic.db.domain.AddressDM;
+import org.basic.db.domain.UserDM;
+import org.basic.db.hsqldb.HsqlMemServer;
 
 /**
  * <pre>
@@ -74,6 +76,8 @@ public class MyBatisTest {
     }
 
     public static void main(String[] args) {
+    	AbstractDatabaseServer database =  HsqlMemServer.getDefault();
+    	
 
     }
 }

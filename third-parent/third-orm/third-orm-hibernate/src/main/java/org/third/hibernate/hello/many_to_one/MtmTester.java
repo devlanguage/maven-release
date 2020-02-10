@@ -1,41 +1,47 @@
 package org.third.hibernate.hello.many_to_one;
 
+import org.basic.db.domain.AccountDM;
+import org.basic.db.domain.UserDM;
+import org.hsqldb.rights.User;
+
 public class MtmTester {
+	public static void main(String[] args) {
 
-    public static void main(String[] args) {
+		org.hibernate.cfg.Configuration config = new org.hibernate.cfg.Configuration()
+				.configure(Thread.class.getResource("/hibernate.jdbc.xml"));
+		config.addAnnotatedClass(AccountDM.class);
+		config.addAnnotatedClass(UserDM.class);
 
-        org.hibernate.cfg.Configuration config = new org.hibernate.cfg.Configuration().configure();
-        org.hibernate.SessionFactory sessionFactory = config.buildSessionFactory();
-        org.hibernate.Session session = sessionFactory.openSession();
-        Account account1 = new Account();
-        account1.accountName = "NTU-M8-419";
-        Account account2 = new Account();
-        account2.accountName = "NTU-G3-302";
+		org.hibernate.SessionFactory sessionFactory = config.buildSessionFactory();
+		org.hibernate.Session session = sessionFactory.openSession();
+		AccountDM account1 = new AccountDM();
+		account1.setId(3);
+		account1.setName("NTU-M8-419");
 
-        User u1 = new User();
-        u1.userName = ("shenbin");
-        u1.account = account1;
+		UserDM u1 = new UserDM();
+		u1.setId(1);
+		u1.setName("shenbin");
+		u1.setAccount(account1);
 
-        User u2 = new User();
-        u2.userName = ("chenyan");
-        u2.account = account1;
+		UserDM u2 = new UserDM();
+		u2.setId(3);
+		u2.setAccount(account1);
+		u2.setName("chenyan");
 
-        User u3 = new User();
-        u3.userName = ("zhangsna");
-        u3.account = account1;
+		org.hibernate.Transaction tx = session.beginTransaction();
+		session.saveOrUpdate(account1);
+		session.saveOrUpdate(u1);
+		session.saveOrUpdate(u2);
 
-        org.hibernate.Transaction tx = session.beginTransaction();
-        session.save(u1);
-        session.save(u2);
-        session.save(u3);
-        tx.commit();
+		UserDM user = (UserDM) session.load(UserDM.class, new Integer(1));
+		System.out.println(user.getName());
+		System.out.println(user.getAccount().getName());
+		user.setHeight(120);
+		tx.commit();
 
-        User user = (User) session.load(User.class, new Integer(1));
-        System.out.println(user.userName);
-        System.out.println(user.account.accountName);
-        session.close();
-        sessionFactory.close();
+		session.close();
+		sessionFactory.close();
 
-    }
+	}
 
 }

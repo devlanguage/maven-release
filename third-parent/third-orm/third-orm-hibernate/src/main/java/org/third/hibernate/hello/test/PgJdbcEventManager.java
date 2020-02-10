@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.basic.db.domain.ErrorEventDM;
+import org.basic.db.domain.PersonDM;
 import org.hibernate.Query;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.Statistics;
-import org.third.common.user.domain.ErrorEventDM;
-import org.third.common.user.domain.EventDM;
 import org.third.common.user.domain.HiEvent;
-import org.third.common.user.domain.PersonDM;
-import org.third.hibernate.common.util.HibernateUtil;
 
 public class PgJdbcEventManager {
 

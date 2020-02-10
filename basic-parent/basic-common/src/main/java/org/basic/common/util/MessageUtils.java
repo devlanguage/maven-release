@@ -14,7 +14,6 @@ public class MessageUtils {
 
 	private static final Logger logger = Logger.getLogger(MessageUtils.class.getName());
 	private static Properties MESSAGE_LIST;
-	// private final static Logger logger = Logger.getLogger(MessageUtil.class);
 
 	static {
 		MESSAGE_LIST = new Properties();

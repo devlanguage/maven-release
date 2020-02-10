@@ -1,17 +1,25 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!-- 
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
- -->
 <hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.hibernate.org/xsd/orm/cfg  http://hibernate.org/xsd/hibernate-configuration/hibernate-configuration-4.0.xsd">
     <session-factory>
-        <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://h0:5432/test01</property>
-        <property name="connection.username">test01</property>
-        <property name="connection.password">test01</property>
+       <!--
+       org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl
+       org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl
+       org.hibernate.c3p0.internal.C3P0ConnectionProvider
+       com.alibaba.druid.support.hibernate.DruidConnectionProvider
+       org.hibernate.proxool.internal.ProxoolConnectionProvider
+       org.hibernate.engine.jdbc.connections.internal.UserSuppliedConnectionProviderImpl #For testing
+        -->
+        <property name="hibernate.connection.provider_class">org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl</property>
+        <property name="driver_class">org.hsqldb.jdbc.JDBCDriver</property>
+        <property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost:28080/test1</property>
+        <property name="username">SA</property>
+        <property name="password"></property>
+        <property name="hibernate.connection.min_pool_size">1</property>
+        <property name="hibernate.connection.pool_size">3</property>
+        <property name="hibernate.connection.autocommit">false</property>
+        
         <!-- Set the JDBC transaction isolation level.
             Check java.sql.Connection for meaningful values but note that most databases do not support all isolation levels. 
             TRANSACTION_NONE : 0
@@ -20,8 +28,8 @@
             TRANSACTION_REPEATABLE_READ : 4
             TRANSACTION_SERIALIZABLE : 8
         -->
-        <property name="connection.isolation">8</property>
-        <property name="connection.charset">utf-8</property>
+        <property name="isolation">8</property>
+        <property name="charset">utf-8</property>
         <!-- 
             Specify when Hibernate should release JDBC connections. 
             By default, a JDBC connection is held until the session is explicitly closed or disconnected. 
@@ -42,14 +50,7 @@
             configured for use controls the connection release mode for those Sessions. 
             
         -->
-        <property name="connection.release_mode">auto</property>
-
-        <!-- property name="connection.pool_size">1</property-->
-        <property name="c3p0.max_size">10</property>
-        <property name="c3p0.timeout">1800</property>
-        <property name="c3p0.max_statements">20</property>
-        <property name="c3p0.min_size">5</property>
-
+        <property name="release_mode">auto</property>
         <!-- SQL dialect 
             <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
             <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -57,8 +58,11 @@
             <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
             
         -->
-            <property name="dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
-
+            <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+    <!-- 
+      Previous hibernate use "hibernate.default_schema" 
+       <property name="hibernate.default_catalog">hibernatetest</property>
+     -->
 
         <!-- Enable Hibernate's automatic session context management 
             jta | thread | managed | custom.Class 
@@ -122,9 +126,9 @@
         <!-- Drop and re-create the database schema on startup 
             Automatically validate or export schema DDL to the database when the SessionFactory is created. 
             With create-drop, the database schema will be dropped when the SessionFactory is closed explicitly. 
-            validate | update | create | create-drop 
+            'create', 'create-drop', 'create-only', 'drop', 'update', 'none' and 'validate'
         -->
-        <property name="hbm2ddl.auto">update</property>
+         <property name="hbm2ddl.auto">none</property>
         <!-- 
             Oracle limits the size of byte arrays that may be passed to/from its JDBC driver. 
             If you wish to use large instances of binary or serializable type, 
@@ -134,8 +138,8 @@
         -->
       <!-- <mapping resource="hbm/hello.hbm.xml" /> -->
       <!-- <mapping class="org.third.common.user.domain.HiEvent" /> -->
-      <mapping class="org.third.common.user.domain.HiEvent"/>
-      <!-- <class-cache class="org.hibernate3.core.hello.persistence.Event" usage="read-write" /> -->
+<!--       <mapping class="org.third.common.user.domain.HiEvent"/>
+ -->      <!-- <class-cache class="org.hibernate3.core.hello.persistence.Event" usage="read-write" /> -->
       <!--collection-cache usage="read-only" collection="" /> -->
     
     </session-factory>

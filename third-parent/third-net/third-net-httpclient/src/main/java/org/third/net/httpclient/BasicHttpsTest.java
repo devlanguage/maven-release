@@ -24,42 +24,17 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 public class BasicHttpsTest {
+
     public static void main(String[] args) throws Exception {
-        TrustManager[] tms = new TrustManager[] { new X509TrustManager() {
-
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
-            }
-
-            @Override
-            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
-            }
-        } };
-        SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-        sslContext.init(null, tms, new java.security.SecureRandom());
-
-        CloseableHttpClient httpClient = HttpClients.custom().setSSLHostnameVerifier(new NoopHostnameVerifier())
-                .setSSLContext(sslContext).build();
-        
-        HttpUriRequest request = new HttpGet("https://www.google.com/mngPortal#!/suitemanage");
-        CloseableHttpResponse response = httpClient.execute(request);
-        System.err.println(response.getAllHeaders());
-
-//        BasicHttpsTest t = new BasicHttpsTest();
-//        t.testSslContextHttps();
+        BasicHttpsTest t = new BasicHttpsTest();
+        t.testSslContextHttps();
     }
 
     public static SSLContext createIgnoreVerifySSL() throws NoSuchAlgorithmException, KeyManagementException {
@@ -173,33 +148,34 @@ public class BasicHttpsTest {
     }
 
     public void testBasicHttpsWithPost() throws Exception {
-        CloseableHttpClient client = getHttpsClientWithSslContextIngored();
-        String body = "";
-        try {
-            // 创建post方式请求对象
-            HttpPost httpPost = new HttpPost("https://api.douban.com/v2/book/1220562");
+		CloseableHttpClient client = getHttpsClientWithSslContextIngored();
+		String body = "";
+		try {
+			// 创建post方式请求对象
+			HttpPost httpPost = new HttpPost("https://api.douban.com/v2/book/1220562");
 
-            // 指定报文头Content-type、User-Agent
-            httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+			// 指定报文头Content-type、User-Agent
+			httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+			httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
 
-            httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
+			StringEntity entity = new StringEntity("");
+			httpPost.setEntity(entity);
+			// 执行请求操作，并拿到结果（同步阻塞）
+			CloseableHttpResponse response = client.execute(httpPost);
 
-            // 执行请求操作，并拿到结果（同步阻塞）
-            CloseableHttpResponse response = client.execute(httpPost);
+			// 获取结果实体
+			HttpEntity entityResp = response.getEntity();
+			if (entity != null) {
+				// 按指定编码转换结果实体为String类型
+				body = EntityUtils.toString(entityResp, "UTF-8");
+			}
 
-            // 获取结果实体
-            HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                // 按指定编码转换结果实体为String类型
-                body = EntityUtils.toString(entity, "UTF-8");
-            }
-
-            EntityUtils.consume(entity);
-            // 释放链接
-            response.close();
-            System.out.println("body:" + body);
-        } finally {
-            client.close();
-        }
-    }
+			EntityUtils.consume(entity);
+			// 释放链接
+			response.close();
+			System.out.println("body:" + body);
+		} finally {
+			client.close();
+		}
+	}>>>>>>>c588051954c892c5658c196007358e31a5c1b6c9
 }
