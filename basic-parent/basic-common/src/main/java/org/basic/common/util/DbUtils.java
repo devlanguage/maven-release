@@ -35,7 +35,7 @@ public class DbUtils {
             buffer.append("]\n");
         }
 
-        logger.log(CommonLogger.INFO, "print",buffer.toString());
+        logger.log(CommonLogger.INFO, "print", buffer.toString());
         return buffer.toString();
     }
 
@@ -60,7 +60,6 @@ public class DbUtils {
             }
         }
     }
-    
 
     private static void withProxool() {
 

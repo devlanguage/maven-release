@@ -1,4 +1,4 @@
-package org.basic.grammar.polymophoism;
+package org.basic.grammar.uml.polymophoism;
 
 import java.io.IOException;
 

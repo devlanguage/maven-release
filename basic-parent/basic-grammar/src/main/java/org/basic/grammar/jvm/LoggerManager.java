@@ -1,8 +1,6 @@
 package org.basic.grammar.jvm;
 
 import java.util.Hashtable;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -23,7 +21,7 @@ public class LoggerManager {
 
     static {
 
-        String localPath = LoggerManager.class.getClassLoader().getResource("logging.properties").getFile();
+        String localPath = LoggerManager.class.getResource("logging.properties").getFile();
         System.setProperty("java.util.logging.config.file", localPath.substring(0, localPath.length()));
         manager = LogManager.getLogManager();
         String delimeter = manager.getProperty(DELIMETER) == null ? DEFAULT_DELIMETER : manager.getProperty(DELIMETER);
