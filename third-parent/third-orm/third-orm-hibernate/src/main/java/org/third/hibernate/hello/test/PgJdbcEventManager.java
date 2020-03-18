@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.basic.db.domain.ErrorEventDM;
+import org.basic.db.domain.EventDM;
 import org.basic.db.domain.PersonDM;
 import org.hibernate.Query;
 import org.hibernate.ScrollableResults;
@@ -12,7 +13,6 @@ import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.Statistics;
-import org.third.common.user.domain.HiEvent;
 
 public class PgJdbcEventManager {
 
@@ -142,7 +142,7 @@ public class PgJdbcEventManager {
 	private void testInsert() {
 
 		// Query insert = session.createQuery("insert into Event ");
-		HiEvent event = new HiEvent();
+		EventDM event = new EventDM();
 
 		event.setTitle("create_zhangsan");
 		// Assign the identifier and persist it
