@@ -14,7 +14,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -57,148 +56,36 @@ public class StreamUtils {
 	 */
 	public static final String LINE_SEPARATOR_WINDOWS = "\r\n";
 
-	/**
-	 * Build the <code>InputStream</code> on the specified the file. file path is
-	 * relative path located in classs path. for example:
-	 * org/basic/common/config.properties
-	 * 
-	 * @param messageFile
-	 * @return
-	 * @throws BasicException
-	 */
-	public final static InputStream getInputStreamFromClassPath(String fileName) {
-
-		return StreamUtils.class.getClassLoader().getResourceAsStream(fileName);
-	}
+	private static char[] SKIP_CHAR_BUFFER;
 
 	/**
-	 * Build the <code>InputStream</code> on the specified the file. file path is
-	 * absolute path located in operating system. for example:
-	 * C:\\Software\\eclipse3.2.2\\workspace\\basic\\source\\common\\src\\main\\build.properties
-	 * 
-	 * @param messageFile
-	 * @return
-	 * @throws BasicException
+	 * The default buffer size to use for the skip() methods.
 	 */
-	public static InputStream getInputStreamFromAbosulateClassPath(String messageFile) throws BasicException {
+	private static final int SKIP_BUFFER_SIZE = 2048;
 
-		FileInputStream fins = null;
-		try {
-			fins = new FileInputStream(messageFile);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-//            throw SystemUtil.handleException(logger, e, "Failed to find the file [filePath="
-//                    + messageFile + "]");
+	public static void byteArrayToFile(File file, byte[] contentInBytes) throws IOException {
+		// if file doesn't exists, then create it
+		if (!file.exists()) {
+			if (!file.createNewFile()) {
+				throw new IOException("Can't create file " + file);
+			}
 		}
-		return fins;
-	}
-
-	public static void close(InputStream ins) throws BasicException {
-
-		if (ins != null)
-			try {
-				ins.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-//                throw SystemUtil.handleException(logger, e,
-//                        "Failed to close the specified InputStream");
-			}
-
-	}
-
-	/**
-	 * Copy the contents of the given InputStream into a String. Leaves the stream
-	 * open when done.
-	 * 
-	 * @param in the InputStream to copy from
-	 * @return the String that has been copied to
-	 * 
-	 * @throws IOException in case of I/O errors
-	 */
-	public static String streamToString(InputStream in, Charset charset) throws IOException {
-
-		StringBuilder stringBuffer = new StringBuilder();
-		char[] buffer = new char[BUFFER_SIZE];
-		int bytesRead = -1;
-
-		InputStreamReader reader = null;
+		FileOutputStream fop = null;
 		try {
-			reader = new InputStreamReader(in, charset);
-			while ((bytesRead = reader.read(buffer)) != -1) {
-				stringBuffer.append(buffer, 0, bytesRead);
-			}
+			fop = new FileOutputStream(file);
+			// get the content in bytes
+			fop.write(contentInBytes);
+			fop.flush();
 		} finally {
-			closeQuietly(reader);
-		}
-		return stringBuffer.toString();
-	}
-
-	public static String pkiStreamToString(InputStream in) throws IOException {
-		StringBuilder stringBuffer = new StringBuilder();
-		String line = null;
-
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-			while ((line = reader.readLine()) != null) {
-				if (line.length() == 0 || line.charAt(0) == '-') {
-					continue;
-				} else {
-					stringBuffer.append(line);
-				}
+			if (fop != null) {
+				fop.close();
 			}
-		} finally {
-			closeQuietly(reader);
 		}
-		return stringBuffer.toString();
 	}
 
-	/**
-	 * Copies bytes from a large (over 2GB) <code>InputStream</code> to an
-	 * <code>OutputStream</code>.
-	 * <p>
-	 * This method uses the provided buffer, so there is no need to use a
-	 * <code>BufferedInputStream</code>.
-	 * <p>
-	 *
-	 * @param input  the <code>InputStream</code> to read from
-	 * @param output the <code>OutputStream</code> to write to
-	 * @param buffer the buffer to use for the copy
-	 * @return the number of bytes copied
-	 */
-	public static long streamToOutputStream(final InputStream input, final OutputStream output) throws IOException {
-		long count = 0;
-		int bytesRead;
-		byte[] buffer = new byte[BUFFER_SIZE];
-
-		while (EOF != (bytesRead = input.read(buffer))) {
-			output.write(buffer, 0, bytesRead);
-			count += bytesRead;
-		}
+	public static void byteArrayToOutputStream(byte[] source, FileOutputStream output) throws IOException {
+		output.write(source);
 		output.flush();
-		return count;
-	}
-
-	/**
-	 * Read the content from {@code input} and return it as byte array
-	 * 
-	 * @param input
-	 * @return
-	 * @throws IOException
-	 */
-	public static byte[] streamToByteArray(InputStream input) throws IOException {
-
-		ByteArrayOutputStream output = null;
-		byte[] result = null;
-		try {
-			output = new ByteArrayOutputStream(BUFFER_SIZE);
-			streamToOutputStream(input, output);
-			result = output.toByteArray();
-		} finally {
-			StreamUtils.closeQuietly(input, output);
-		}
-
-		return result;
 	}
 
 	/**
@@ -226,98 +113,60 @@ public class StreamUtils {
 		return new String(bytes, StandardCharsets.UTF_8);
 	}
 
-	public static byte[] stringToUtf8Bytes(String str) {
+	/**
+	 * Build the <code>InputStream</code> on the specified the file. file path is
+	 * absolute path located in operating system. for example:
+	 * C:\\Software\\eclipse3.2.2\\workspace\\basic\\source\\common\\src\\main\\build.properties
+	 * 
+	 * @param messageFile
+	 * @return
+	 * @throws BasicException
+	 */
+	public static InputStream getInputStreamFromAbosulateClassPath(String messageFile) throws BasicException {
+
+		FileInputStream fins = null;
 		try {
-			return str.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
+			fins = new FileInputStream(messageFile);
+		} catch (FileNotFoundException e) {
+			logger.error("Failed to close the closeble object:" + messageFile, e);
+		} finally {
+			closeQuietly(fins);
 		}
+		return fins;
 	}
 
 	/**
-	 * Converts the specified string to an input stream, encoded as bytes using the
-	 * specified character encoding.
-	 *
-	 * @param input    the string to convert
-	 * @param encoding the encoding to use, null means platform default
-	 * @return an input stream
-	 * @since 2.3
+	 * Build the <code>InputStream</code> on the specified the file. file path is
+	 * relative path located in classs path. for example:
+	 * org/basic/common/config.properties
+	 * 
+	 * @param messageFile
+	 * @return
+	 * @throws BasicException
 	 */
-	public static InputStream toInputStream(final String input, final Charset encoding) {
-		return new ByteArrayInputStream(input.getBytes(encoding));
+	public final static InputStream getInputStreamFromClassPath(String fileName) {
+
+		return StreamUtils.class.getClassLoader().getResourceAsStream(fileName);
 	}
 
-	public static String toString(Reader reader) {
-		String result = null;
-		try {
-			StringWriter writer = new StringWriter();
-			int n;
-			char[] buffer = new char[BUFFER_SIZE];
-			while (EOF != (n = reader.read(buffer))) {
-				writer.write(buffer, 0, n);
-			}
-			result = writer.toString();
+	public static String pkiStreamToString(InputStream in) throws IOException {
+		StringBuilder stringBuffer = new StringBuilder();
+		String line = null;
 
-		} catch (IOException e) {
-			throw new RuntimeException("Faid to read string from reader", e);
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+			while ((line = reader.readLine()) != null) {
+				if (line.length() == 0 || line.charAt(0) == '-') {
+					continue;
+				} else {
+					stringBuffer.append(line);
+				}
+			}
 		} finally {
 			closeQuietly(reader);
 		}
-		return result;
-	}
-
-	public static String streamToString(InputStream ins) throws IOException {
-		return streamToString(ins, CommonUtils.UTF8);
-	}
-
-	public static String streamToString(InputStream ins, String charset) throws IOException {
-
-		int read = -1;
-		byte[] cache = new byte[BUFFER_SIZE];
-		StringBuilder sb = new StringBuilder();
-		while ((read = ins.read(cache)) != -1) {
-			sb.append(new String(cache, 0, read, charset));
-		}
-
-		return sb.toString();
-	}
-
-	public static void stringToFile(String content, String filePath) throws IOException {
-		byteArrayToFile(new File(filePath), content.getBytes(StandardCharsets.UTF_8));
-	}
-
-	public static InputStream stringToInputStream(String str) {
-
-		if (str == null) {
-			return null;
-		}
-
-		return new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8));
-	}
-
-	public static void byteArrayToFile(File file, byte[] contentInBytes) throws IOException {
-		// if file doesn't exists, then create it
-		if (!file.exists()) {
-			if (!file.createNewFile()) {
-				throw new IOException("Can't create file " + file);
-			}
-		}
-		FileOutputStream fop = null;
-		try {
-			fop = new FileOutputStream(file);
-			// get the content in bytes
-			fop.write(contentInBytes);
-			fop.flush();
-		} finally {
-			if (fop != null) {
-				fop.close();
-			}
-		}
-	}
-
-	public static void byteArrayToOutputStream(byte[] source, FileOutputStream output) throws IOException {
-		output.write(source);
-		output.flush();
+		return stringBuffer.toString();
 	}
 
 	/**
@@ -363,51 +212,6 @@ public class StreamUtils {
 		}
 		return totalRead;
 	}
-
-	/**
-	 * Skips the requested number of characters or fail if there are not enough
-	 * left.
-	 * <p>
-	 * This allows for the possibility that {@link Reader#skip(long)} may not skip
-	 * as many characters as requested (most likely because of reaching EOF).
-	 * <p>
-	 * Note that the implementation uses {@link #skip(Reader, long)}. This means
-	 * that the method may be considerably less efficient than using the actual skip
-	 * implementation, this is done to guarantee that the correct number of
-	 * characters are skipped.
-	 * </p>
-	 *
-	 * @param input  stream to skip
-	 * @param toSkip the number of characters to skip
-	 * @throws IOException              if there is a problem reading the file
-	 * @throws IllegalArgumentException if toSkip is negative
-	 * @throws EOFException             if the number of characters skipped was
-	 *                                  incorrect
-	 * @see Reader#skip(long)
-	 * @since 2.0
-	 */
-	public static void skipFully(final Reader input, final long toSkip) throws IOException {
-		final long skipped = skip(input, toSkip);
-		if (skipped != toSkip) {
-			throw new EOFException("Chars to skip: " + toSkip + " actual: " + skipped);
-		}
-	} // Allocated in the relevant skip method if necessary.
-	/*
-	 * These buffers are static and are shared between threads. This is possible
-	 * because the buffers are write-only - the contents are never read.
-	 *
-	 * N.B. there is no need to synchronize when creating these because: - we don't
-	 * care if the buffer is created multiple times (the data is ignored) - we
-	 * always use the same size buffer, so if it it is recreated it will still be OK
-	 * (if the buffer size were variable, we would need to synch. to ensure some
-	 * other thread did not create a smaller one)
-	 */
-
-	private static char[] SKIP_CHAR_BUFFER;
-	/**
-	 * The default buffer size to use for the skip() methods.
-	 */
-	private static final int SKIP_BUFFER_SIZE = 2048;
 
 	/**
 	 * Skips characters from an input character stream. This implementation
@@ -457,6 +261,185 @@ public class StreamUtils {
 			remain -= n;
 		}
 		return toSkip - remain;
+	}
+
+	/**
+	 * Skips the requested number of characters or fail if there are not enough
+	 * left.
+	 * <p>
+	 * This allows for the possibility that {@link Reader#skip(long)} may not skip
+	 * as many characters as requested (most likely because of reaching EOF).
+	 * <p>
+	 * Note that the implementation uses {@link #skip(Reader, long)}. This means
+	 * that the method may be considerably less efficient than using the actual skip
+	 * implementation, this is done to guarantee that the correct number of
+	 * characters are skipped.
+	 * </p>
+	 *
+	 * @param input  stream to skip
+	 * @param toSkip the number of characters to skip
+	 * @throws IOException              if there is a problem reading the file
+	 * @throws IllegalArgumentException if toSkip is negative
+	 * @throws EOFException             if the number of characters skipped was
+	 *                                  incorrect
+	 * @see Reader#skip(long)
+	 * @since 2.0
+	 */
+	public static void skipFully(final Reader input, final long toSkip) throws IOException {
+		final long skipped = skip(input, toSkip);
+		if (skipped != toSkip) {
+			throw new EOFException("Chars to skip: " + toSkip + " actual: " + skipped);
+		}
+	} // Allocated in the relevant skip method if necessary.
+	/*
+	 * These buffers are static and are shared between threads. This is possible
+	 * because the buffers are write-only - the contents are never read.
+	 *
+	 * N.B. there is no need to synchronize when creating these because: - we don't
+	 * care if the buffer is created multiple times (the data is ignored) - we
+	 * always use the same size buffer, so if it it is recreated it will still be OK
+	 * (if the buffer size were variable, we would need to synch. to ensure some
+	 * other thread did not create a smaller one)
+	 */
+
+	/**
+	 * Read the content from {@code input} and return it as byte array
+	 * 
+	 * @param input
+	 * @return
+	 * @throws IOException
+	 */
+	public static byte[] streamToByteArray(InputStream input) throws IOException {
+
+		ByteArrayOutputStream output = null;
+		byte[] result = null;
+		try {
+			output = new ByteArrayOutputStream(BUFFER_SIZE);
+			streamToOutputStream(input, output);
+			result = output.toByteArray();
+		} finally {
+			StreamUtils.closeQuietly(input, output);
+		}
+
+		return result;
+	}
+
+	/**
+	 * Copies bytes from a large (over 2GB) <code>InputStream</code> to an
+	 * <code>OutputStream</code>.
+	 * <p>
+	 * This method uses the provided buffer, so there is no need to use a
+	 * <code>BufferedInputStream</code>.
+	 * <p>
+	 *
+	 * @param input  the <code>InputStream</code> to read from
+	 * @param output the <code>OutputStream</code> to write to
+	 * @param buffer the buffer to use for the copy
+	 * @return the number of bytes copied
+	 */
+	public static long streamToOutputStream(final InputStream input, final OutputStream output) throws IOException {
+		long count = 0;
+		int bytesRead;
+		byte[] buffer = new byte[BUFFER_SIZE];
+
+		while (EOF != (bytesRead = input.read(buffer))) {
+			output.write(buffer, 0, bytesRead);
+			count += bytesRead;
+		}
+		output.flush();
+		return count;
+	}
+
+	public static String streamToString(InputStream ins) throws IOException {
+		return streamToString(ins, CommonUtils.UTF8);
+	}
+
+	/**
+	 * Copy the contents of the given InputStream into a String. Leaves the stream
+	 * open when done.
+	 * 
+	 * @param in the InputStream to copy from
+	 * @return the String that has been copied to
+	 * 
+	 * @throws IOException in case of I/O errors
+	 */
+	public static String streamToString(InputStream in, Charset charset) throws IOException {
+
+		StringBuilder stringBuffer = new StringBuilder();
+		char[] buffer = new char[BUFFER_SIZE];
+		int bytesRead = -1;
+
+		InputStreamReader reader = null;
+		try {
+			reader = new InputStreamReader(in, charset);
+			while ((bytesRead = reader.read(buffer)) != -1) {
+				stringBuffer.append(buffer, 0, bytesRead);
+			}
+		} finally {
+			closeQuietly(reader);
+		}
+		return stringBuffer.toString();
+	}
+
+	public static String streamToString(InputStream ins, String charset) throws IOException {
+
+		int read = -1;
+		byte[] cache = new byte[BUFFER_SIZE];
+		StringBuilder sb = new StringBuilder();
+		while ((read = ins.read(cache)) != -1) {
+			sb.append(new String(cache, 0, read, charset));
+		}
+
+		return sb.toString();
+	}
+
+	public static String streamToString(Reader reader) {
+		String result = null;
+		try {
+			StringWriter writer = new StringWriter();
+			int n;
+			char[] buffer = new char[BUFFER_SIZE];
+			while (EOF != (n = reader.read(buffer))) {
+				writer.write(buffer, 0, n);
+			}
+			result = writer.toString();
+
+		} catch (IOException e) {
+			throw new RuntimeException("Faid to read string from reader", e);
+		} finally {
+			closeQuietly(reader);
+		}
+		return result;
+	}
+
+	public static void stringToFile(String content, String filePath) throws IOException {
+		byteArrayToFile(new File(filePath), content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public static InputStream stringToInputStream(String str) {
+
+		if (str == null) {
+			return null;
+		}
+
+		return new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public static byte[] stringToUtf8Bytes(String str) {
+		return str.getBytes(StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * Converts the specified string to an input stream, encoded as bytes using the
+	 * specified character encoding.
+	 *
+	 * @param input    the string to convert
+	 * @param encoding the encoding to use, null means platform default
+	 * @return an input stream
+	 * @since 2.3
+	 */
+	public static InputStream toInputStream(final String input, final Charset encoding) {
+		return new ByteArrayInputStream(input.getBytes(encoding));
 	}
 
 }

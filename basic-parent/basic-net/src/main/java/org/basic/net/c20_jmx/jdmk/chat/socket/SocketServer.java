@@ -49,7 +49,7 @@ public class SocketServer {
                 System.out.println("New connection accepted " + socket.getInetAddress() + ":"
                         + socket.getPort());
                 InputStream ins = socket.getInputStream();
-                System.out.println("Received: " + StreamUtils.toString(ins));
+                System.out.println("Received: " + StreamUtils.streamToString(ins));
                 ins.close();
 
                 OutputStream out = socket.getOutputStream();
@@ -75,7 +75,7 @@ public class SocketServer {
         String response = "";
         try {
             ins = new FileInputStream("test.txt");
-            response = StreamUtils.toString(ins);
+            response = StreamUtils.streamToString(ins);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {

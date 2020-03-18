@@ -13,13 +13,10 @@
     <java.version>1.8</java.version>
 
     <cglib.version>3.2.12</cglib.version>
-    <slf4j.version>1.7.26</slf4j.version>
-    <log4j.version>1.2.17</log4j.version>
-
     <commons.cli.version>1.4</commons.cli.version>
     <commons.codec.version>1.10</commons.codec.version>
     <commons.beanutils.version>1.8.3</commons.beanutils.version>
-    <commons.collections.version>3.2.2</commons.collections.version>
+    <commons.collections.version>4.4</commons.collections.version>
     <commons.dbcp2.version>2.6.0</commons.dbcp2.version>
     <commons.fileupload.version>1.3</commons.fileupload.version>
     <commons.httpclient.version>4.5.9</commons.httpclient.version>
@@ -28,8 +25,20 @@
     <commons.compress.version>1.17</commons.compress.version>
     <commons.lang3.version>3.9</commons.lang3.version>
     <commons.math3.version>3.6.1</commons.math3.version>
+    <unix4j.version>0.5</unix4j.version>
+    <proxy4j.version>1.0.0</proxy4j.version>
+    <grep4j.version>1.8.7</grep4j.version>
+    <jmh.version>1.9.3</jmh.version>
+    <esapi.version>2.2.0.0</esapi.version>
+    <javamoney.moneta.version>1.3</javamoney.moneta.version>
+    <lombok.version>1.18.8</lombok.version>
+    <guava.version>28.2-jre</guava.version>
+    <jenetics.version>5.1.0</jenetics.version>
+    <jenetics.prngine.version>1.0.2</jenetics.prngine.version>
+    <tradukisto.version>1.8.0</tradukisto.version>
     <snakeyaml.version>1.24</snakeyaml.version>
     <yamlbeans.version>1.13</yamlbeans.version>
+
     <httpasyncclient.version>4.1.2</httpasyncclient.version>
     <httpclient.version>4.5.9</httpclient.version>
     <httpcore.version>4.4.5</httpcore.version>
@@ -60,8 +69,6 @@
     <gib.skipTestsForNotImpactedModules>true</gib.skipTestsForNotImpactedModules>
     <gitflow-incremental-builder.version>3.4</gitflow-incremental-builder.version>
 
-
-
     <springfox.swagger.version>2.6.1</springfox.swagger.version>
     <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
     <jackson.version>2.9.6</jackson.version>
@@ -70,22 +77,20 @@
     <javax.servlet.jsp-api.version>2.3.1</javax.servlet.jsp-api.version>
     <javax.mail-api.version>1.6.2</javax.mail-api.version>
     <xerces.version>2.9.0</xerces.version>
+    <jgrapht.version>1.1.0</jgrapht.version>
     <!-- SSH -->
     <jsch.version>0.1.55</jsch.version>
     <sshd-cli.vesion>2.2.0</sshd-cli.vesion>
     <ganymed.version>262</ganymed.version>
     <jcabi.version>1.6.1</jcabi.version>
-
     <jdpapi64.version>1.0.0</jdpapi64.version>
-    <jmh-core.version>1.19</jmh-core.version>
-    <jmh-generator.version>1.19</jmh-generator.version>
 
     <jstl-api.version>1.2</jstl-api.version>
     <jstl.version>1.2</jstl.version>
 
+    <slf4j.version>1.7.26</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
     <logback.version>1.1.7</logback.version>
-    <lombok.version>1.16.12</lombok.version>
     <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
     <maven-directory-plugin.version>0.3.1</maven-directory-plugin.version>
     <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
@@ -111,7 +116,7 @@
     <spring.security.version>4.2.7.RELEASE</spring.security.version>
     <spring.vault.version>2.0.1.RELEASE</spring.vault.version>
     <spring.version>5.2.3.RELEASE</spring.version>
-    
+
     <thymeleaf.version>2.1.6.RELEASE</thymeleaf.version>
     <thymeleaf-extras-springsecurity4.version>2.1.3.RELEASE</thymeleaf-extras-springsecurity4.version>
     <thymeleaf-extras-conditionalcomments.version>2.1.2.RELEASE</thymeleaf-extras-conditionalcomments.version>
@@ -122,13 +127,17 @@
     <k8s.google.version>5.0.0</k8s.google.version>
 
     <!-- Test -->
+    <assertj.version>3.10.0</assertj.version>
+    <awaitility.version>1.7.0</awaitility.version>
     <powermock.version>1.7.4</powermock.version>
     <hamcrest.version>1.3</hamcrest.version>
-    <junit-jupiter.version>5.2.0</junit-jupiter.version>
-    <junit-platform.version>1.2.0</junit-platform.version>
-    <junit.version>4.12</junit.version>
-    <mockito.version>1.10.19</mockito.version>
+    <junit5.version>5.0.0-ALPHA</junit5.version>
+    <junit.version>4.13</junit.version>
+    <mockito.version>3.3.0</mockito.version>
+    <jmockit.version>1.49</jmockit.version>
     <jacoco.version>0.8.4</jacoco.version>
+    <junit.jupiter.version>5.6.0</junit.jupiter.version>
+    <junit.platform.version>1.6.0</junit.platform.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -379,12 +388,77 @@
         <groupId>commons-beanutils</groupId>
         <artifactId>commons-beanutils-core</artifactId>
         <version>${commons.beanutils.version}</version>
-
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>${commons.collections.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${commons.lang3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.unix4j</groupId>
+        <artifactId>unix4j-command</artifactId>
+        <version>${unix4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.unix4j</groupId>
+        <artifactId>unix4j-perf</artifactId>
+        <version>${unix4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.unix4j</groupId>
+        <artifactId>unix4j-tools</artifactId>
+        <version>${unix4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.googlecode.grep4j</groupId>
+        <artifactId>grep4j</artifactId>
+        <version>${grep4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.googlecode.proxy4j</groupId>
+        <artifactId>proxy4j-core</artifactId>
+        <version>${proxy4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.jenetics</groupId>
+        <artifactId>jenetics</artifactId>
+        <version>${jenetics.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jenetics</groupId>
+        <artifactId>jenetics.ext</artifactId>
+        <version>${jenetics.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jenetics</groupId>
+        <artifactId>jenetics.xml</artifactId>
+        <version>${jenetics.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jenetics</groupId>
+        <artifactId>prngine</artifactId>
+        <version>${jenetics.prngine.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>pl.allegro.finance</groupId>
+        <artifactId>tradukisto</artifactId>
+        <version>${tradukisto.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <version>${guava.version}</version>
+        <artifactId>guava</artifactId>
       </dependency>
       <dependency>
         <groupId>com.esotericsoftware.yamlbeans</groupId>
@@ -395,6 +469,36 @@
         <groupId>org.yaml</groupId>
         <artifactId>snakeyaml</artifactId>
         <version>${snakeyaml.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-core</artifactId>
+        <version>${jmh.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.owasp.esapi</groupId>
+        <artifactId>esapi</artifactId>
+        <version>${esapi.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-generator-annprocess</artifactId>
+        <version>${jmh.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-generator-bytecode</artifactId>
+        <version>${jmh.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-generator-asm</artifactId>
+        <version>${jmh.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.javamoney.moneta</groupId>
+        <artifactId>moneta-convert</artifactId>
+        <version>${javamoney.moneta.version}</version>
       </dependency>
       <!-- Java EE -->
       <dependency>
@@ -453,7 +557,8 @@
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-entitymanager</artifactId>
         <version>${hibernate.version}</version>
-      </dependency>    <dependency>
+      </dependency>
+      <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-c3p0</artifactId>
         <version>${hibernate.version}</version>
@@ -463,7 +568,43 @@
         <artifactId>xercesImpl</artifactId>
         <version>${xerces.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>org.jgrapht</groupId>
+        <artifactId>jgrapht-core</artifactId>
+        <version>${jgrapht.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jgrapht</groupId>
+        <artifactId>jgrapht-guava</artifactId>
+        <version>${jgrapht.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jgrapht</groupId>
+        <artifactId>jgrapht-demo</artifactId>
+        <version>${jgrapht.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jgrapht</groupId>
+        <artifactId>jgrapht-ext</artifactId>
+        <version>${jgrapht.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jgrapht</groupId>
+        <artifactId>jgrapht-dist</artifactId>
+        <version>${jgrapht.version}</version>
+      </dependency>
       <!-- Test -->
+      <dependency>
+        <groupId>com.jayway.awaitility</groupId>
+        <artifactId>awaitility</artifactId>
+        <version>${awaitility.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${assertj.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-all</artifactId>
@@ -471,8 +612,18 @@
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+      </dependency>
+<!--       <dependency>
+        <groupId>org.mockito</groupId>
         <artifactId>mockito-all</artifactId>
         <version>${mockito.version}</version>
+      </dependency> -->
+      <dependency>
+        <groupId>org.jmockit</groupId>
+        <artifactId>jmockit</artifactId>
+        <version>${jmockit.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -495,9 +646,49 @@
         <version>${powermock.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit5-engine</artifactId>
+        <version>${junit5.version}</version>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${junit.jupiter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${junit.jupiter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit.jupiter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>${junit.jupiter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-commons</artifactId>
+        <version>${junit.platform.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-runner</artifactId>
+        <version>${junit.platform.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-engine</artifactId>
+        <version>${junit.platform.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

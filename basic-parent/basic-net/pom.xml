@@ -34,7 +34,7 @@
       <groupId>javax.mail</groupId>
       <artifactId>javax.mail-api</artifactId>
     </dependency>
-    <dependency>
+    <dependency> 
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>

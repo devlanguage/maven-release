@@ -4,15 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import org.basic.common.bean.CommonConstants;
 import org.basic.common.bean.FileType;
 import org.basic.common.bean.RelativePath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MessageUtils {
 
-	private static final Logger logger = Logger.getLogger(MessageUtils.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(MessageUtils.class.getName());
 	private static Properties MESSAGE_LIST;
 
 	static {
@@ -113,9 +114,9 @@ public class MessageUtils {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("cannot update the message data", e);
 		} finally {
-			StreamUtils.close(ins);
+			StreamUtils.closeQuietly(ins);
 		}
 		MESSAGE_LIST.putAll(messageEntries);
 	}

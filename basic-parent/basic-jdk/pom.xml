@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.basic</groupId>
+    <artifactId>basic-parent</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>basic-jdk</artifactId>
+  <packaging>pom</packaging>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- testing -->
+    <assertj.version>3.10.0</assertj.version>
+    <awaitility.version>1.7.0</awaitility.version>
+    <java.version>11</java.version>
+    <guava.version>25.1-jre</guava.version>
+    <junit.jupiter.version>5.6.0</junit.jupiter.version>
+    <junit.jupiter.version>5.6.0</junit.jupiter.version>
+    <junit.platform.version>1.6.0</junit.platform.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.basic</groupId>
+      <artifactId>basic-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jayway.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-runner</artifactId>
+    </dependency>
+  </dependencies>
+  <modules>
+    <module>basic-jdk-core</module>
+    <module>basic-jdk8</module>
+    <module>basic-jdk9</module>
+    <module>basic-jdk10</module>
+    <module>basic-jdk11</module>
+    <module>basic-jdk12</module>
+
+  </modules>
+</project>
