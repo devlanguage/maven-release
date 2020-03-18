@@ -13,7 +13,12 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD:third-parent/third-build/third-build-maven/maven-hello-plugin/.classpath
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+=======
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk13">
+>>>>>>> 3d068d265e44298bee8374076701dd4d859c2888:basic-parent/basic-grammar/.classpath
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>

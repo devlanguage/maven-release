@@ -1,0 +1,1 @@
+INSERT INTO bosun_test1(id) values(1);

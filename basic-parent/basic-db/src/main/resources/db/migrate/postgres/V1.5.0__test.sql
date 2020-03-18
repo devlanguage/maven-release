@@ -1,0 +1,1 @@
+CREATE TABLE bosun_test1(id int);

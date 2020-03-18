@@ -17,7 +17,7 @@ public class LoggerManager {
 
     static {
 
-        String localPath = LoggerManager.class.getClassLoader().getResource("logging.properties").getFile();
+        String localPath = LoggerManager.class.getResource("logging.properties").getFile();
         System.setProperty("java.util.logging.config.file", localPath.substring(0, localPath.length()));
         manager = LogManager.getLogManager();
         String delimeter = manager.getProperty(DELIMETER) == null ? DEFAULT_DELIMETER : manager.getProperty(DELIMETER);
