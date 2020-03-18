@@ -33,7 +33,7 @@ public enum RdbDatabaseType {
 	sqlserver("sqlserver", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver:"), //
 	sqlserver_JTDS("sqlserver", "net.sourceforge.jtds.jdbc.Driver", "jdbc:jtds:"), //
 
-	postgresql("postgresql", "org.postgresql.Driver", "jdbc:postgresql:"), ////
+	postgresql("postgresql", "org.postgresql.Driver", "jdbc:postgresql:"), ////jdbc:postgresql://localhost/test
 	mariadb("mariadb", "org.mariadb.jdbc.Driver", "jdbc:mariadb:"), //
 	sybase("sybase", "com.sybase.jdbc4.jdbc.SybDriver", "jdbc:sybase:"), //
 	saphana("sybase", "com.sap.db.jdbc.Driver", "jdbc:sap:"), //

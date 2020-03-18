@@ -10,6 +10,8 @@ import java.awt.Label;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 
@@ -23,9 +25,15 @@ import org.basic.common.util.StringUtils;
 
 public class SwingTest {
 
-    public static void main(String[] args) {
-        System.out.println(StringUtils.normalizeText("-rw  . 1 1999 root 4036257 Oct 31 08:21 'oracle-ojdbc8 (1).jar'\r\n" + 
-                ""));
+    public static void main(String[] args)  {
+//        System.out.println(StringUtils.normalizeText("-rw  . 1 1999 root 4036257 Oct 31 08:21 'oracle-ojdbc8 (1).jar'\r\n" + 
+//                ""));
+        try {
+            DriverManager.getConnection("jdbc:postgresql://localhost:5432","df","");
+        } catch (SQLException e) {
+            System.out.println(e.getSQLState()); 
+            e.printStackTrace();
+        }
     }
     public static void dfmain(String[] args) {
         Toolkit tk = java.awt.Toolkit.getDefaultToolkit();

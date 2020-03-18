@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 
 public class PgTest {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://shcssolindb01.hpeswlab.net:5432/postgres?user=postgres@testazure18&password=Admin_1234";
+        String url = "jdbc:postgresql://h7.test.com:5432/postgres?user=postgres@testazure18&password=Admin_1234";
         String user = "postgres", password = "";
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--dbUrl")) {

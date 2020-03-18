@@ -40,196 +40,192 @@ import org.slf4j.LoggerFactory;
 import sun.security.provider.X509Factory;
 
 public class CertificateUtils {
-	static final Logger logger = LoggerFactory.getLogger(CertificateUtils.class);
+    static final Logger logger = LoggerFactory.getLogger(CertificateUtils.class);
 
-	public KeyPair getDefaultKeyPair() {
-		logger.info("Into: getDefaultKeyPair()");
+    public KeyPair getDefaultKeyPair() {
+        logger.info("Into: getDefaultKeyPair()");
 
-		String publ = "";
-		String priv = "";
+        String publ = "";
+        String priv = "";
 
-		try {
-			if (StringUtils.hasText(publ) && StringUtils.hasText(priv)) {
-				Base64.Decoder decoder = Base64.getDecoder();
-				byte[] privateKeyBytes = decoder.decode(priv);
-				byte[] publicKeyBytes = decoder.decode(publ);
-				KeyFactory kf = KeyFactory.getInstance("RSA");
-				PrivateKey privateKey = kf.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
-				PublicKey publicKey = kf.generatePublic(new X509EncodedKeySpec(publicKeyBytes));
-				return new KeyPair(publicKey, privateKey);
-			}
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			logger.warn("KeyPair {PrivateKey and PublicKey} is invalid, will be regenerated. ", e);
-		}
+        try {
+            if (StringUtils.hasText(publ) && StringUtils.hasText(priv)) {
+                Base64.Decoder decoder = Base64.getDecoder();
+                byte[] privateKeyBytes = decoder.decode(priv);
+                byte[] publicKeyBytes = decoder.decode(publ);
+                KeyFactory kf = KeyFactory.getInstance("RSA");
+                PrivateKey privateKey = kf.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
+                PublicKey publicKey = kf.generatePublic(new X509EncodedKeySpec(publicKeyBytes));
+                return new KeyPair(publicKey, privateKey);
+            }
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            logger.warn("KeyPair {PrivateKey and PublicKey} is invalid, will be regenerated. ", e);
+        }
 
-		try {
-			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-			SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
-			keyGen.initialize(1024, random);
-			KeyPair keyPair = keyGen.generateKeyPair();
-			PrivateKey privateKey = keyPair.getPrivate();
-			PublicKey publicKey = keyPair.getPublic();
+        try {
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
+            keyGen.initialize(1024, random);
+            KeyPair keyPair = keyGen.generateKeyPair();
+            PrivateKey privateKey = keyPair.getPrivate();
+            PublicKey publicKey = keyPair.getPublic();
 
-			Base64.Encoder encoder = Base64.getEncoder();
-			String privCode = encoder.encodeToString(privateKey.getEncoded());
-			String publCode = encoder.encodeToString(publicKey.getEncoded());
+            Base64.Encoder encoder = Base64.getEncoder();
+            String privCode = encoder.encodeToString(privateKey.getEncoded());
+            String publCode = encoder.encodeToString(publicKey.getEncoded());
 
-			return keyPair;
-		} catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-			// this Exception should be unreachable
-			logger.error("KeyPair generate fail, might be wrong jar. " + e.getMessage());
-		}
+            return keyPair;
+        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+            // this Exception should be unreachable
+            logger.error("KeyPair generate fail, might be wrong jar. " + e.getMessage());
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public X509Certificate generateCertificate(KeyPair keyPair) throws NoSuchAlgorithmException,
-			CertificateEncodingException, NoSuchProviderException, InvalidKeyException, SignatureException {
-		logger.info("Into: generateCertificate()");
-		return generateCertificate(keyPair.getPublic(), keyPair.getPrivate());
-	}
+    public X509Certificate generateCertificate(KeyPair keyPair) throws NoSuchAlgorithmException,
+            CertificateEncodingException, NoSuchProviderException, InvalidKeyException, SignatureException {
+        logger.info("Into: generateCertificate()");
+        return generateCertificate(keyPair.getPublic(), keyPair.getPrivate());
+    }
 
-	/**
-	 * Delete public key with the given alias
-	 *
-	 * @param alias
-	 *            alias of the key to find
-	 * 
-	 */
-	public void deleteCertificateFromKeystore(String alias, KeyStore keyStore) {
-		logger.info("Into: deleteCertificate()");
-		try {
-			keyStore.deleteEntry(alias);
-		} catch (KeyStoreException e) {
-			logger.error("Error delete public certificate {}", alias);
-		}
-	}
+    /**
+     * Delete public key with the given alias
+     *
+     * @param alias alias of the key to find
+     * 
+     */
+    public void deleteCertificateFromKeystore(String alias, KeyStore keyStore) {
+        logger.info("Into: deleteCertificate()");
+        try {
+            keyStore.deleteEntry(alias);
+        } catch (KeyStoreException e) {
+            logger.error("Error delete public certificate {}", alias);
+        }
+    }
 
-	/**
-	 * Returns public key with the given alias
-	 *
-	 * @param alias
-	 *            alias of the key to find
-	 * @return public key of the alias or null if not found
-	 */
-	public PublicKey getPublicKey(String alias, KeyStore keyStore) {
-		logger.info("Into: getPublicKey()");
-		X509Certificate x509Certificate = getCertificate(alias, keyStore);
-		if (x509Certificate != null) {
-			return x509Certificate.getPublicKey();
-		} else {
-			return null;
-		}
-	}
+    /**
+     * Returns public key with the given alias
+     *
+     * @param alias alias of the key to find
+     * @return public key of the alias or null if not found
+     */
+    public PublicKey getPublicKey(String alias, KeyStore keyStore) {
+        logger.info("Into: getPublicKey()");
+        X509Certificate x509Certificate = getCertificate(alias, keyStore);
+        if (x509Certificate != null) {
+            return x509Certificate.getPublicKey();
+        } else {
+            return null;
+        }
+    }
 
+    /**
+     * Returns certificate with the given alias from the keystore.
+     *
+     * @param alias alias of certificate to find
+     * @return certificate with the given alias or null if not found
+     */
+    public X509Certificate getCertificate(String alias, KeyStore keyStore) {
+        logger.info("Into: getCertificate()");
+        if (alias == null || alias.length() == 0) {
+            return null;
+        }
+        try {
+            return (X509Certificate) keyStore.getCertificate(alias);
+        } catch (Exception e) {
+            logger.error("Error loading certificate", e);
+        }
+        return null;
+    }
 
-	/**
-	 * Returns certificate with the given alias from the keystore.
-	 *
-	 * @param alias
-	 *            alias of certificate to find
-	 * @return certificate with the given alias or null if not found
-	 */
-	public X509Certificate getCertificate(String alias, KeyStore keyStore) {
-		logger.info("Into: getCertificate()");
-		if (alias == null || alias.length() == 0) {
-			return null;
-		}
-		try {
-			return (X509Certificate) keyStore.getCertificate(alias);
-		} catch (Exception e) {
-			logger.error("Error loading certificate", e);
-		}
-		return null;
-	}
+    public java.security.cert.X509Certificate pemToCertificate(String pem)
+            throws CertificateException, UnsupportedEncodingException {
+        X509Certificate cert = (X509Certificate) CertificateFactory.getInstance("X509")
+                .generateCertificate(new ByteArrayInputStream(pem.getBytes("UTF-8")));
+        return cert;
+    }
 
-	public java.security.cert.X509Certificate pemToCertificate(String pem)
-			throws CertificateException, UnsupportedEncodingException {
-		X509Certificate cert = (X509Certificate) CertificateFactory.getInstance("X509")
-				.generateCertificate(new ByteArrayInputStream(pem.getBytes("UTF-8")));
-		return cert;
-	}
+    public String certToPem(java.security.cert.X509Certificate cert) throws CertificateEncodingException {
+        Base64.Encoder encoder = Base64.getEncoder();
+        byte[] derCert = cert.getEncoded();
+        String pemCertPre = new String(encoder.encode(derCert));
+        String pemCert = X509Factory.BEGIN_CERT + "\n" + pemCertPre + "\n" + X509Factory.END_CERT;
+        return pemCert;
+    }
 
-	public String certToPem(java.security.cert.X509Certificate cert) throws CertificateEncodingException {
-		Base64.Encoder encoder = Base64.getEncoder();
-		byte[] derCert = cert.getEncoded();
-		String pemCertPre = new String(encoder.encode(derCert));
-		String pemCert = X509Factory.BEGIN_CERT + "\n" + pemCertPre + "\n" + X509Factory.END_CERT;
-		return pemCert;
-	}
+    private static final int NOT_EXISTING_TYPE = -1;
 
-	private static final int NOT_EXISTING_TYPE = -1;
+    public String getUserIdentifier(X509Certificate clientCert) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("getUserIdentifier(X509Certificate) - start");
+        }
+        int alternativeIdentifierTypeValue = 1; //
+        String userIdentifier = null;
+        if (clientCert != null) {
+            if (alternativeIdentifierTypeValue != NOT_EXISTING_TYPE) {
+                boolean foundUserIdentifier = false;
+                try {
+                    if (clientCert.getSubjectAlternativeNames() != null) {
+                        Collection subjectAlternativeNames = clientCert.getSubjectAlternativeNames();
+                        Iterator iter = subjectAlternativeNames.iterator();
+                        while (iter.hasNext()) {
+                            List subjectAlternativeName = (List) iter.next();
+                            Integer type = (Integer) subjectAlternativeName.get(0);
+                            if (type.intValue() == alternativeIdentifierTypeValue) {
+                                Object subjectAlternativeNameValue = subjectAlternativeName.get(1);
+                                if (subjectAlternativeNameValue instanceof String) {
+                                    userIdentifier = (String) subjectAlternativeNameValue;
+                                    foundUserIdentifier = true;
+                                    break;
+                                } else if (subjectAlternativeNameValue instanceof byte[]) {
+                                    byte[] subjectAlternativeNameValueBytes = (byte[]) subjectAlternativeNameValue;
+                                    userIdentifier = getStringFromASNDerEncodedByteArray(
+                                            subjectAlternativeNameValueBytes);
+                                    if (userIdentifier != null) {
+                                        foundUserIdentifier = true;
+                                        break;
+                                    }
+                                } else {
+                                    if (logger.isInfoEnabled()) {
+                                        logger.info(
+                                                "VALIDATION - Cannot get UserIdentifier, the subjectAlternativeName not supported ["
+                                                        + subjectAlternativeNameValue + "].");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (CertificateParsingException e) {
+                    logger.info(
+                            "VALIDATION - Cannot get UserIdentifier, cannot get subjectAlternativeNames from certificate ["
+                                    + e.getMessage() + "].",
+                            e);
+                }
 
-	public String getUserIdentifier(X509Certificate clientCert) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("getUserIdentifier(X509Certificate) - start");
-		}
-		int alternativeIdentifierTypeValue = 1; //
-		String userIdentifier = null;
-		if (clientCert != null) {
-			if (alternativeIdentifierTypeValue != NOT_EXISTING_TYPE) {
-				boolean foundUserIdentifier = false;
-				try {
-					if (clientCert.getSubjectAlternativeNames() != null) {
-						Collection subjectAlternativeNames = clientCert.getSubjectAlternativeNames();
-						Iterator iter = subjectAlternativeNames.iterator();
-						while (iter.hasNext()) {
-							List subjectAlternativeName = (List) iter.next();
-							Integer type = (Integer) subjectAlternativeName.get(0);
-							if (type.intValue() == alternativeIdentifierTypeValue) {
-								Object subjectAlternativeNameValue = subjectAlternativeName.get(1);
-								if (subjectAlternativeNameValue instanceof String) {
-									userIdentifier = (String) subjectAlternativeNameValue;
-									foundUserIdentifier = true;
-									break;
-								} else if (subjectAlternativeNameValue instanceof byte[]) {
-									byte[] subjectAlternativeNameValueBytes = (byte[]) subjectAlternativeNameValue;
-									userIdentifier = getStringFromASNDerEncodedByteArray(
-											subjectAlternativeNameValueBytes);
-									if (userIdentifier != null) {
-										foundUserIdentifier = true;
-										break;
-									}
-								} else {
-									if (logger.isInfoEnabled()) {
-										logger.info(
-												"VALIDATION - Cannot get UserIdentifier, the subjectAlternativeName not supported ["
-														+ subjectAlternativeNameValue + "].");
-									}
-								}
-							}
-						}
-					}
-				} catch (CertificateParsingException e) {
-					logger.info(
-							"VALIDATION - Cannot get UserIdentifier, cannot get subjectAlternativeNames from certificate ["
-									+ e.getMessage() + "].",
-							e);
-				}
+            } else {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("VALIDATION - Cannot get UserIdentifier, generalName is null");
+                }
+            }
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug("VALIDATION - Cannot get UserIdentifier, clientCert is null");
+            }
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("getUserIdentifier(X509Certificate) - end; Ret is [" + userIdentifier + "].");
+        }
 
-			} else {
-				if (logger.isDebugEnabled()) {
-					logger.debug("VALIDATION - Cannot get UserIdentifier, generalName is null");
-				}
-			}
-		} else {
-			if (logger.isDebugEnabled()) {
-				logger.debug("VALIDATION - Cannot get UserIdentifier, clientCert is null");
-			}
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("getUserIdentifier(X509Certificate) - end; Ret is [" + userIdentifier + "].");
-		}
+        return userIdentifier;
+    }
 
-		return userIdentifier;
-	}
+    private String getStringFromASNDerEncodedByteArray(byte[] byteArray) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("getStringFromASNDerEncodedByteArray(byte[]) - start");
+        }
 
-	private String getStringFromASNDerEncodedByteArray(byte[] byteArray) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("getStringFromASNDerEncodedByteArray(byte[]) - start");
-		}
-
-		String ret = null;
+        String ret = null;
 //		ASN1InputStream asn1InputStream = null;
 //		try {
 //			asn1InputStream = new ASN1InputStream(new ByteArrayInputStream(byteArray));
@@ -262,26 +258,26 @@ public class CertificateUtils {
 //		if (logger.isDebugEnabled()) {
 //			logger.debug("VALIDATION - getStringFromASNDerEncodedByteArray(byte[]) - end. Ret is [" + ret + "].");
 //		}
-		return ret;
+        return ret;
 
-	}
+    }
 
-	public X509Certificate generateCertificate(PublicKey publicKey, PrivateKey privateKey)
-			throws NoSuchAlgorithmException, CertificateEncodingException, NoSuchProviderException, InvalidKeyException,
-			SignatureException {
+    public X509Certificate generateCertificate(PublicKey publicKey, PrivateKey privateKey)
+            throws NoSuchAlgorithmException, CertificateEncodingException, NoSuchProviderException, InvalidKeyException,
+            SignatureException {
 
-		logger.info("Into: generateCertificate(,)");
-		String certCode = "";
-		if (StringUtils.hasText(certCode)) {
-			try {
-				return pemToCertificate(certCode);
-			} catch (Exception e) {
-				logger.warn("Failed to get certificate from DB: ", e.getMessage());
-				logger.debug("Detailed exception: ", e);
-			}
-		}
+        logger.info("Into: generateCertificate(,)");
+        String certCode = "";
+        if (StringUtils.hasText(certCode)) {
+            try {
+                return pemToCertificate(certCode);
+            } catch (Exception e) {
+                logger.warn("Failed to get certificate from DB: ", e.getMessage());
+                logger.debug("Detailed exception: ", e);
+            }
+        }
 
-		X509Certificate certificate = null;
+        X509Certificate certificate = null;
 //		
 //		int days = 365;
 //		long secOfDay = 86400000L;
@@ -297,64 +293,64 @@ public class CertificateUtils {
 //		PrivateKey signingKey = privateKey;
 //		X509Certificate certificate = cert.generate(signingKey);
 
-		return certificate;
-	}
+        return certificate;
+    }
 
-	public KeyStore initialize(File storeFile, String storePass, String storeType) throws KeyStoreException {
-		logger.info("Into: initialize()");
-		InputStream inputStream = null;
-		KeyStore ks;
-		String provider = "";// BCFIPS,SUNJCE
-		try {
-			ks = StringUtils.hasText(provider) ? KeyStore.getInstance(storeType, provider)
-					: KeyStore.getInstance(storeType);
-			inputStream = new FileInputStream(storeFile);
-			ks.load(inputStream, storePass == null ? null : storePass.toCharArray());
-			return ks;
-		} catch (KeyStoreException e) {
-			logger.warn("KeyStoreException:" + e.getMessage());
-			logger.debug("Cannot initialize key store with keystoreFile=" + storeFile, e);
-		} catch (IOException e) {
-			logger.warn("IOException:" + e.getMessage());
-			logger.debug("Cannot initialize key store with keystoreFile=" + storeFile, e);
-		} catch (Exception e) {
-			logger.warn("Exception:" + e.getMessage());
-			logger.debug("Cannot initialize key store with keystoreFile=" + storeFile, e);
-		} finally {
-			StreamUtils.closeQuietly(inputStream);
-		}
-		return generateDefaultKeystore(DEFAULT_KEYSTORE_PASSWORD, DEFAULT_KEYSTORE_DEFAULT_KEY,
-				DEFAULT_KEYSTORE_DEFAULT_PASSWORD);
-	}
+    public KeyStore initialize(File storeFile, String storePass, String storeType) throws KeyStoreException {
+        logger.info("Into: initialize()");
+        InputStream inputStream = null;
+        KeyStore ks;
+        String provider = "";// BCFIPS,SUNJCE
+        try {
+            ks = StringUtils.hasText(provider) ? KeyStore.getInstance(storeType, provider)
+                    : KeyStore.getInstance(storeType);
+            inputStream = new FileInputStream(storeFile);
+            ks.load(inputStream, storePass == null ? null : storePass.toCharArray());
+            return ks;
+        } catch (KeyStoreException e) {
+            logger.warn("KeyStoreException:" + e.getMessage());
+            logger.debug("Cannot initialize key store with keystoreFile=" + storeFile, e);
+        } catch (IOException e) {
+            logger.warn("IOException:" + e.getMessage());
+            logger.debug("Cannot initialize key store with keystoreFile=" + storeFile, e);
+        } catch (Exception e) {
+            logger.warn("Exception:" + e.getMessage());
+            logger.debug("Cannot initialize key store with keystoreFile=" + storeFile, e);
+        } finally {
+            StreamUtils.closeQuietly(inputStream);
+        }
+        return generateDefaultKeystore(DEFAULT_KEYSTORE_PASSWORD, DEFAULT_KEYSTORE_DEFAULT_KEY,
+                DEFAULT_KEYSTORE_DEFAULT_PASSWORD);
+    }
 
-	private String DEFAULT_KEYSTORE_PASSWORD = "testKeystore.jks";
-	private String DEFAULT_KEYSTORE_DEFAULT_KEY = "testKeyAlias1";
-	private String DEFAULT_KEYSTORE_DEFAULT_PASSWORD = "testKeyAlias1_Pass";
+    private String DEFAULT_KEYSTORE_PASSWORD = "testKeystore.jks";
+    private String DEFAULT_KEYSTORE_DEFAULT_KEY = "testKeyAlias1";
+    private String DEFAULT_KEYSTORE_DEFAULT_PASSWORD = "testKeyAlias1_Pass";
 
-	public KeyStore generateDefaultKeystore(String keyStorePass, String keyAlias, String keyPassword)
-			throws KeyStoreException {
-		logger.warn("Warning: Default Keystore In Use.");
-		logger.info("Generating Default Keystore.");
-		KeyStore keyStore = KeyStore.getInstance("JKS");
+    public KeyStore generateDefaultKeystore(String keyStorePass, String keyAlias, String keyPassword)
+            throws KeyStoreException {
+        logger.warn("Warning: Default Keystore In Use.");
+        logger.info("Generating Default Keystore.");
+        KeyStore keyStore = KeyStore.getInstance("JKS");
 
-		try {
-			KeyPair keyPair = getDefaultKeyPair();
-			X509Certificate certificate = generateCertificate(keyPair);
-			keyStore.load(null, null);
-			Certificate[] certChain = new Certificate[1];
-			certChain[0] = certificate;
+        try {
+            KeyPair keyPair = getDefaultKeyPair();
+            X509Certificate certificate = generateCertificate(keyPair);
+            keyStore.load(null, null);
+            Certificate[] certChain = new Certificate[1];
+            certChain[0] = certificate;
 
-			keyStore.setKeyEntry(keyAlias, keyPair.getPrivate(), keyPassword.toCharArray(), certChain);
+            keyStore.setKeyEntry(keyAlias, keyPair.getPrivate(), keyPassword.toCharArray(), certChain);
 
-			// keyStore.store(FileOutputStream("newKeystore.jks", keyStorePass);
-		} catch (Exception e) {
-			logger.error("Automatically generate key store failed: " + e.getMessage());
-		}
-		return keyStore;
-	}
+            // keyStore.store(FileOutputStream("newKeystore.jks", keyStorePass);
+        } catch (Exception e) {
+            logger.error("Automatically generate key store failed: " + e.getMessage());
+        }
+        return keyStore;
+    }
 
-	// KeyStore newKeyStore = initialize(keystoreFile, passwordValue, typeValue);
-	// Map<String, String> passwords = new
-	// HashMap<>(1);passwords.put(this.defaultKey,this.password);
+    // KeyStore newKeyStore = initialize(keystoreFile, passwordValue, typeValue);
+    // Map<String, String> passwords = new
+    // HashMap<>(1);passwords.put(this.defaultKey,this.password);
 
 }

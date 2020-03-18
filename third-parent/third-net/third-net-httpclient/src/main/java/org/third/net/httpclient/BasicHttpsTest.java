@@ -148,34 +148,34 @@ public class BasicHttpsTest {
     }
 
     public void testBasicHttpsWithPost() throws Exception {
-		CloseableHttpClient client = getHttpsClientWithSslContextIngored();
-		String body = "";
-		try {
-			// 创建post方式请求对象
-			HttpPost httpPost = new HttpPost("https://api.douban.com/v2/book/1220562");
+        CloseableHttpClient client = getHttpsClientWithSslContextIngored();
+        String body = "";
+        try {
+            // 创建post方式请求对象
+            HttpPost httpPost = new HttpPost("https://api.douban.com/v2/book/1220562");
 
-			// 指定报文头Content-type、User-Agent
-			httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
-			httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
+            // 指定报文头Content-type、User-Agent
+            httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
+            httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
 
-			StringEntity entity = new StringEntity("");
-			httpPost.setEntity(entity);
-			// 执行请求操作，并拿到结果（同步阻塞）
-			CloseableHttpResponse response = client.execute(httpPost);
+            StringEntity entity = new StringEntity("");
+            httpPost.setEntity(entity);
+            // 执行请求操作，并拿到结果（同步阻塞）
+            CloseableHttpResponse response = client.execute(httpPost);
 
-			// 获取结果实体
-			HttpEntity entityResp = response.getEntity();
-			if (entity != null) {
-				// 按指定编码转换结果实体为String类型
-				body = EntityUtils.toString(entityResp, "UTF-8");
-			}
+            // 获取结果实体
+            HttpEntity entityResp = response.getEntity();
+            if (entity != null) {
+                // 按指定编码转换结果实体为String类型
+                body = EntityUtils.toString(entityResp, "UTF-8");
+            }
 
-			EntityUtils.consume(entity);
-			// 释放链接
-			response.close();
-			System.out.println("body:" + body);
-		} finally {
-			client.close();
-		}
-	}>>>>>>>c588051954c892c5658c196007358e31a5c1b6c9
+            EntityUtils.consume(entity);
+            // 释放链接
+            response.close();
+            System.out.println("body:" + body);
+        } finally {
+            client.close();
+        }
+    }
 }
