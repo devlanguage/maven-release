@@ -1,13 +1,15 @@
 package org.third.hibernate.migrate;
 
+import java.util.EnumSet;
+
 import javax.persistence.Entity;
 
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.tool.hbm2ddl.SchemaUpdate;
+import org.hibernate.tool.schema.TargetType;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
@@ -36,12 +38,9 @@ public class MigrationTest {
         }
         Metadata metadata = metadataSources.buildMetadata();
 
-        
-        //5.4.3
-//        SchemaUpdate su = new SchemaUpdate();
-//        EnumSet<TargetType> targets = EnumSet.of(TargetType.DATABASE);
-//        su.execute(targets, metadata);
-        SchemaUpdate su = new SchemaUpdate((MetadataImplementor) metadata);
-      su.execute(true, true);
+        // 5.4.3
+        SchemaUpdate su = new SchemaUpdate();
+        EnumSet<TargetType> targets = EnumSet.of(TargetType.DATABASE);
+        su.execute(targets, metadata);
     }
 }

@@ -1,7 +1,5 @@
 package org.basic.jdk.core.uml.polymophoism;
 
-import java.io.IOException;
-
 /**
  * <pre>
  * 隐藏：
