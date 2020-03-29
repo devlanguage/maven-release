@@ -2,15 +2,10 @@ package org.third.ssh.sshd.beans;
 
 import org.basic.common.util.StringUtils;
 
-/**
- * Created by Robin on 8/3/2018 5:53 PM
- */
 public class SshScpResult {
 
     private boolean success;
-
     private String errorMessage;
-
     private Throwable caughtException;
 
     public boolean isSuccess() {
@@ -39,10 +34,10 @@ public class SshScpResult {
 
     public String getAllAccumulatedErrorMessage() {
         StringBuilder sb = new StringBuilder();
-        if(StringUtils.isNullOrBlank(this.errorMessage)) {
+        if (StringUtils.isNullOrBlank(this.errorMessage)) {
             sb.append(this.errorMessage).append(System.lineSeparator());
         }
-        if(null!=this.caughtException) {
+        if (null != this.caughtException) {
             sb.append(this.caughtException.getMessage()).append(System.lineSeparator());
         }
         return sb.toString();
@@ -50,10 +45,7 @@ public class SshScpResult {
 
     @Override
     public String toString() {
-        return "SshScpResult{" +
-                "success=" + success +
-                ", errorMessage='" + errorMessage + '\'' +
-                ", caughtException=" + caughtException +
-                '}';
+        return "SshScpResult{" + "success=" + success + ", errorMessage='" + errorMessage + '\'' + ", caughtException="
+                + caughtException + '}';
     }
 }

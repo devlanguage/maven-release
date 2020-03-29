@@ -7,7 +7,7 @@
     <artifactId>basic-parent</artifactId>
     <version>0.0.1</version>
   </parent>
-  <artifactId>basic-arithmetic</artifactId>
+  <artifactId>basic-arithmetic</artifactId> 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

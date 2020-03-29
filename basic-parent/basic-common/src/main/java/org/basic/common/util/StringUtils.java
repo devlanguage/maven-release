@@ -1938,7 +1938,7 @@ public class StringUtils {
 		if (null == value) {
 			return true;
 		}
-		return String.valueOf(value).length() != 0;
+		return String.valueOf(value).trim().length() == 0;
 	}
 
 	public static <T> boolean isNotBlank(T value) {

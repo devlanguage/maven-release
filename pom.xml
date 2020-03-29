@@ -80,7 +80,7 @@
     <jgrapht.version>1.1.0</jgrapht.version>
     <!-- SSH -->
     <jsch.version>0.1.55</jsch.version>
-    <sshd-cli.vesion>2.2.0</sshd-cli.vesion>
+    <sshd-cli.vesion>2.4.0</sshd-cli.vesion>
     <ganymed.version>262</ganymed.version>
     <jcabi.version>1.6.1</jcabi.version>
     <jdpapi64.version>1.0.0</jdpapi64.version>
@@ -90,6 +90,7 @@
 
     <slf4j.version>1.7.26</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
+    <log4j-to-slf4j.version>2.13.1</log4j-to-slf4j.version>
     <logback.version>1.1.7</logback.version>
     <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
     <maven-directory-plugin.version>0.3.1</maven-directory-plugin.version>
@@ -173,6 +174,16 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-to-slf4j</artifactId>
+        <version>${log4j-to-slf4j.version}</version>
       </dependency>
       <!-- Spring core -->
       <dependency>
