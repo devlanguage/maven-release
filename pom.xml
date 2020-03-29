@@ -56,7 +56,6 @@
     <jdmk.version>1.2.8</jdmk.version>
     <flyway.version>6.2.1</flyway.version>
     <druid.version>1.1.20</druid.version>
-
     <custom-pmd.version>0.0.1</custom-pmd.version>
     <dataprotection.version>1.0.1</dataprotection.version>
     <esapi.version>2.1.0.1</esapi.version>

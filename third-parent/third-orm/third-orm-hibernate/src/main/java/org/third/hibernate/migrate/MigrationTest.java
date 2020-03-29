@@ -42,5 +42,8 @@ public class MigrationTest {
         SchemaUpdate su = new SchemaUpdate();
         EnumSet<TargetType> targets = EnumSet.of(TargetType.DATABASE);
         su.execute(targets, metadata);
+        //5.1
+//        SchemaUpdate su = new SchemaUpdate((MetadataImplementor) metadata);
+//      su.execute(true, true);
     }
 }

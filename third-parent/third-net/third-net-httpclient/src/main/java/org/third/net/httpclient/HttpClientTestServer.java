@@ -51,7 +51,7 @@ public class HttpClientTestServer {
 					}
 
 					InputStream reqBody = t.getRequestBody();
-					System.out.println(StreamUtils.toString(reqBody));
+					System.out.println(StreamUtils.streamToString(reqBody));
 					String response = "<h3>Happy New Year 2007! -- Chinajash</h3>";
 					t.sendResponseHeaders(200, response.length());
 					OutputStream os = t.getResponseBody();
