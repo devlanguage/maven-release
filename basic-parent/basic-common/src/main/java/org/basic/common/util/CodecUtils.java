@@ -283,6 +283,18 @@ public class CodecUtils {
         return BASE64_DECODER.decode(src);
     }
 
+    public static final byte[] decodeBase64(String src, boolean ignoreWhitespace) {
+        StringBuilder filteringSrc = new StringBuilder();
+        for (int i = 0; i < src.length(); ++i) {
+            if (Character.isWhitespace(src.charAt(i))) {
+                // src[i] == '\n' || src[i] == '\r' || src[i] == '\t' || src[i] == ' ') {
+                continue;
+            }
+            filteringSrc.append(src.charAt(i));
+        }
+        return BASE64_DECODER.decode(filteringSrc.toString());
+    }
+
     /**
      * Decodes one byte array in base64 to byte array
      * 

@@ -1,4 +1,4 @@
-package org.basic.grammar.jdk.jdk.scan;
+package org.basic.jdk.core.jdk.jdk.scan;
 
 import java.io.File;
 import java.net.JarURLConnection;
