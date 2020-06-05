@@ -22,7 +22,6 @@
     <module>basic-arithmetic</module>
     <module>basic-db</module>
     <module>basic-jdk</module>
-    <module>basic-grammar</module>
     <module>basic-gui</module>
     <module>basic-io</module>
     <module>basic-net</module>

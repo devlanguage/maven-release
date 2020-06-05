@@ -13,7 +13,6 @@ import java.util.Hashtable;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-import org.basic.common.util.ConfigFileMonitor;
 import org.basic.common.util.SystemUtils;
 
 public class CommonConfiguration extends Hashtable<String, String> {

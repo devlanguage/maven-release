@@ -1,4 +1,4 @@
-package org.basic.db.oracle.collection;
+package org.basic.db.oracle.types;
 
 import java.sql.SQLData;
 import java.sql.SQLException;

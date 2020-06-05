@@ -1,4 +1,4 @@
-package org.basic.db.oracle.collection;
+package org.basic.db.oracle.types;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

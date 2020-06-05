@@ -1,4 +1,4 @@
-package org.basic.db.oracle.statement_preparedStatement;
+package org.basic.db.oracle.statement;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;

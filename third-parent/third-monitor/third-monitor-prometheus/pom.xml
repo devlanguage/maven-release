@@ -10,7 +10,7 @@
   <artifactId>third-monitor-prometheus</artifactId>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <prometheus.version>0.8.1</prometheus.version>
+    <prometheus.version>0.9.0</prometheus.version>
   </properties>
   <dependencies>
     <dependency>
@@ -23,6 +23,12 @@
       <artifactId>third-common</artifactId>
       <version>${project.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>io.prometheus</groupId>
+      <artifactId>simpleclient</artifactId>
+      <version>${prometheus.version}</version>
+    </dependency>
     <dependency>
       <groupId>io.prometheus</groupId>
       <artifactId>simpleclient_httpserver</artifactId>
@@ -30,13 +36,22 @@
     </dependency>
     <dependency>
       <groupId>io.prometheus</groupId>
-      <artifactId>simpleclient</artifactId>
+      <artifactId>simpleclient_httpserver</artifactId>
       <version>${prometheus.version}</version>
     </dependency>
-    
     <dependency>
       <groupId>io.prometheus</groupId>
       <artifactId>simpleclient_guava</artifactId>
+      <version>${prometheus.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.prometheus</groupId>
+      <artifactId>simpleclient_guava</artifactId>
+      <version>${prometheus.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.prometheus</groupId>
+      <artifactId>simpleclient_pushgateway</artifactId>
       <version>${prometheus.version}</version>
     </dependency>
     <dependency>
