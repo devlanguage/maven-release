@@ -1,0 +1,52 @@
+{
+	"folders": {},
+	"connections": {
+		"postgres-jdbc-16e05a5e455-3bdb01502589bc5": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "PostgreSQL - postgres",
+			"save-password": true,
+			"show-system-objects": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "5432",
+				"database": "postgres",
+				"url": "jdbc:postgresql://localhost:5432/postgres",
+				"type": "dev",
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "true",
+					"@dbeaver-show-template-db@": "false"
+				}
+			}
+		},
+		"postgres-jdbc-16eab645895-74b16316854ebdf9": {
+			"provider": "postgresql",
+			"driver": "postgres-jdbc",
+			"name": "PostgreSQL - postgres 2",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "h7.test.com",
+				"port": "5432",
+				"database": "postgres",
+				"url": "jdbc:postgresql://h7.test.com:5432/postgres",
+				"type": "dev",
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "true",
+					"@dbeaver-show-template-db@": "true"
+				}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false
+		}
+	}
+}
