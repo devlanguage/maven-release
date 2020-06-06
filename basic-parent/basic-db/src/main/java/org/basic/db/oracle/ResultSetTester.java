@@ -13,7 +13,7 @@ import org.basic.common.bean.PoolType;
 import org.basic.common.util.BasicException;
 import org.basic.common.util.DbUtils;
 import org.basic.db.PropertiesTest;
-import org.basic.db.oracle.collection.SqlTypeAddress;
+import org.basic.db.oracle.types.SqlTypeAddress;
 import org.basic.db.util.DbDao;
 import org.basic.db.util.DbDaoFactory;
 

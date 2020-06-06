@@ -22,9 +22,6 @@ public class OracleSessionReport {
 
             new Thread(new Runnable() {
 
-                /* (non-Javadoc)
-                 * @see java.lang.Runnable#run()
-                 */
                 public void run() {
 
                     while (true) {
