@@ -11,5 +11,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="third-parent/third-build/third-build-gradle/gradle/wrapper/gradle-wrapper.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -19,7 +19,7 @@
     </dependency>
     <dependency>
       <groupId>org.basic</groupId>
-      <artifactId>third-common</artifactId>
+      <artifactId>basic-common</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

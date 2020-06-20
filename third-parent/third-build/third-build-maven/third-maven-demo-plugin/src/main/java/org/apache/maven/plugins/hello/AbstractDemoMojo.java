@@ -5,7 +5,7 @@ import java.io.File;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-public abstract class AbstractHelloMojo extends AbstractMojo {
+public abstract class AbstractDemoMojo extends AbstractMojo {
     /**
      */
     @Parameter(defaultValue = "${basedir}", readonly = true, required = true)
