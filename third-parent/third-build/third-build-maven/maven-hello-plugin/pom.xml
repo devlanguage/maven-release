@@ -48,11 +48,19 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-demo-plugin</artifactId>
+          <version>0.0.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-demo-plugin</artifactId>
-        <version>0.0.1</version>
         <configuration>
           <from>${project.basedir}</from>
           <to>${project.build.outputDirectory}</to>
@@ -67,7 +75,6 @@
             <goals>
               <goal>touch</goal>
               <goal>copy</goal>
-              <goal>hello</goal>
             </goals>
           </execution>
         </executions>
