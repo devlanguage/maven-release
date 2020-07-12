@@ -18,11 +18,6 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.basic</groupId>
-      <artifactId>third-common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.ehcache</groupId>
       <artifactId>ehcache</artifactId>
       <version>3.8.0</version>

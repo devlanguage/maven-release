@@ -5,8 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -30,11 +28,15 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.batik.util.DOMConstants;
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
 import org.xml.sax.SAXException;
 
 class JaxbSchemaOutputResolver extends SchemaOutputResolver {
@@ -149,6 +151,7 @@ public class XmlUtils {
 			documentBuilderFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 			documentBuilderFactory.setExpandEntityReferences(false);
 			documentBuilderFactory.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			builder = documentBuilderFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -279,16 +282,16 @@ public class XmlUtils {
 		return getRootNode(createDocumentByString(xmlFileContent));
 	}
 
-	public static final String toString(org.w3c.dom.Element element) throws IOException {
-		com.sun.org.apache.xml.internal.serialize.OutputFormat format = new com.sun.org.apache.xml.internal.serialize.OutputFormat(
-				element.getOwnerDocument());
-		format.setEncoding("UTF-8");
-		java.io.StringWriter stringOut = new java.io.StringWriter();
-		com.sun.org.apache.xml.internal.serialize.XMLSerializer serial = new com.sun.org.apache.xml.internal.serialize.XMLSerializer(
-				stringOut, format);
-		serial.asDOMSerializer();
-		serial.serialize(element);
-		return stringOut.toString();
+	public static final String nodeToString(org.w3c.dom.Element element) throws IOException {
+		String resultXmlStr;
+
+		Document doc = element.getOwnerDocument();
+		DOMImplementationLS domImplLS = (DOMImplementationLS) doc.getImplementation();
+		LSSerializer serializer = domImplLS.createLSSerializer();
+		serializer.getDomConfig().setParameter(DOMConstants.DOM_WELL_FORMED_PARAM, false);
+
+		resultXmlStr = serializer.writeToString(element);
+		return resultXmlStr;
 	}
 
 	public static boolean isValid(String filename) {
@@ -305,42 +308,6 @@ public class XmlUtils {
 			System.err.println(e.getMessage());
 		}
 		return bValid;
-	}
-
-	public final static void serialize(Element node, File file, boolean canonical) throws BasicException {
-
-		FileOutputStream out;
-		try {
-			out = new FileOutputStream(file);
-			out.write(serialize(node, canonical).getBytes());
-		} catch (FileNotFoundException e) {
-			throw SystemUtils.handleException(logger, e, "Failed to find the file " + file);
-		} catch (IOException e) {
-			throw SystemUtils.handleException(logger, e, "Failed to export the xml node value into the file " + file);
-		}
-
-	}
-
-	public final static void serialize(Element node, String file, boolean canonical) throws BasicException {
-
-		serialize(node, new File(file), canonical);
-	}
-
-	public static String serialize(Node node, boolean canonical) throws BasicException {
-
-		String xmlString = "";
-		try {
-			DOMSource domSource = new DOMSource(node);
-			StringWriter sw = new StringWriter();
-			StreamResult result = new StreamResult(sw);
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			transformer.transform(domSource, result);
-			xmlString = sw.toString();
-
-		} catch (Exception e) {
-			throw SystemUtils.handleException(logger, e, "Failed to export the xml node as String ");
-		}
-		return xmlString;
 	}
 
 	public final static String nodeToString_01(Node node) {
@@ -360,30 +327,16 @@ public class XmlUtils {
 	public final static String nodeToString(Node node, boolean containProcessInstruction) {
 
 		DOMSource source = new DOMSource(node);
-		StringWriter out = new StringWriter();
-		StreamResult result = new StreamResult(out);
+		StringWriter output = new StringWriter();
+		StreamResult result = new StreamResult(output);
 		try {
 			Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.transform(source, result);
-			out.flush();
+			output.flush();
 		} catch (TransformerException e) {
 			e.printStackTrace();
 		}
-		if (containProcessInstruction) {
-			return out.toString();
-		} else {
-			String output = out.toString();
-			String startTag = null, endTag = null;
-
-			if (node instanceof Document) {
-				startTag = ((Document) node).getDocumentElement().getNodeName();
-			} else {
-				startTag = node.getNodeName();
-			}
-			endTag = "</" + startTag + ">";
-			startTag = "<" + startTag + ">";
-			return output.substring(output.indexOf(startTag) + startTag.length() + 2, output.lastIndexOf(endTag));
-		}
+		return output.toString();
 	}
 
 	public static void printNodeInfo(Node node) {
@@ -470,7 +423,7 @@ public class XmlUtils {
 			}
 		} else {
 			try {
-				outputAccessor = new RandomAccessFile(file, "w");
+				outputAccessor = new RandomAccessFile(file, "rw");
 				outputAccessor.write(nodeToString(xmlNode, false).getBytes());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -483,8 +436,25 @@ public class XmlUtils {
 	public static void main(String[] args) {
 
 		try {
-			Document doc = createDocumentBySystemPathFile(
-					"C:/software/Java_Dev/eclipse_proj/java_proj/JavaBasic/user1.xml");
+			Document doc = createDocument();
+
+			Element usersEle = doc.createElement("users");
+			Comment usersComment = doc.createComment("Define user list");
+			usersEle.appendChild(usersComment);
+
+			Element userZhangEle = doc.createElement("user");
+			userZhangEle.setAttribute("id", "001");
+			userZhangEle.setAttribute("name", "test1");
+			usersEle.appendChild(userZhangEle);
+
+			Element userWangEle = doc.createElement("user");
+			userWangEle.setAttribute("id", "001");
+			userWangEle.setAttribute("name", "test1");
+			usersEle.appendChild(userWangEle);
+
+			doc.appendChild(usersEle);
+			System.out.println(nodeToString(usersEle));
+
 			mergeXmlToFile(doc, "output.xml");
 		} catch (Exception e) {
 			e.printStackTrace();

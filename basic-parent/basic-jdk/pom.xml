@@ -50,10 +50,10 @@
   <modules>
     <module>basic-jdk-core</module>
     <module>basic-jdk8</module>
-    <module>basic-jdk9</module>
+<!--     <module>basic-jdk9</module>
     <module>basic-jdk10</module>
     <module>basic-jdk11</module>
-    <module>basic-jdk12</module>
+    <module>basic-jdk12</module> -->
 
   </modules>
 </project>

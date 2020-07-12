@@ -9,20 +9,9 @@
     <version>0.0.1</version>
     <relativePath>../</relativePath>
   </parent>
-  <packaging>pom</packaging>
-  <artifactId>third-validator</artifactId>
+  <artifactId>third-common</artifactId>
+  <packaging>jar</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  <dependencies>
-    <dependency>
-      <groupId>org.basic</groupId>
-      <artifactId>basic-common</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-  </dependencies>
 </project>
