@@ -9,5 +9,6 @@ module org.basic.common {
 	requires org.slf4j;
 	requires org.apache.commons.compress;
 	requires batik.util;
+
 	exports org.basic.common;
 }
