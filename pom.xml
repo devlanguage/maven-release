@@ -24,7 +24,7 @@
     <commons.httpclient.version>4.5.9</commons.httpclient.version>
     <commons.io.version>2.5</commons.io.version>
     <commons.digester.version>2.1</commons.digester.version>
-    <commons.compress.version>1.20</commons.compress.version>
+    <commons.compress.version>1.21</commons.compress.version>
     <commons.lang3.version>3.9</commons.lang3.version>
     <commons.math3.version>3.6.1</commons.math3.version>
     <dom4j.version>2.1.1</dom4j.version>
@@ -398,7 +398,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-compress</artifactId>
-        <version>${commons.compress.version} </version>
+        <version>${commons.compress.version}</version>
       </dependency>
       <dependency>
         <groupId>org.dom4j</groupId>
