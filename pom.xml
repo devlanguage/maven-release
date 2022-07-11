@@ -124,7 +124,7 @@
     <opensaml3.version>2.6.4</opensaml3.version>
 
     <hibernate.version>5.4.10.Final</hibernate.version>
-    <spring.boot.version>2.2.0.RELEASE</spring.boot.version>
+    <spring.boot.version>2.2.11.RELEASE</spring.boot.version>
     <spring.data.version>3.2.0.RELEASE</spring.data.version>
     <spring.data.jpa.version>2.2.0.RELEASE</spring.data.jpa.version>
     <spring.kafka.version>2.1.7.RELEASE</spring.kafka.version>
