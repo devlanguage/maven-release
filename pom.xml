@@ -46,7 +46,7 @@
     <httpclient.version>4.5.9</httpclient.version>
     <httpcore.version>4.4.5</httpcore.version>
 
-    <postgresql.version>42.2.8</postgresql.version>
+    <postgresql.version>42.4.1</postgresql.version>
     <mysql.version>8.0.16</mysql.version>
     <mssql.version>7.2.2.jre8</mssql.version>
     <ojdbc7.version>12.1.0.2</ojdbc7.version>
