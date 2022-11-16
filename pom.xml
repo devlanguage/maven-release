@@ -74,7 +74,7 @@
     <springfox.swagger.version>2.6.1</springfox.swagger.version>
     <spring-boot.version></spring-boot.version>
     <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
-    <jackson.version>2.10.2</jackson.version>
+    <jackson.version>2.12.7.1</jackson.version>
     <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
     <javax.servlet.jsp-api.version>2.3.1</javax.servlet.jsp-api.version>
     <javax.mail-api.version>1.6.2</javax.mail-api.version>
